@@ -252,7 +252,7 @@ public class ScheduleWidgetRemoteViewsService extends RemoteViewsService {
             //Fetch all sessions and blocks
             List<ScheduleItem> allScheduleItems = scheduleHelper.getScheduleData(Long.MIN_VALUE, Long.MAX_VALUE);
 
-            String displayTimeZone = SettingsUtils.getDisplayTimeZone(mContext).getID();
+            String displayTimeZone = SettingsUtils.INSTANCE.getDisplayTimeZone(mContext).getID();
 
             mSections = new ArrayList<SimpleSectionedListAdapter.Section>();
             long previousTime = -1;

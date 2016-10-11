@@ -16,6 +16,18 @@
 
 package com.google.samples.apps.iosched.debug;
 
+import android.app.Fragment;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.samples.apps.iosched.Config;
 import com.google.samples.apps.iosched.R;
 import com.google.samples.apps.iosched.debug.actions.DisplayUserDataDebugAction;
@@ -35,18 +47,6 @@ import com.google.samples.apps.iosched.util.TimeUtils;
 import com.google.samples.apps.iosched.util.UIUtils;
 import com.google.samples.apps.iosched.util.WiFiUtils;
 import com.google.samples.apps.iosched.welcome.WelcomeActivity;
-
-import android.app.Fragment;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import static com.google.samples.apps.iosched.util.LogUtils.LOGW;
 import static com.google.samples.apps.iosched.util.LogUtils.makeLogTag;
@@ -117,12 +117,12 @@ public class DebugFragment extends Fragment {
         tests.addView(createTestAction(new DebugAction() {
             @Override
             public void run(Context context, Callback callback) {
-                SettingsUtils.markTosAccepted(context, false);
-                SettingsUtils.markConductAccepted(context, false);
-                SettingsUtils.setAttendeeAtVenue(context, false);
-                SettingsUtils.markAnsweredLocalOrRemote(context, false);
+                SettingsUtils.INSTANCE.markTosAccepted(context, false);
+                SettingsUtils.INSTANCE.markConductAccepted(context, false);
+                SettingsUtils.INSTANCE.setAttendeeAtVenue(context, false);
+                SettingsUtils.INSTANCE.markAnsweredLocalOrRemote(context, false);
                 AccountUtils.INSTANCE.setActiveAccount(context, null);
-                ConfMessageCardUtils.unsetStateForAllCards(context);
+                ConfMessageCardUtils.INSTANCE.unsetStateForAllCards(context);
             }
 
             @Override
@@ -147,9 +147,9 @@ public class DebugFragment extends Fragment {
             @Override
             public void run(Context context, Callback callback) {
                 LOGW(TAG, "Unsetting all Explore I/O message card answers.");
-                ConfMessageCardUtils.markAnsweredConfMessageCardsPrompt(context, null);
-                ConfMessageCardUtils.setConfMessageCardsEnabled(context, null);
-                ConfMessageCardUtils.unsetStateForAllCards(context);
+                ConfMessageCardUtils.INSTANCE.markAnsweredConfMessageCardsPrompt(context, null);
+                ConfMessageCardUtils.INSTANCE.setConfMessageCardsEnabled(context, null);
+                ConfMessageCardUtils.INSTANCE.unsetStateForAllCards(context);
             }
 
             @Override
@@ -198,9 +198,9 @@ public class DebugFragment extends Fragment {
                         " to " + newTime);
                 UIUtils.INSTANCE.setCurrentTime(context, newTime.getTime());
                 LOGW(TAG, "Unsetting all Explore I/O card answers and settings.");
-                ConfMessageCardUtils.markAnsweredConfMessageCardsPrompt(context, null);
-                ConfMessageCardUtils.setConfMessageCardsEnabled(context, null);
-                SettingsUtils.markDeclinedWifiSetup(context, false);
+                ConfMessageCardUtils.INSTANCE.markAnsweredConfMessageCardsPrompt(context, null);
+                ConfMessageCardUtils.INSTANCE.setConfMessageCardsEnabled(context, null);
+                SettingsUtils.INSTANCE.markDeclinedWifiSetup(context, false);
                 WiFiUtils.INSTANCE.uninstallConferenceWiFi(context);
             }
 
@@ -242,7 +242,7 @@ public class DebugFragment extends Fragment {
         tests.addView(createTestAction(new DebugAction() {
             @Override
             public void run(Context context, Callback callback) {
-                ConfMessageCardUtils.markShouldShowConfMessageCard(context,
+                ConfMessageCardUtils.INSTANCE.markShouldShowConfMessageCard(context,
                         ConfMessageCardUtils.ConfMessageCard.CONFERENCE_CREDENTIALS, true);
             }
 
@@ -254,7 +254,7 @@ public class DebugFragment extends Fragment {
         tests.addView(createTestAction(new DebugAction() {
             @Override
             public void run(Context context, Callback callback) {
-                ConfMessageCardUtils.markShouldShowConfMessageCard(context,
+                ConfMessageCardUtils.INSTANCE.markShouldShowConfMessageCard(context,
                         ConfMessageCardUtils.ConfMessageCard.KEYNOTE_ACCESS, true);
             }
 
@@ -266,7 +266,7 @@ public class DebugFragment extends Fragment {
         tests.addView(createTestAction(new DebugAction() {
             @Override
             public void run(Context context, Callback callback) {
-                ConfMessageCardUtils.markShouldShowConfMessageCard(context,
+                ConfMessageCardUtils.INSTANCE.markShouldShowConfMessageCard(context,
                         ConfMessageCardUtils.ConfMessageCard.AFTER_HOURS, true);
             }
 

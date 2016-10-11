@@ -16,6 +16,22 @@
 
 package com.google.samples.apps.iosched.explore;
 
+import android.app.Activity;
+import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.net.Uri;
+import android.os.Bundle;
+import android.os.Parcelable;
+import android.preference.PreferenceManager;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+
 import com.google.samples.apps.iosched.R;
 import com.google.samples.apps.iosched.explore.data.ItemGroup;
 import com.google.samples.apps.iosched.explore.data.LiveStreamData;
@@ -36,22 +52,6 @@ import com.google.samples.apps.iosched.util.ImageLoader;
 import com.google.samples.apps.iosched.util.ThrottledContentObserver;
 import com.google.samples.apps.iosched.util.UIUtils;
 import com.google.samples.apps.iosched.util.WiFiUtils;
-
-import android.app.Activity;
-import android.app.Fragment;
-import android.content.Context;
-import android.content.SharedPreferences;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.preference.PreferenceManager;
-import android.text.TextUtils;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -121,7 +121,7 @@ public class ExploreIOFragment extends Fragment implements UpdatableView<Explore
             new OnSharedPreferenceChangeListener() {
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (SettingsUtils.PREF_DECLINED_WIFI_SETUP.equals(key)) {
+            if (SettingsUtils.INSTANCE.getPREF_DECLINED_WIFI_SETUP().equals(key)) {
                 fireReloadEvent();
             }
         }
@@ -192,7 +192,7 @@ public class ExploreIOFragment extends Fragment implements UpdatableView<Explore
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         // Register preference change listeners
-        ConfMessageCardUtils.registerPreferencesChangeListener(getContext(),
+        ConfMessageCardUtils.INSTANCE.registerPreferencesChangeListener(getContext(),
                 mConfMessagesAnswerChangeListener);
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(getContext());
         sp.registerOnSharedPreferenceChangeListener(mSettingsChangeListener);
@@ -218,7 +218,7 @@ public class ExploreIOFragment extends Fragment implements UpdatableView<Explore
     public void onDetach() {
         super.onDetach();
         if (mConfMessagesAnswerChangeListener != null) {
-            ConfMessageCardUtils.unregisterPreferencesChangeListener(getContext(),
+            ConfMessageCardUtils.INSTANCE.unregisterPreferencesChangeListener(getContext(),
                     mConfMessagesAnswerChangeListener);
         }
         if (mSettingsChangeListener != null) {
@@ -240,9 +240,9 @@ public class ExploreIOFragment extends Fragment implements UpdatableView<Explore
 
         // BEGIN Add Message Cards.
         // Message cards are only used for onsite attendees.
-        if (SettingsUtils.isAttendeeAtVenue(getContext())) {
+        if (SettingsUtils.INSTANCE.isAttendeeAtVenue(getContext())) {
             // Users are required to opt in or out of whether they want conference message cards.
-            if (!ConfMessageCardUtils.hasAnsweredConfMessageCardsPrompt(getContext())) {
+            if (!ConfMessageCardUtils.INSTANCE.hasAnsweredConfMessageCardsPrompt(getContext())) {
                 // User has not answered whether they want to opt in.
                 // Build a opt-in/out card.
                 inventoryGroup = new CollectionView.InventoryGroup(GROUP_ID_MESSAGE_CARDS);
@@ -251,8 +251,8 @@ public class ExploreIOFragment extends Fragment implements UpdatableView<Explore
                 inventoryGroup.addItemWithTag(conferenceMessageOptIn);
                 inventoryGroup.setDisplayCols(1);
                 inventory.addGroup(inventoryGroup);
-            } else if (ConfMessageCardUtils.isConfMessageCardsEnabled(getContext())) {
-                ConfMessageCardUtils.enableActiveCards(getContext());
+            } else if (ConfMessageCardUtils.INSTANCE.isConfMessageCardsEnabled(getContext())) {
+                ConfMessageCardUtils.INSTANCE.enableActiveCards(getContext());
 
                 // Note that for these special cards, we'll never show more than one at a time to
                 // prevent overloading the user with messages. We want each new message to be
@@ -628,8 +628,8 @@ public class ExploreIOFragment extends Fragment implements UpdatableView<Explore
 
     private boolean shouldShowCard(ConfMessageCardUtils.ConfMessageCard card) {
 
-        boolean shouldShow = ConfMessageCardUtils.shouldShowConfMessageCard(getContext(), card);
-        boolean hasDismissed = ConfMessageCardUtils.hasDismissedConfMessageCard(getContext(),
+        boolean shouldShow = ConfMessageCardUtils.INSTANCE.shouldShowConfMessageCard(getContext(), card);
+        boolean hasDismissed = ConfMessageCardUtils.INSTANCE.hasDismissedConfMessageCard(getContext(),
                 card);
         return  (shouldShow && !hasDismissed);
     }

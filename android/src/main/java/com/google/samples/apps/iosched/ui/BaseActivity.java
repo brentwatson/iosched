@@ -446,9 +446,9 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
         // When the user runs the app for the first time, we want to land them with the
         // navigation drawer open. But just the first time.
-        if (!SettingsUtils.isFirstRunProcessComplete(this)) {
+        if (!SettingsUtils.INSTANCE.isFirstRunProcessComplete(this)) {
             // first run of the app starts with the nav drawer open
-            SettingsUtils.markFirstRunProcessesDone(this, true);
+            SettingsUtils.INSTANCE.markFirstRunProcessesDone(this, true);
             mDrawerLayout.openDrawer(GravityCompat.START);
         }
     }
@@ -484,7 +484,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
      * forces the Navigation Drawer to redraw itself.
      */
     private void populateNavDrawer() {
-        boolean attendeeAtVenue = SettingsUtils.isAttendeeAtVenue(this);
+        boolean attendeeAtVenue = SettingsUtils.INSTANCE.isAttendeeAtVenue(this);
         boolean conferenceInProgress = TimeUtils.INSTANCE.isConferenceInProgress(this);
         mNavDrawerItems.clear();
 
@@ -564,7 +564,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key != null && key.equals(SettingsUtils.PREF_ATTENDEE_AT_VENUE)) {
+        if (key != null && key.equals(SettingsUtils.INSTANCE.getPREF_ATTENDEE_AT_VENUE())) {
             LOGD(TAG, "Attendee at venue preference changed, repopulating nav drawer and menu.");
             populateNavDrawer();
             invalidateOptionsMenu();

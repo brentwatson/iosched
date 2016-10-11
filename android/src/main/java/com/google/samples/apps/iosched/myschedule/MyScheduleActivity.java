@@ -176,7 +176,7 @@ public class MyScheduleActivity extends BaseActivity implements MyScheduleFragme
         mScrollViewWide = (ScrollView) findViewById(R.id.main_content_wide);
         mWideMode = findViewById(R.id.my_schedule_first_day) != null;
 
-        if (SettingsUtils.isAttendeeAtVenue(this)) {
+        if (SettingsUtils.INSTANCE.isAttendeeAtVenue(this)) {
             mDayZeroAdapter = new MyScheduleAdapter(this, getLUtils());
             prepareDayZeroAdapter();
         }
@@ -536,9 +536,9 @@ public class MyScheduleActivity extends BaseActivity implements MyScheduleFragme
                 public void onSharedPreferenceChanged(SharedPreferences sp, String key) {
                     LOGD(TAG, "sharedpreferences key " + key + " changed, maybe reloading data.");
                     for (MyScheduleAdapter adapter : mScheduleAdapters) {
-                        if (SettingsUtils.PREF_LOCAL_TIMES.equals(key)) {
+                        if (SettingsUtils.INSTANCE.getPREF_LOCAL_TIMES().equals(key)) {
                             adapter.forceUpdate();
-                        } else if (SettingsUtils.PREF_ATTENDEE_AT_VENUE.equals(key)) {
+                        } else if (SettingsUtils.INSTANCE.getPREF_ATTENDEE_AT_VENUE().equals(key)) {
                             updateData();
                         }
                     }

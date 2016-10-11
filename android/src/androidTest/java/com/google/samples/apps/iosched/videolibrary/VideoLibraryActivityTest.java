@@ -74,7 +74,7 @@ public class VideoLibraryActivityTest {
                 @Override
                 protected Intent getActivityIntent() {
                     // Make sure the EULA screen is not shown.
-                    SettingsUtils.markTosAccepted(InstrumentationRegistry.getTargetContext(), true);
+                    SettingsUtils.INSTANCE.markTosAccepted(InstrumentationRegistry.getTargetContext(), true);
 
                     // Create intent to load the video library.
                     return new Intent(InstrumentationRegistry.getInstrumentation()

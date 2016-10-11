@@ -212,7 +212,7 @@ public class MapActivity extends BaseActivity
                 new Intent(Intent.ACTION_VIEW,
                         ScheduleContract.Sessions.buildSessionUri(sessionId)),
                 null,
-                SessionDetailConstants.TRANSITION_NAME_PHOTO
+                SessionDetailConstants.INSTANCE.getTRANSITION_NAME_PHOTO()
         );
     }
 

@@ -100,11 +100,11 @@ public class ScheduleProvider extends ContentProvider {
             // Calling append in multiple calls is typically better than creating net new strings to
             // pass to method invocations.
             writer.print("Last sync attempted: ");
-            writer.println(new java.util.Date(SettingsUtils.getLastSyncAttemptedTime(context)));
+            writer.println(new java.util.Date(SettingsUtils.INSTANCE.getLastSyncAttemptedTime(context)));
             writer.print("Last sync successful: ");
-            writer.println(new java.util.Date(SettingsUtils.getLastSyncSucceededTime(context)));
+            writer.println(new java.util.Date(SettingsUtils.INSTANCE.getLastSyncSucceededTime(context)));
             writer.print("Current sync interval: ");
-            writer.println(SettingsUtils.getCurSyncInterval(context));
+            writer.println(SettingsUtils.INSTANCE.getCurSyncInterval(context));
             writer.print("Is an account active: ");
             writer.println(AccountUtils.INSTANCE.hasActiveAccount(context));
             boolean canGetAuthToken = !TextUtils.isEmpty(AccountUtils.INSTANCE.getAuthToken(context));

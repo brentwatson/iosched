@@ -96,7 +96,7 @@ public class SessionCalendarService extends IntentService {
             isAddEvent = false;
 
         } else if (ACTION_UPDATE_ALL_SESSIONS_CALENDAR.equals(action) &&
-                SettingsUtils.shouldSyncCalendar(this)) {
+                SettingsUtils.INSTANCE.shouldSyncCalendar(this)) {
             try {
                 getContentResolver().applyBatch(CalendarContract.AUTHORITY,
                         processAllSessionsCalendar(resolver, getCalendarId(intent)));
@@ -124,7 +124,7 @@ public class SessionCalendarService extends IntentService {
 
         final Uri uri = intent.getData();
         final Bundle extras = intent.getExtras();
-        if (uri == null || extras == null || !SettingsUtils.shouldSyncCalendar(this)) {
+        if (uri == null || extras == null || !SettingsUtils.INSTANCE.shouldSyncCalendar(this)) {
             return;
         }
 

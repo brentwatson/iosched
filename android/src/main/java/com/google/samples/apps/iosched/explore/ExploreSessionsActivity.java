@@ -288,7 +288,7 @@ public class ExploreSessionsActivity extends BaseActivity
             // update the selected filters using the following logic:
             // a) For onsite attendees, we should default to showing all 'types'
             // (i.e. Sessions, code labs, sandbox, misc).
-            if (SettingsUtils.isAttendeeAtVenue(this)) {
+            if (SettingsUtils.INSTANCE.isAttendeeAtVenue(this)) {
                 List<TagMetadata.Tag> tags =
                         mTagMetadata.getTagsInCategory(Config.Tags.CATEGORY_TYPE);
                 // Here we only add all 'types' if the user has not explicitly selected

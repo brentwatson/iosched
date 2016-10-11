@@ -1,16 +1,16 @@
 package com.google.samples.apps.iosched.explore;
 
-import com.google.samples.apps.iosched.R;
-import com.google.samples.apps.iosched.explore.data.MessageData;
-import com.google.samples.apps.iosched.settings.ConfMessageCardUtils;
-import com.google.samples.apps.iosched.settings.SettingsUtils;
-import com.google.samples.apps.iosched.util.WiFiUtils;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.view.View;
+
+import com.google.samples.apps.iosched.R;
+import com.google.samples.apps.iosched.explore.data.MessageData;
+import com.google.samples.apps.iosched.settings.ConfMessageCardUtils;
+import com.google.samples.apps.iosched.settings.SettingsUtils;
+import com.google.samples.apps.iosched.util.WiFiUtils;
 
 import static com.google.samples.apps.iosched.util.LogUtils.LOGD;
 import static com.google.samples.apps.iosched.util.LogUtils.makeLogTag;
@@ -38,8 +38,8 @@ public class MessageCardHelper {
             @Override
             public void onClick(View view) {
                 LOGD(TAG, "Marking conference messages question answered with decline.");
-                ConfMessageCardUtils.markAnsweredConfMessageCardsPrompt(view.getContext(), true);
-                ConfMessageCardUtils.setConfMessageCardsEnabled(view.getContext(), false);
+                ConfMessageCardUtils.INSTANCE.markAnsweredConfMessageCardsPrompt(view.getContext(), true);
+                ConfMessageCardUtils.INSTANCE.setConfMessageCardsEnabled(view.getContext(), false);
 
             }
         });
@@ -47,8 +47,8 @@ public class MessageCardHelper {
             @Override
             public void onClick(View view) {
                 LOGD(TAG, "Marking conference messages question answered with affirmation.");
-                ConfMessageCardUtils.markAnsweredConfMessageCardsPrompt(view.getContext(), true);
-                ConfMessageCardUtils.setConfMessageCardsEnabled(view.getContext(), true);
+                ConfMessageCardUtils.INSTANCE.markAnsweredConfMessageCardsPrompt(view.getContext(), true);
+                ConfMessageCardUtils.INSTANCE.setConfMessageCardsEnabled(view.getContext(), true);
             }
         });
 
@@ -71,8 +71,8 @@ public class MessageCardHelper {
                 LOGD(TAG, "Marking wifi setup declined.");
 
                 // Switching like this ensure the value change listener is fired.
-                SettingsUtils.markDeclinedWifiSetup(view.getContext(), false);
-                SettingsUtils.markDeclinedWifiSetup(view.getContext(), true);
+                SettingsUtils.INSTANCE.markDeclinedWifiSetup(view.getContext(), false);
+                SettingsUtils.INSTANCE.markDeclinedWifiSetup(view.getContext(), true);
             }
         });
         messageData.setEndButtonClickListener(new View.OnClickListener() {
@@ -82,8 +82,8 @@ public class MessageCardHelper {
                 WiFiUtils.INSTANCE.installConferenceWiFi(view.getContext());
 
                 // Switching like this ensure the value change listener is fired.
-                SettingsUtils.markDeclinedWifiSetup(view.getContext(), true);
-                SettingsUtils.markDeclinedWifiSetup(view.getContext(), false);
+                SettingsUtils.INSTANCE.markDeclinedWifiSetup(view.getContext(), true);
+                SettingsUtils.INSTANCE.markDeclinedWifiSetup(view.getContext(), false);
             }
         });
 
@@ -105,7 +105,7 @@ public class MessageCardHelper {
             public void onClick(View view) {
                 LOGD(TAG, "Marking conference credentials card dismissed.");
 
-                ConfMessageCardUtils.markDismissedConfMessageCard(
+                ConfMessageCardUtils.INSTANCE.markDismissedConfMessageCard(
                         view.getContext(),
                         ConfMessageCardUtils.ConfMessageCard.CONFERENCE_CREDENTIALS);
             }
@@ -128,7 +128,7 @@ public class MessageCardHelper {
             @Override
             public void onClick(View view) {
                 LOGD(TAG, "Marking conference credentials card dismissed.");
-                ConfMessageCardUtils.markDismissedConfMessageCard(
+                ConfMessageCardUtils.INSTANCE.markDismissedConfMessageCard(
                         view.getContext(),
                         ConfMessageCardUtils.ConfMessageCard.WIFI_FEEDBACK);
             }
@@ -156,7 +156,7 @@ public class MessageCardHelper {
 
                 view.getContext().startActivity(sendIntent);
                 // Hide the card for now.
-                ConfMessageCardUtils.markShouldShowConfMessageCard(view.getContext(),
+                ConfMessageCardUtils.INSTANCE.markShouldShowConfMessageCard(view.getContext(),
                         ConfMessageCardUtils.ConfMessageCard.WIFI_FEEDBACK, false);
             }
         });
@@ -179,7 +179,7 @@ public class MessageCardHelper {
             public void onClick(View view) {
                 LOGD(TAG, "Marking keynote access card dismissed.");
 
-                ConfMessageCardUtils.markDismissedConfMessageCard(
+                ConfMessageCardUtils.INSTANCE.markDismissedConfMessageCard(
                         view.getContext(),
                         ConfMessageCardUtils.ConfMessageCard.KEYNOTE_ACCESS);
             }
@@ -202,7 +202,7 @@ public class MessageCardHelper {
             public void onClick(View view) {
                 LOGD(TAG, "Marking after hours card dismissed.");
 
-                ConfMessageCardUtils.markDismissedConfMessageCard(
+                ConfMessageCardUtils.INSTANCE.markDismissedConfMessageCard(
                         view.getContext(),
                         ConfMessageCardUtils.ConfMessageCard.AFTER_HOURS);
             }

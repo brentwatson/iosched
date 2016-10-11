@@ -849,7 +849,7 @@ public class SessionDetailModelTest {
         when(cursor.getColumnIndex(ScheduleContract.Sessions.SESSION_END))
                 .thenReturn(SESSION_END_COLUMN_INDEX);
         when(cursor.getLong(SESSION_END_COLUMN_INDEX)).thenReturn(FAKE_CURRENT_TIME_OFFSET
-                + SessionDetailConstants.FEEDBACK_MILLIS_BEFORE_SESSION_END_MS - ONE_MINUTE);
+                + SessionDetailConstants.INSTANCE.getFEEDBACK_MILLIS_BEFORE_SESSION_END_MS() - ONE_MINUTE);
     }
 
     private void initMockCursorWithOngoingSession(Cursor cursor) {

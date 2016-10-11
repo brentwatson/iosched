@@ -119,7 +119,7 @@ public class ExploreModel implements Model {
 
             // The following adjusts the theme and topic limits based on whether the attendee is at
             // the venue.
-            boolean atVenue = SettingsUtils.isAttendeeAtVenue(mContext);
+            boolean atVenue = SettingsUtils.INSTANCE.isAttendeeAtVenue(mContext);
             int themeSessionLimit = getThemeSessionLimit(mContext);
 
             int topicSessionLimit = getTopicSessionLimit(mContext);
@@ -222,7 +222,7 @@ public class ExploreModel implements Model {
     }
 
     public static int getTopicSessionLimit(Context context) {
-        boolean atVenue = SettingsUtils.isAttendeeAtVenue(context);
+        boolean atVenue = SettingsUtils.INSTANCE.isAttendeeAtVenue(context);
         int topicSessionLimit;
         if (atVenue) {
             topicSessionLimit = context.getResources().getInteger(R.integer
@@ -234,7 +234,7 @@ public class ExploreModel implements Model {
     }
 
     public static int getThemeSessionLimit(Context context) {
-        boolean atVenue = SettingsUtils.isAttendeeAtVenue(context);
+        boolean atVenue = SettingsUtils.INSTANCE.isAttendeeAtVenue(context);
         int themeSessionLimit;
         if (atVenue) {
             themeSessionLimit = context.getResources().getInteger(R.integer

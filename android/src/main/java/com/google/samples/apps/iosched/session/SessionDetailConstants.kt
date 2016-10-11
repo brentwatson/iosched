@@ -14,29 +14,29 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.session;
+package com.google.samples.apps.iosched.session
 
-public class SessionDetailConstants {
+object SessionDetailConstants {
 
     /**
      * How long before a session "This session starts in N minutes." is displayed.
      */
-    public static final long HINT_TIME_BEFORE_SESSION_MIN = 60l;
+    val HINT_TIME_BEFORE_SESSION_MIN = 60L
 
     /**
-     * Every 10 seconds, the time sensitive views of {@link SessionDetailFragment} are updated.
+     * Every 10 seconds, the time sensitive views of [SessionDetailFragment] are updated.
      * Those are related to live streaming, feedback, and information about how soon the session starts.
      */
-    public static final int TIME_HINT_UPDATE_INTERVAL = 10000;
+    val TIME_HINT_UPDATE_INTERVAL = 10000
 
     /**
      * How long before the end of a session the user can give feedback.
      */
-    public static final long FEEDBACK_MILLIS_BEFORE_SESSION_END_MS = 15 * 60 * 1000l;
+    val FEEDBACK_MILLIS_BEFORE_SESSION_END_MS = 15 * 60 * 1000L
 
     /**
-     * The name of the shared transition shown when loading {@link SessionDetailFragment}.
+     * The name of the shared transition shown when loading [SessionDetailFragment].
      */
-    public static final String TRANSITION_NAME_PHOTO = "photo";
+    val TRANSITION_NAME_PHOTO = "photo"
 
 }

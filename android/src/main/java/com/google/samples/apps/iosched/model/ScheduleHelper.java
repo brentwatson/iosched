@@ -230,7 +230,7 @@ public class ScheduleHelper {
                     item.endTime = cursor.getLong(BlocksQuery.BLOCK_END);
 
                     // Hide BREAK blocks to remote attendees (b/14666391):
-                    if (item.type == ScheduleItem.BREAK && !SettingsUtils.isAttendeeAtVenue(mContext)) {
+                    if (item.type == ScheduleItem.BREAK && !SettingsUtils.INSTANCE.isAttendeeAtVenue(mContext)) {
                         continue;
                     }
                     // Currently, only type=FREE is mutable

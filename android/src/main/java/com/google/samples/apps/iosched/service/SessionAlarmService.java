@@ -288,7 +288,7 @@ public class SessionAlarmService extends IntentService
         }
 
         // Don't fire notification if this feature is disabled in settings
-        if (!SettingsUtils.shouldShowSessionFeedbackReminders(this)) {
+        if (!SettingsUtils.INSTANCE.shouldShowSessionFeedbackReminders(this)) {
             LOGD(TAG, "Skipping session feedback notification. Disabled in settings.");
             return;
         }
@@ -446,7 +446,7 @@ public class SessionAlarmService extends IntentService
             return;
         }
 
-        if (!SettingsUtils.shouldShowSessionReminders(this)) {
+        if (!SettingsUtils.INSTANCE.shouldShowSessionReminders(this)) {
             // skip if disabled in settings
             LOGD(TAG, "Skipping session notification for sessions. Disabled in settings.");
             return;
@@ -538,7 +538,7 @@ public class SessionAlarmService extends IntentService
                         String.format(res.getString(R.string.snooze_x_min), 5),
                         createSnoozeIntent(sessionStart, intervalEnd, 5));
             }
-            if (starredCount == 1 && SettingsUtils.isAttendeeAtVenue(this)) {
+            if (starredCount == 1 && SettingsUtils.INSTANCE.isAttendeeAtVenue(this)) {
                 notifBuilder.addAction(R.drawable.ic_map_holo_dark,
                         res.getString(R.string.title_map),
                         createRoomMapIntent(singleSessionRoomId));

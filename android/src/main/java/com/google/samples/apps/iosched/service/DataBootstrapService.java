@@ -53,7 +53,7 @@ public class DataBootstrapService extends IntentService {
      *                shared preference to mark the process as done is set.
      */
     public static void startDataBootstrapIfNecessary(Context context) {
-        if (!SettingsUtils.isDataBootstrapDone(context)) {
+        if (!SettingsUtils.INSTANCE.isDataBootstrapDone(context)) {
             LOGW(TAG, "One-time data bootstrap not done yet. Doing now.");
             context.startService(new Intent(context, DataBootstrapService.class));
         }
@@ -70,7 +70,7 @@ public class DataBootstrapService extends IntentService {
     protected void onHandleIntent(Intent intent) {
         Context appContext = getApplicationContext();
 
-        if (SettingsUtils.isDataBootstrapDone(appContext)) {
+        if (SettingsUtils.INSTANCE.isDataBootstrapDone(appContext)) {
             LOGD(TAG, "Data bootstrap already done.");
             return;
         }
@@ -88,8 +88,8 @@ public class DataBootstrapService extends IntentService {
             SyncHelper.Companion.performPostSyncChores(appContext);
 
             LOGI(TAG, "End of bootstrap -- successful. Marking bootstrap as done.");
-            SettingsUtils.markSyncSucceededNow(appContext);
-            SettingsUtils.markDataBootstrapDone(appContext);
+            SettingsUtils.INSTANCE.markSyncSucceededNow(appContext);
+            SettingsUtils.INSTANCE.markDataBootstrapDone(appContext);
 
             getContentResolver().notifyChange(Uri.parse(ScheduleContract.CONTENT_AUTHORITY),
                     null, false);
@@ -102,7 +102,7 @@ public class DataBootstrapService extends IntentService {
             LOGE(TAG, "*** ERROR DURING BOOTSTRAP! Problem in bootstrap data?", ex);
             LOGE(TAG,
                     "Applying fallback -- marking boostrap as done; sync might fix problem.");
-            SettingsUtils.markDataBootstrapDone(appContext);
+            SettingsUtils.INSTANCE.markDataBootstrapDone(appContext);
         } finally {
             // Request a manual sync immediately after the bootstrapping process, in case we
             // have an active connection. Otherwise, the scheduled sync could take a while.

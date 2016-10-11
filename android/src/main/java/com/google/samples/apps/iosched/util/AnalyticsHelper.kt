@@ -128,7 +128,7 @@ object AnalyticsHelper {
         setupPreferenceChangeListener()
 
         // If TOS hasn't been signed yet, it's the first run.  Exit.
-        if (SettingsUtils.isTosAccepted(sAppContext)) {
+        if (SettingsUtils.isTosAccepted(sAppContext!!)) {
             initializeAnalyticsTracker(sAppContext!!)
         }
     }
@@ -254,9 +254,9 @@ object AnalyticsHelper {
         // 3) "Anonymous usage data" is enabled in settings.
         return isInitialized // Has Analytics been initialized?
 
-                && SettingsUtils.isTosAccepted(sAppContext) // User has accepted TOS.
+                && SettingsUtils.isTosAccepted(sAppContext!!) // User has accepted TOS.
 
-                && SettingsUtils.isAnalyticsEnabled(sAppContext) // Analytics enabled in settings.
+                && SettingsUtils.isAnalyticsEnabled(sAppContext!!) // Analytics enabled in settings.
     }
 
     /**
@@ -267,8 +267,8 @@ object AnalyticsHelper {
         try {
             setAnalyticsEnabled(shouldEnableAnalytics())
             LOGD(TAG, "Analytics" + (if (isInitialized) "" else " not") + " initialized"
-                    + ", TOS" + (if (SettingsUtils.isTosAccepted(sAppContext)) "" else " not") + " accepted"
-                    + ", Setting is" + (if (SettingsUtils.isAnalyticsEnabled(sAppContext)) "" else " not")
+                    + ", TOS" + (if (SettingsUtils.isTosAccepted(sAppContext!!)) "" else " not") + " accepted"
+                    + ", Setting is" + (if (SettingsUtils.isAnalyticsEnabled(sAppContext!!)) "" else " not")
                     + " checked")
         } catch (e: Exception) {
             setAnalyticsEnabled(false)

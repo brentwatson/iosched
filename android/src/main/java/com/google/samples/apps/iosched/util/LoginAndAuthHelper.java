@@ -131,7 +131,7 @@ public class LoginAndAuthHelper implements GoogleApiClient.ConnectionCallbacks, 
         mCallbacksRef = new WeakReference<Callbacks>(callbacks);
         mAppContext = activity.getApplicationContext();
         mAccountName = accountName;
-        if (SettingsUtils.hasUserRefusedSignIn(activity)) {
+        if (SettingsUtils.INSTANCE.hasUserRefusedSignIn(activity)) {
             // If we know the user refused sign-in, let's not annoy them.
             sCanShowSignInUi = sCanShowAuthUi = false;
         }
@@ -157,11 +157,11 @@ public class LoginAndAuthHelper implements GoogleApiClient.ConnectionCallbacks, 
         LOGD(TAG, "Retrying sign-in/auth (user-initiated).");
         if (!mGoogleApiClient.isConnected()) {
             sCanShowAuthUi = sCanShowSignInUi = true;
-            SettingsUtils.markUserRefusedSignIn(mAppContext, false);
+            SettingsUtils.INSTANCE.markUserRefusedSignIn(mAppContext, false);
             mGoogleApiClient.connect();
         } else if (!AccountUtils.INSTANCE.hasToken(mAppContext, mAccountName)) {
             sCanShowAuthUi = sCanShowSignInUi = true;
-            SettingsUtils.markUserRefusedSignIn(mAppContext, false);
+            SettingsUtils.INSTANCE.markUserRefusedSignIn(mAppContext, false);
             mTokenTask = new GetTokenTask();
             mTokenTask.execute();
         } else {
@@ -370,7 +370,7 @@ public class LoginAndAuthHelper implements GoogleApiClient.ConnectionCallbacks, 
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 LOGD(TAG, "User explicitly cancelled sign-in/auth flow.");
                 // Save the refusal so the user isn't annoyed again.
-                SettingsUtils.markUserRefusedSignIn(mAppContext, true);
+                SettingsUtils.INSTANCE.markUserRefusedSignIn(mAppContext, true);
             } else {
                 LOGW(TAG, "Failed to recover from a login/auth failure, resultCode=" + resultCode);
             }

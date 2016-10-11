@@ -133,14 +133,14 @@ public class NotificationCommand extends GCMCommand {
         // Check if we are the right audience
         LOGD(TAG, "Checking audience: " + command.audience);
         if ("remote".equals(command.audience)) {
-            if (SettingsUtils.isAttendeeAtVenue(context)) {
+            if (SettingsUtils.INSTANCE.isAttendeeAtVenue(context)) {
                 LOGD(TAG, "Ignoring notification because audience is remote and attendee is on-site");
                 return;
             } else {
                 LOGD(TAG, "Relevant (attendee is remote).");
             }
         } else if ("local".equals(command.audience)) {
-            if (!SettingsUtils.isAttendeeAtVenue(context)) {
+            if (!SettingsUtils.INSTANCE.isAttendeeAtVenue(context)) {
                 LOGD(TAG, "Ignoring notification because audience is on-site and attendee is remote.");
                 return;
             } else {

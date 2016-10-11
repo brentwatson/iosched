@@ -78,7 +78,7 @@ public class SessionDetailActivityTestKeynoteSession {
                 @Override
                 protected Intent getActivityIntent() {
                     // Make sure the EULA screen is not shown.
-                    SettingsUtils.markTosAccepted(InstrumentationRegistry.getTargetContext(), true);
+                    SettingsUtils.INSTANCE.markTosAccepted(InstrumentationRegistry.getTargetContext(), true);
 
                     // Create intent to load the keynote session.
                     mSessionUri = ScheduleContract.Sessions.buildSessionUri(SESSION_ID);
