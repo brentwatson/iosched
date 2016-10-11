@@ -13,15 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.samples.apps.iosched.framework;
+package com.google.samples.apps.iosched.framework
 
 /**
- * A listener for events fired by a {@link android.app.Fragment}.
+ * A listener for events fired by a [android.app.Fragment].
  */
-public interface FragmentListener {
+interface FragmentListener {
 
     /**
-     * Called when the {@link android.app.Fragment} is ready.
+     * Called when the [android.app.Fragment] is ready.
      */
-    public void onFragmentReady();
+    fun onFragmentReady()
 }

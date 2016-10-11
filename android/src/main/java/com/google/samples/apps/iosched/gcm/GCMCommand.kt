@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.samples.apps.iosched.gcm;
+package com.google.samples.apps.iosched.gcm
 
-import android.content.Context;
+import android.content.Context
 
-public abstract class GCMCommand {
-    public abstract void execute(Context context, String type, String extraData);
+abstract class GCMCommand {
+    abstract fun execute(context: Context, type: String, extraData: String?)
 }

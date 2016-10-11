@@ -1355,7 +1355,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
                     AccountUtils.INSTANCE.getGcmKey(this, AccountUtils.INSTANCE.getActiveAccountName(this)) : null;
             // Device is already registered on GCM, needs to check if it is
             // registered on our server as well.
-            if (ServerUtilities.isRegisteredOnServer(this, gcmKey)) {
+            if (ServerUtilities.INSTANCE.isRegisteredOnServer(this, gcmKey)) {
                 // Skips registration.
                 LOGI(TAG, "Already registered on the GCM server with right GCM key.");
             } else {
@@ -1367,7 +1367,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
                     protected Void doInBackground(Void... params) {
                         LOGI(TAG, "Registering on the GCM server with GCM key: "
                                 + AccountUtils.INSTANCE.sanitizeGcmKey(gcmKey));
-                        boolean registered = ServerUtilities.register(BaseActivity.this,
+                        boolean registered = ServerUtilities.INSTANCE.register(BaseActivity.this,
                                 regId, gcmKey);
                         // At this point all attempts to register with the app
                         // server failed, so we need to unregister the device

@@ -15,23 +15,21 @@
  */
 
 
-package com.google.samples.apps.iosched.gcm;
+package com.google.samples.apps.iosched.gcm
 
-import com.google.android.gcm.GCMBroadcastReceiver;
+import android.content.Context
+import com.google.android.gcm.GCMBroadcastReceiver
 
-import android.content.Context;
-
-public class GCMRedirectedBroadcastReceiver extends GCMBroadcastReceiver {
+class GCMRedirectedBroadcastReceiver : GCMBroadcastReceiver() {
 
     /**
      * Gets the class name of the intent service that will handle GCM messages.
-     *
+
      * Used to override class name, so that GCMIntentService can live in a
      * subpackage.
      */
-    @Override
-    protected String getGCMIntentServiceClassName(Context context) {
-        return GCMIntentService.class.getCanonicalName();
+    override fun getGCMIntentServiceClassName(context: Context): String {
+        return GCMIntentService::class.java.canonicalName
     }
 
 }

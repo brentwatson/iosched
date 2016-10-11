@@ -13,19 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.samples.apps.iosched.gcm.command;
+package com.google.samples.apps.iosched.gcm.command
 
-import android.content.Context;
-import com.google.samples.apps.iosched.gcm.GCMCommand;
+import android.content.Context
+import com.google.samples.apps.iosched.gcm.GCMCommand
 
-import static com.google.samples.apps.iosched.util.LogUtils.LOGI;
-import static com.google.samples.apps.iosched.util.LogUtils.makeLogTag;
+import com.google.samples.apps.iosched.util.LogUtils.LOGI
+import com.google.samples.apps.iosched.util.LogUtils.makeLogTag
 
-public class TestCommand extends GCMCommand {
-    private static final String TAG = makeLogTag("TestCommand");
+class TestCommand : GCMCommand() {
 
-    @Override
-    public void execute(Context context, String type, String extraData) {
-        LOGI(TAG, "Received GCM message: type=" + type + ", extraData=" + extraData);
+    override fun execute(context: Context, type: String, extraData: String?) {
+        LOGI(TAG, "Received GCM message: type=$type, extraData=$extraData")
+    }
+
+    companion object {
+        private val TAG = makeLogTag("TestCommand")
     }
 }
