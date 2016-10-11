@@ -278,7 +278,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
         RecentTasksStyler.styleRecentTasksEntry(this);
 
         // Check if the EULA has been accepted; if not, show it.
-        if (WelcomeActivity.shouldDisplay(this)) {
+        if (WelcomeActivity.Companion.shouldDisplay(this)) {
             Intent intent = new Intent(this, WelcomeActivity.class);
             startActivity(intent);
             finish();
