@@ -413,7 +413,7 @@ public class SessionAlarmService extends IntentService
             return;
         }
         PutDataMapRequest putDataMapRequest = PutDataMapRequest
-                .create(FeedbackHelper.getFeedbackDataPathForWear(sessionId));
+                .create(FeedbackHelper.Companion.getFeedbackDataPathForWear(sessionId));
         putDataMapRequest.getDataMap().putLong("time", new Date().getTime());
         putDataMapRequest.getDataMap().putString(KEY_SESSION_ID, sessionId);
         putDataMapRequest.getDataMap().putString(KEY_SESSION_NAME, sessionName);

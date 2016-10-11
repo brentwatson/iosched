@@ -100,11 +100,11 @@ public class SessionFeedbackModelTest {
         int sessionRelevantAnswer = 2;
         int contentAnswer = 3;
         int speakerAnswer = 2;
-        when(mMockBundle.getInt(SessionFeedbackModel.DATA_RATING_INT)).thenReturn(rating);
-        when(mMockBundle.getInt(SessionFeedbackModel.DATA_SESSION_RELEVANT_ANSWER_INT)).thenReturn(sessionRelevantAnswer);
-        when(mMockBundle.getInt(SessionFeedbackModel.DATA_CONTENT_ANSWER_INT)).thenReturn(contentAnswer);
-        when(mMockBundle.getInt(SessionFeedbackModel.DATA_SPEAKER_ANSWER_INT)).thenReturn(speakerAnswer);
-        when(mMockBundle.getString(SessionFeedbackModel.DATA_COMMENT_STRING)).thenReturn(comments);
+        when(mMockBundle.getInt(SessionFeedbackModel.Companion.getDATA_RATING_INT())).thenReturn(rating);
+        when(mMockBundle.getInt(SessionFeedbackModel.Companion.getDATA_SESSION_RELEVANT_ANSWER_INT())).thenReturn(sessionRelevantAnswer);
+        when(mMockBundle.getInt(SessionFeedbackModel.Companion.getDATA_CONTENT_ANSWER_INT())).thenReturn(contentAnswer);
+        when(mMockBundle.getInt(SessionFeedbackModel.Companion.getDATA_SPEAKER_ANSWER_INT())).thenReturn(speakerAnswer);
+        when(mMockBundle.getString(SessionFeedbackModel.Companion.getDATA_COMMENT_STRING())).thenReturn(comments);
 
         // When ran with the submit user action and the mock bundle
         spyModel.requestModelUpdate(
@@ -115,12 +115,12 @@ public class SessionFeedbackModelTest {
         ArgumentCaptor<SessionFeedbackData> saveSessionCaptor =
                 ArgumentCaptor.forClass(SessionFeedbackData.class);
         verify(mMockFeedbackHelper).saveSessionFeedback(saveSessionCaptor.capture());
-        assertThat(saveSessionCaptor.getValue().sessionId, is(spyModel.getSessionId(mMockUri)));
-        assertThat(saveSessionCaptor.getValue().sessionRating, is(rating));
-        assertThat(saveSessionCaptor.getValue().sessionRelevantAnswer, is(sessionRelevantAnswer));
-        assertThat(saveSessionCaptor.getValue().contentAnswer, is(contentAnswer));
-        assertThat(saveSessionCaptor.getValue().speakerAnswer, is(speakerAnswer));
-        assertThat(saveSessionCaptor.getValue().comments, is(comments));
+        assertThat(saveSessionCaptor.getValue().getSessionId(), is(spyModel.getSessionId(mMockUri)));
+        assertThat(saveSessionCaptor.getValue().getSessionRating(), is(rating));
+        assertThat(saveSessionCaptor.getValue().getSessionRelevantAnswer(), is(sessionRelevantAnswer));
+        assertThat(saveSessionCaptor.getValue().getContentAnswer(), is(contentAnswer));
+        assertThat(saveSessionCaptor.getValue().getSpeakerAnswer(), is(speakerAnswer));
+        assertThat(saveSessionCaptor.getValue().getComments(), is(comments));
     }
 
     @Test

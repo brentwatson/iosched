@@ -76,15 +76,15 @@ public class FeedbackHelperTest {
         when(mMockDataMap.getString(DATA_MAP_KEY)).thenReturn(VALID_JSON);
 
         // When run with invalid JSON
-        SessionFeedbackData data = FeedbackHelper.convertDataMapToFeedbackData(mMockDataMap);
+        SessionFeedbackData data = FeedbackHelper.Companion.convertDataMapToFeedbackData(mMockDataMap);
 
         // Then returned data matches JSON data
-        assertThat(data.sessionId, is(VALID_JSON_SESSION_ID));
-        assertThat(data.sessionRating, is(VALID_JSON_SESSION_RATING));
-        assertThat(data.sessionRelevantAnswer, is(VALID_JSON_Q1_ANSWER));
-        assertThat(data.contentAnswer, is(VALID_JSON_Q2_ANSWER));
-        assertThat(data.speakerAnswer, is(VALID_JSON_Q3_ANSWER));
-        assertThat(data.comments, is(nullValue()));
+        assertThat(data.getSessionId(), is(VALID_JSON_SESSION_ID));
+        assertThat(data.getSessionRating(), is(VALID_JSON_SESSION_RATING));
+        assertThat(data.getSessionRelevantAnswer(), is(VALID_JSON_Q1_ANSWER));
+        assertThat(data.getContentAnswer(), is(VALID_JSON_Q2_ANSWER));
+        assertThat(data.getSpeakerAnswer(), is(VALID_JSON_Q3_ANSWER));
+        assertThat(data.getComments(), is(nullValue()));
     }
 
     @Test
@@ -93,7 +93,7 @@ public class FeedbackHelperTest {
         when(mMockDataMap.getString(DATA_MAP_KEY)).thenReturn(INVALID_JSON);
 
         // When run with invalid JSON
-        SessionFeedbackData data = FeedbackHelper.convertDataMapToFeedbackData(mMockDataMap);
+        SessionFeedbackData data = FeedbackHelper.Companion.convertDataMapToFeedbackData(mMockDataMap);
 
         // Then null data is returned
         assertThat(data, is(nullValue()));
@@ -102,7 +102,7 @@ public class FeedbackHelperTest {
     @Test
     public void convertDataMapToFeedbackData_NullData_ReturnsNullObject() {
         // When run with null data
-        SessionFeedbackData data = FeedbackHelper.convertDataMapToFeedbackData(null);
+        SessionFeedbackData data = FeedbackHelper.Companion.convertDataMapToFeedbackData(null);
 
         // Then null data is returned
         assertThat(data, is(nullValue()));

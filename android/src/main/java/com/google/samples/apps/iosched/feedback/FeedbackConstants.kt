@@ -14,15 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.feedback;
+package com.google.samples.apps.iosched.feedback
 
-import com.google.samples.apps.iosched.Config;
+object FeedbackConstants {
 
-public class FeedbackConstants {
+    val FEEDBACK_CONNECT_TIMEOUT_MS = 15000
 
-    public static final int FEEDBACK_CONNECT_TIMEOUT_MS = 15000;
+    val FEEDBACK_READ_TIMEOUT_MS = 15000
 
-    public static final int FEEDBACK_READ_TIMEOUT_MS = 15000;
-
-    public static final int GOOGLE_API_CLIENT_CONNECTION_TIMEOUT_S = 10;
+    val GOOGLE_API_CLIENT_CONNECTION_TIMEOUT_S = 10
 }
