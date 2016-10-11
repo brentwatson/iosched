@@ -97,7 +97,7 @@ public class SessionsHelper {
 
         // Because change listener is set to null during initialization, these
         // won't fire on pageview.
-        mActivity.sendBroadcast(ScheduleWidgetProvider.getRefreshBroadcastIntent(mActivity, false));
+        mActivity.sendBroadcast(ScheduleWidgetProvider.Companion.getRefreshBroadcastIntent(mActivity, false));
 
         // Request an immediate user data sync to reflect the starred user sessions in the cloud
         SyncHelper.Companion.requestManualSync(AccountUtils.INSTANCE.getActiveAccount(mActivity), true);

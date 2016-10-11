@@ -488,7 +488,7 @@ public class ScheduleProvider extends ContentProvider {
             context.getContentResolver().notifyChange(uri, null);
 
             // Widgets can't register content observers so we refresh widgets separately.
-            context.sendBroadcast(ScheduleWidgetProvider.getRefreshBroadcastIntent(context, false));
+            context.sendBroadcast(ScheduleWidgetProvider.Companion.getRefreshBroadcastIntent(context, false));
         }
     }
 

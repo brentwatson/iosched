@@ -406,7 +406,7 @@ public class VideoLibraryModel implements Model {
 
                 // Because change listener is set to null during initialization, these
                 // won't fire on pageview.
-                mActivity.sendBroadcast(ScheduleWidgetProvider.getRefreshBroadcastIntent(mActivity,
+                mActivity.sendBroadcast(ScheduleWidgetProvider.Companion.getRefreshBroadcastIntent(mActivity,
                         false));
 
                 // Request an immediate user data sync to reflect the viewed video in the cloud.
