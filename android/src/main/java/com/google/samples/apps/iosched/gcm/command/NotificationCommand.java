@@ -181,15 +181,15 @@ public class NotificationCommand extends GCMCommand {
                     Intent.FLAG_ACTIVITY_CLEAR_TOP |
                     Intent.FLAG_ACTIVITY_SINGLE_TOP |
                     Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra(MyScheduleActivity.EXTRA_DIALOG_TITLE,
+            intent.putExtra(MyScheduleActivity.Companion.getEXTRA_DIALOG_TITLE(),
                     command.dialogTitle == null ? "" : command.dialogTitle);
-            intent.putExtra(MyScheduleActivity.EXTRA_DIALOG_MESSAGE,
+            intent.putExtra(MyScheduleActivity.Companion.getEXTRA_DIALOG_MESSAGE(),
                     command.dialogText == null ? "" : command.dialogText);
-            intent.putExtra(MyScheduleActivity.EXTRA_DIALOG_YES,
+            intent.putExtra(MyScheduleActivity.Companion.getEXTRA_DIALOG_YES(),
                     command.dialogYes == null ? "OK" : command.dialogYes);
-            intent.putExtra(MyScheduleActivity.EXTRA_DIALOG_NO,
+            intent.putExtra(MyScheduleActivity.Companion.getEXTRA_DIALOG_NO(),
                     command.dialogNo == null ? "" : command.dialogNo);
-            intent.putExtra(MyScheduleActivity.EXTRA_DIALOG_URL,
+            intent.putExtra(MyScheduleActivity.Companion.getEXTRA_DIALOG_URL(),
                     command.url == null ? "" : command.url);
         }
 

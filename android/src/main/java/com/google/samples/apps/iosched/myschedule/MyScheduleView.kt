@@ -43,7 +43,7 @@ class MyScheduleView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     fun setAdapter(adapter: MyScheduleAdapter?) {
         if (mAdapter != null && mObserver != null) {
-            mAdapter!!.unregisterDataSetObserver(mObserver)
+            mAdapter!!.unregisterDataSetObserver(mObserver!!)
             mObserver = null
         }
         mAdapter = adapter

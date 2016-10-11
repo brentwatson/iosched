@@ -210,8 +210,8 @@ class MyScheduleAdapter(private val mContext: Context, private val mLUtils: LUti
             holder = view.tag as ViewHolder
             // Clear event listeners
             clearClickable(view)
-            clearClickable(holder.startTime)
-            clearClickable(holder.touchArea)
+            clearClickable(holder.startTime!!)
+            clearClickable(holder.touchArea!!)
             //Make sure it doesn't retain conflict coloring
             holder.description!!.setTextColor(mHourColorDefault)
         }
@@ -298,17 +298,17 @@ class MyScheduleAdapter(private val mContext: Context, private val mLUtils: LUti
             if (0 != item.flags and ScheduleItem.FLAG_CONFLICTS_WITH_PREVIOUS) {
                 holder.startTime!!.visibility = View.GONE
                 holder.description!!.setTextColor(mColorConflict)
-                setUriClickable(holder.touchArea, sessionUri)
+                setUriClickable(holder.touchArea!!, sessionUri)
             } else {
                 holder.startTime!!.visibility = View.VISIBLE
-                setUriClickable(holder.startTime,
+                setUriClickable(holder.startTime!!,
                         ScheduleContract.Sessions.buildUnscheduledSessionsInInterval(
                                 item.startTime, item.endTime))
                 // Padding fix needed for KitKat 4.4. (padding gets removed by setting the background)
                 holder.startTime!!.setPadding(
                         mContext.resources.getDimension(R.dimen.keyline_2).toInt(), 0,
                         mContext.resources.getDimension(R.dimen.keyline_2).toInt(), 0)
-                setUriClickable(holder.touchArea, sessionUri)
+                setUriClickable(holder.touchArea!!, sessionUri)
                 if (0 != item.flags and ScheduleItem.FLAG_CONFLICTS_WITH_NEXT) {
                     holder.description!!.setTextColor(mColorConflict)
                 }

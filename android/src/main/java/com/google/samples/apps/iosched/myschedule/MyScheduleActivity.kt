@@ -91,10 +91,10 @@ class MyScheduleActivity : BaseActivity(), MyScheduleFragment.Listener {
     internal var mViewPager: ViewPager? = null
     internal var mViewPagerAdapter: OurViewPagerAdapter? = null
     internal var mTabLayout: TabLayout? = null
-    internal var mScrollViewWide: ScrollView
+    internal var mScrollViewWide: ScrollView? = null
 
     // Login failed butter bar
-    internal var mButterBar: View
+    internal var mButterBar: View? = null
 
     internal var mDestroyed = false
 
@@ -166,9 +166,9 @@ class MyScheduleActivity : BaseActivity(), MyScheduleFragment.Listener {
 
         if (mWideMode) {
             mMyScheduleViewWide[0] = findViewById(R.id.my_schedule_first_day) as MyScheduleView
-            mMyScheduleViewWide[0].setAdapter(mScheduleAdapters[0])
+            mMyScheduleViewWide[0]!!.setAdapter(mScheduleAdapters[0])
             mMyScheduleViewWide[1] = findViewById(R.id.my_schedule_second_day) as MyScheduleView
-            mMyScheduleViewWide[1].setAdapter(mScheduleAdapters[1])
+            mMyScheduleViewWide[1]!!.setAdapter(mScheduleAdapters[1])
 
             val firstDayHeaderView = findViewById(R.id.day_label_first_day) as TextView
             val secondDayHeaderView = findViewById(R.id.day_label_second_day) as TextView
@@ -233,7 +233,8 @@ class MyScheduleActivity : BaseActivity(), MyScheduleFragment.Listener {
         item.startTime = 1432742400000L // 2015/05/27 9:00 AM PST
         item.endTime = 1432782000000L // 2015/05/27 8:00 PM PST
         item.type = ScheduleItem.BREAK
-        item.room = item.subtitle = "Registration Desk"
+        item.subtitle = "Registration Desk"
+        item.room = "Registration Desk"
         item.sessionType = ScheduleItem.SESSION_TYPE_MISC
         mDayZeroAdapter!!.updateItems(Arrays.asList(item))
     }
@@ -301,7 +302,7 @@ class MyScheduleActivity : BaseActivity(), MyScheduleFragment.Listener {
     }
 
     private fun removeLoginFailed() {
-        mButterBar.visibility = View.GONE
+        mButterBar?.visibility = View.GONE
         deregisterHideableHeaderView(mButterBar)
     }
 
@@ -424,7 +425,7 @@ class MyScheduleActivity : BaseActivity(), MyScheduleFragment.Listener {
         mMyScheduleFragments.remove(fragment)
     }
 
-    private inner class OurViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+    inner class OurViewPagerAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 
         override fun getItem(position: Int): Fragment {
             var position = position
@@ -473,7 +474,7 @@ class MyScheduleActivity : BaseActivity(), MyScheduleFragment.Listener {
         LOGD(TAG, "sharedpreferences key $key changed, maybe reloading data.")
         for (adapter in mScheduleAdapters) {
             if (SettingsUtils.PREF_LOCAL_TIMES == key) {
-                adapter.forceUpdate()
+                adapter?.forceUpdate()
             } else if (SettingsUtils.PREF_ATTENDEE_AT_VENUE == key) {
                 updateData()
             }
@@ -526,7 +527,7 @@ class MyScheduleActivity : BaseActivity(), MyScheduleFragment.Listener {
                     && activity.mScheduleAdapters.size > today
                     && activity.mScheduleAdapters[today] != null) {
                 try {
-                    activity.mScheduleAdapters[today].forceUpdate()
+                    activity.mScheduleAdapters[today]?.forceUpdate()
                 } finally {
                     // schedule again
                     this.scheduleNextRun()
