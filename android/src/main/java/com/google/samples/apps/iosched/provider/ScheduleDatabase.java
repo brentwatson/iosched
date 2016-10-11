@@ -524,10 +524,10 @@ public class ScheduleDatabase extends SQLiteOpenHelper {
 
         if (dataInvalidated) {
             LOGD(TAG, "Data invalidated; resetting our data timestamp.");
-            ConferenceDataHandler.resetDataTimestamp(mContext);
+            ConferenceDataHandler.Companion.resetDataTimestamp(mContext);
             if (account != null) {
                 LOGI(TAG, "DB upgrade complete. Requesting resync.");
-                SyncHelper.requestManualSync(account);
+                SyncHelper.Companion.requestManualSync(account);
             }
         }
     }

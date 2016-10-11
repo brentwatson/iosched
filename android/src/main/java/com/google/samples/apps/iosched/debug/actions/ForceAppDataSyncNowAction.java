@@ -33,7 +33,7 @@ public class ForceAppDataSyncNowAction implements DebugAction {
         new AsyncTask<Context, Void, Void>() {
             @Override
             protected Void doInBackground(Context... params) {
-                final AbstractUserDataSyncHelper syncer = UserDataSyncHelperFactory.buildSyncHelper(
+                final AbstractUserDataSyncHelper syncer = UserDataSyncHelperFactory.INSTANCE.buildSyncHelper(
                         context, AccountUtils.INSTANCE.getActiveAccountName(context));
                 syncer.sync();
                 return null;

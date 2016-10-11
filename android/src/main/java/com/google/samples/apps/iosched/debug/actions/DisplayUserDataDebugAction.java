@@ -32,13 +32,13 @@ public class DisplayUserDataDebugAction implements DebugAction {
         new AsyncTask<Context, Void, UserDataHelper.UserData>() {
             @Override
             protected UserDataHelper.UserData doInBackground(Context... contexts) {
-                return UserDataHelper.getLocalUserData(contexts[0]);
+                return UserDataHelper.INSTANCE.INSTANCE.getLocalUserData(contexts[0]);
             }
 
             @Override
             protected void onPostExecute(UserDataHelper.UserData userData) {
                 callback.done(true, "Found User Data: " + new String(
-                        UserDataHelper.toByteArray(userData), Charsets.UTF_8));
+                        UserDataHelper.INSTANCE.INSTANCE.toByteArray(userData), Charsets.UTF_8));
             }
         }.execute(context);
     }

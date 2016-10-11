@@ -14,30 +14,31 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.sync;
+package com.google.samples.apps.iosched.sync
 
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
+import android.app.Service
+import android.content.Intent
+import android.os.IBinder
 
 /**
  * Service that handles sync. It simply instantiates a SyncAdapter and returns its IBinder.
  */
-public class SyncService extends Service {
-    private static final Object sSyncAdapterLock = new Object();
-    private static SyncAdapter sSyncAdapter = null;
+class SyncService : Service() {
 
-    @Override
-    public void onCreate() {
-        synchronized (sSyncAdapterLock) {
+    override fun onCreate() {
+        synchronized(sSyncAdapterLock) {
             if (sSyncAdapter == null) {
-                sSyncAdapter = new SyncAdapter(getApplicationContext(), false);
+                sSyncAdapter = SyncAdapter(applicationContext, false)
             }
         }
     }
 
-    @Override
-    public IBinder onBind(Intent intent) {
-        return sSyncAdapter.getSyncAdapterBinder();
+    override fun onBind(intent: Intent): IBinder? {
+        return sSyncAdapter!!.syncAdapterBinder
+    }
+
+    companion object {
+        private val sSyncAdapterLock = Any()
+        private var sSyncAdapter: SyncAdapter? = null
     }
 }

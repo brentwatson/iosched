@@ -63,7 +63,7 @@ public class SyncUserCommand extends GCMCommand {
         LOGI(TAG, debugMessage);
 
         final Intent intent = new Intent(context, TriggerSyncReceiver.class);
-        intent.putExtra(TriggerSyncReceiver.EXTRA_USER_DATA_SYNC_ONLY, true);
+        intent.putExtra(TriggerSyncReceiver.Companion.getEXTRA_USER_DATA_SYNC_ONLY(), true);
         ((AlarmManager) context.getSystemService(Context.ALARM_SERVICE))
                 .set(
                         AlarmManager.RTC,

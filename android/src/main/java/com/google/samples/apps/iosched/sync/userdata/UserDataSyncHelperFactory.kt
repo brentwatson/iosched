@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.sync.userdata;
+package com.google.samples.apps.iosched.sync.userdata
 
-import android.content.Context;
+import android.content.Context
 
-import com.google.samples.apps.iosched.sync.userdata.gms.GMSUserDataSyncHelper;
+import com.google.samples.apps.iosched.sync.userdata.gms.GMSUserDataSyncHelper
 
 /**
  * A simple factory to isolate the decision of which synchelper should be used.
- *
+
  * Currently, the HTTP sync helper is always returned, because of the early stage of
  * the GMS version. In the future, this can be changed.
  */
-public class UserDataSyncHelperFactory {
-    public static AbstractUserDataSyncHelper buildSyncHelper(Context context, String accountName) {
-        return new GMSUserDataSyncHelper(context, accountName);
+object UserDataSyncHelperFactory {
+    fun buildSyncHelper(context: Context, accountName: String): AbstractUserDataSyncHelper {
+        return GMSUserDataSyncHelper(context, accountName)
     }
 }

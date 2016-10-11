@@ -100,6 +100,6 @@ public class SessionsHelper {
         mActivity.sendBroadcast(ScheduleWidgetProvider.getRefreshBroadcastIntent(mActivity, false));
 
         // Request an immediate user data sync to reflect the starred user sessions in the cloud
-        SyncHelper.requestManualSync(AccountUtils.INSTANCE.getActiveAccount(mActivity), true);
+        SyncHelper.Companion.requestManualSync(AccountUtils.INSTANCE.getActiveAccount(mActivity), true);
     }
 }

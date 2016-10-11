@@ -13,25 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.samples.apps.iosched.sync.userdata;
+package com.google.samples.apps.iosched.sync.userdata
 
-public class UserAction {
-    public enum TYPE {
-        ADD_STAR, REMOVE_STAR, VIEW_VIDEO, SUBMIT_FEEDBACK;
-    };
-
-    public UserAction() {
-    }
-
-    public UserAction(TYPE type, String sessionId) {
-        this.type = type;
-        this.sessionId = sessionId;
-    }
-
-    public TYPE type;
-    public String sessionId;
-    public String videoId;
-    public String accountName;
-    public boolean requiresSync;
-
+interface OnSuccessListener {
+    fun onSuccess()
 }

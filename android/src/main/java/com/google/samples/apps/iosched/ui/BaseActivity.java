@@ -804,7 +804,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
         }
         mManualSyncRequest = true;
         LOGD(TAG, "Requesting manual data refresh.");
-        SyncHelper.requestManualSync(activeAccount);
+        SyncHelper.Companion.requestManualSync(activeAccount);
     }
 
     private void goToNavDrawerItem(int item) {
@@ -1161,8 +1161,8 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
         if (newlyAuthenticated) {
             LOGD(TAG, "Enabling auto sync on content provider for account " + accountName);
-            SyncHelper.updateSyncInterval(this, account);
-            SyncHelper.requestManualSync(account);
+            SyncHelper.Companion.updateSyncInterval(this, account);
+            SyncHelper.Companion.requestManualSync(account);
         }
 
         setupAccountBox();

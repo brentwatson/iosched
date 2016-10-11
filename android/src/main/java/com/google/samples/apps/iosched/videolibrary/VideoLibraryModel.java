@@ -410,7 +410,7 @@ public class VideoLibraryModel implements Model {
                         false));
 
                 // Request an immediate user data sync to reflect the viewed video in the cloud.
-                SyncHelper.requestManualSync(AccountUtils.INSTANCE.getActiveAccount(mActivity), true);
+                SyncHelper.Companion.requestManualSync(AccountUtils.INSTANCE.getActiveAccount(mActivity), true);
             } else {
                 LOGE(TAG, "The VideoLibraryUserActionEnum.VIDEO_VIEWED action was called without a "
                         + "proper Bundle.");

@@ -33,7 +33,7 @@ import com.google.samples.apps.iosched.util.AccountUtils;
 public class ForceSyncNowAction implements DebugAction {
     @Override
     public void run(final Context context, final Callback callback) {
-        ConferenceDataHandler.resetDataTimestamp(context);
+        ConferenceDataHandler.Companion.resetDataTimestamp(context);
         final Bundle bundle = new Bundle();
         bundle.putBoolean(ContentResolver.SYNC_EXTRAS_MANUAL, true);
         new AsyncTask<Context, Void, Void>() {
