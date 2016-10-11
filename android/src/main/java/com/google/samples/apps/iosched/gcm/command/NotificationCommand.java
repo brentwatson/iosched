@@ -154,11 +154,11 @@ public class NotificationCommand extends GCMCommand {
         }
 
         // Check if it expired
-        Date expiry = command.expiry == null ? null : TimeUtils.parseTimestamp(command.expiry);
+        Date expiry = command.expiry == null ? null : TimeUtils.INSTANCE.parseTimestamp(command.expiry);
         if (expiry == null) {
             LOGW(TAG, "Failed to parse expiry field of GCM notification command: " + command.expiry);
             return;
-        } else if (expiry.getTime() < UIUtils.getCurrentTime(context)) {
+        } else if (expiry.getTime() < UIUtils.INSTANCE.getCurrentTime(context)) {
             LOGW(TAG, "Got expired GCM notification command. Expiry: " + expiry.toString());
             return;
         } else {

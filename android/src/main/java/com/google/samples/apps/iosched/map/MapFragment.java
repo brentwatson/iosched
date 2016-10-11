@@ -215,7 +215,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
 
         // ANALYTICS SCREEN: View the Map screen
         // Contains: Nothing (Page name is a constant)
-        AnalyticsHelper.sendScreenView(SCREEN_LABEL);
+        AnalyticsHelper.INSTANCE.sendScreenView(SCREEN_LABEL);
 
         // get DPI
         mDPI = getActivity().getResources().getDisplayMetrics().densityDpi / 160f;
@@ -326,7 +326,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
 
         // Add a Marker for Moscone
         mMosconeMaker = mMap
-                .addMarker(MapUtils.createMosconeMarker(MOSCONE).visible(false));
+                .addMarker(MapUtils.INSTANCE.createMosconeMarker(MOSCONE).visible(false));
 
         if (resetCamera) {
             // Move camera directly to Moscone
@@ -575,7 +575,7 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
         // Log clicks on all markers (regardless of type)
         // ANALYTICS EVENT: Click on marker on the map.
         // Contains: Marker ID (for example room UUID)
-        AnalyticsHelper.sendEvent("Map", "markerclick", title);
+        AnalyticsHelper.INSTANCE.sendEvent("Map", "markerclick", title);
 
         deselectActiveMarker();
 
@@ -586,17 +586,17 @@ public class MapFragment extends com.google.android.gms.maps.MapFragment impleme
             LOGD(TAG, "Clicked on Moscone marker, return to initial display.");
             centerOnMoscone(true);
 
-        } else if (model != null && MapUtils.hasInfoTitleOnly(model.type)) {
+        } else if (model != null && MapUtils.INSTANCE.hasInfoTitleOnly(model.type)) {
             // Show a basic info window with a title only
             mCallbacks.onInfoShowTitle(model.label, model.type);
             selectActiveMarker(marker);
 
-        } else if (model != null && MapUtils.hasInfoSessionList(model.type)) {
+        } else if (model != null && MapUtils.INSTANCE.hasInfoSessionList(model.type)) {
             // Type has sessions to display
             mCallbacks.onInfoShowSessionlist(model.id, model.label, model.type);
             selectActiveMarker(marker);
 
-        } else if (model != null && MapUtils.hasInfoFirstDescriptionOnly(model.type)) {
+        } else if (model != null && MapUtils.INSTANCE.hasInfoFirstDescriptionOnly(model.type)) {
             // Display the description of the first session only
             mCallbacks.onInfoShowFirstSessionTitle(model.id, model.label, model.type);
             selectActiveMarker(marker);

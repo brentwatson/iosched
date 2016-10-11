@@ -102,7 +102,7 @@ public class SettingsActivity extends BaseActivity {
 
             // configure the fragment's top clearance to take our overlaid controls (Action Bar
             // and spinner box) into account.
-            int actionBarSize = UIUtils.calculateActionBarSize(getActivity());
+            int actionBarSize = UIUtils.INSTANCE.calculateActionBarSize(getActivity());
             DrawShadowFrameLayout drawShadowFrameLayout =
                     (DrawShadowFrameLayout) getActivity().findViewById(R.id.main_content);
             if (drawShadowFrameLayout != null) {

@@ -72,8 +72,8 @@ public class BlocksHandler extends JSONHandler {
             type = ScheduleContract.Blocks.BLOCK_TYPE_BREAK;
         }
 
-        long startTimeL = ParserUtils.parseTime(block.start);
-        long endTimeL = ParserUtils.parseTime(block.end);
+        long startTimeL = ParserUtils.INSTANCE.parseTime(block.start);
+        long endTimeL = ParserUtils.INSTANCE.parseTime(block.end);
         final String blockId = ScheduleContract.Blocks.generateBlockId(startTimeL, endTimeL);
         builder.withValue(ScheduleContract.Blocks.BLOCK_ID, blockId);
         builder.withValue(ScheduleContract.Blocks.BLOCK_TITLE, title);

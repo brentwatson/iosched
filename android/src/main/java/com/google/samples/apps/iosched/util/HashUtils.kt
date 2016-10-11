@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.util;
+package com.google.samples.apps.iosched.util
 
-import java.util.Locale;
+import java.util.*
 
-public class HashUtils {
-    public static String computeWeakHash(String string) {
-        return String.format(Locale.US, "%08x%08x", string.hashCode(), string.length());
+object HashUtils {
+    fun computeWeakHash(string: String): String {
+        return String.format(Locale.US, "%08x%08x", string.hashCode(), string.length)
     }
 }

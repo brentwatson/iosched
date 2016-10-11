@@ -50,7 +50,7 @@ public class SessionDetailActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        UIUtils.tryTranslateHttpIntent(this);
+        UIUtils.INSTANCE.tryTranslateHttpIntent(this);
         BeamUtils.tryUpdateIntentFromBeam(this);
         boolean shouldBeFloatingWindow = shouldBeFloatingWindow();
         if (shouldBeFloatingWindow) {
@@ -81,7 +81,7 @@ public class SessionDetailActivity extends BaseActivity {
 
         if (savedInstanceState == null) {
             Uri sessionUri = getIntent().getData();
-            BeamUtils.setBeamSessionUri(this, sessionUri);
+            BeamUtils.INSTANCE.setBeamSessionUri(this, sessionUri);
         }
 
         mSessionUri = getIntent().getData();

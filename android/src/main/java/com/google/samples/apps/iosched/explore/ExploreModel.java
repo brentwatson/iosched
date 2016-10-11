@@ -248,7 +248,7 @@ public class ExploreModel implements Model {
 
     private void rewriteKeynoteDetails(SessionData keynoteData) {
         long startTime, endTime, currentTime;
-        currentTime = UIUtils.getCurrentTime(mContext);
+        currentTime = UIUtils.INSTANCE.getCurrentTime(mContext);
         if (keynoteData.getStartDate() != null) {
             startTime = keynoteData.getStartDate().getTime();
         } else {
@@ -267,12 +267,12 @@ public class ExploreModel implements Model {
             stringBuilder.append(mContext.getString(R.string
                     .live_now));
         } else {
-            String shortDate = TimeUtils.formatShortDate(mContext, keynoteData.getStartDate());
+            String shortDate = TimeUtils.INSTANCE.formatShortDate(mContext, keynoteData.getStartDate());
             stringBuilder.append(shortDate);
 
             if (startTime > 0) {
                 stringBuilder.append(" / " );
-                stringBuilder.append(TimeUtils.formatShortTime(mContext,
+                stringBuilder.append(TimeUtils.INSTANCE.formatShortTime(mContext,
                         new java.util.Date(startTime)));
             }
         }

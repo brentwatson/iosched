@@ -79,8 +79,8 @@ public class ConfMessageCardUtils {
         long mStartTime;
         long mEndTime;
         ConfMessageCard(String startTime, String endTime) {
-            mStartTime = TimeUtils.parseTimestamp(startTime).getTime();
-            mEndTime = TimeUtils.parseTimestamp(endTime).getTime();
+            mStartTime = TimeUtils.INSTANCE.parseTimestamp(startTime).getTime();
+            mEndTime = TimeUtils.INSTANCE.parseTimestamp(endTime).getTime();
         }
 
 
@@ -295,7 +295,7 @@ public class ConfMessageCardUtils {
      * @param context Context to be used to lookup the {@link android.content.SharedPreferences}.
      */
     public static void enableActiveCards(final Context context) {
-        long currentTime = UIUtils.getCurrentTime(context);
+        long currentTime = UIUtils.INSTANCE.getCurrentTime(context);
         for (ConfMessageCard card : ConfMessageCard.values()) {
             if (card.isActive(currentTime)) {
                 markShouldShowConfMessageCard(context, card, true);

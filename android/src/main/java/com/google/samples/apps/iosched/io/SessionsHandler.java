@@ -205,8 +205,8 @@ public class SessionsHandler extends JSONHandler {
                 .withValue(ScheduleContract.Sessions.SESSION_TITLE, session.title)
                 .withValue(ScheduleContract.Sessions.SESSION_ABSTRACT, session.description)
                 .withValue(ScheduleContract.Sessions.SESSION_HASHTAG, session.hashtag)
-                .withValue(ScheduleContract.Sessions.SESSION_START, TimeUtils.timestampToMillis(session.startTimestamp, 0))
-                .withValue(ScheduleContract.Sessions.SESSION_END, TimeUtils.timestampToMillis(session.endTimestamp, 0))
+                .withValue(ScheduleContract.Sessions.SESSION_START, TimeUtils.INSTANCE.timestampToMillis(session.startTimestamp, 0))
+                .withValue(ScheduleContract.Sessions.SESSION_END, TimeUtils.INSTANCE.timestampToMillis(session.endTimestamp, 0))
                 .withValue(ScheduleContract.Sessions.SESSION_TAGS, session.makeTagsList())
                         // Note: we store this comma-separated list of tags IN ADDITION
                         // to storing the tags in proper relational format (in the sessions_tags

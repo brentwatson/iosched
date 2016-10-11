@@ -38,6 +38,6 @@ public class Speaker {
                 .append("plusoneUrl").append(plusoneUrl == null ? "" : plusoneUrl)
                 .append("twitterUrl").append(twitterUrl == null ? "" : twitterUrl)
                 .append("thumbnailUrl").append(thumbnailUrl == null ? "" : thumbnailUrl);
-        return HashUtils.computeWeakHash(sb.toString());
+        return HashUtils.INSTANCE.computeWeakHash(sb.toString());
     }
 }

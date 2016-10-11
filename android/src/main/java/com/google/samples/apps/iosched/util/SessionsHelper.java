@@ -67,7 +67,7 @@ public class SessionsHelper {
             String hashtags, String url) {
         // ANALYTICS EVENT: Share a session.
         // Contains: Session title.
-        AnalyticsHelper.sendEvent("Session", "Shared", title);
+        AnalyticsHelper.INSTANCE.sendEvent("Session", "Shared", title);
         Intent intent = Intent.createChooser(
                 createShareIntent(messageTemplateResId, title, hashtags, url),
                 context.getString(R.string.title_share));
@@ -80,7 +80,7 @@ public class SessionsHelper {
                 starred + " title=" + title);
         String sessionId = ScheduleContract.Sessions.getSessionId(sessionUri);
         Uri myScheduleUri = ScheduleContract.MySchedule.buildMyScheduleUri(
-                AccountUtils.getActiveAccountName(mActivity));
+                AccountUtils.INSTANCE.getActiveAccountName(mActivity));
 
         AsyncQueryHandler handler =
                 new AsyncQueryHandler(mActivity.getContentResolver()) {
@@ -92,7 +92,7 @@ public class SessionsHelper {
 
         // ANALYTICS EVENT: Add or remove a session from the schedule
         // Contains: Session title, whether it was added or removed (starred or unstarred)
-        AnalyticsHelper.sendEvent(
+        AnalyticsHelper.INSTANCE.sendEvent(
                 "Session", starred ? "Starred" : "Unstarred", title);
 
         // Because change listener is set to null during initialization, these
@@ -100,6 +100,6 @@ public class SessionsHelper {
         mActivity.sendBroadcast(ScheduleWidgetProvider.getRefreshBroadcastIntent(mActivity, false));
 
         // Request an immediate user data sync to reflect the starred user sessions in the cloud
-        SyncHelper.requestManualSync(AccountUtils.getActiveAccount(mActivity), true);
+        SyncHelper.requestManualSync(AccountUtils.INSTANCE.getActiveAccount(mActivity), true);
     }
 }

@@ -16,6 +16,17 @@
 
 package com.google.samples.apps.iosched.session;
 
+import android.content.Context;
+import android.content.CursorLoader;
+import android.content.Intent;
+import android.content.Loader;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Build;
+import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Pair;
+
 import com.google.common.annotations.VisibleForTesting;
 import com.google.samples.apps.iosched.Config;
 import com.google.samples.apps.iosched.R;
@@ -31,17 +42,6 @@ import com.google.samples.apps.iosched.util.AccountUtils;
 import com.google.samples.apps.iosched.util.AnalyticsHelper;
 import com.google.samples.apps.iosched.util.SessionsHelper;
 import com.google.samples.apps.iosched.util.UIUtils;
-
-import android.content.Context;
-import android.content.CursorLoader;
-import android.content.Intent;
-import android.content.Loader;
-import android.database.Cursor;
-import android.net.Uri;
-import android.os.Build;
-import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -188,17 +188,17 @@ public class SessionDetailModel implements Model {
     }
 
     public boolean isSessionOngoing() {
-        long currentTimeMillis = UIUtils.getCurrentTime(mContext);
+        long currentTimeMillis = UIUtils.INSTANCE.getCurrentTime(mContext);
         return currentTimeMillis > mSessionStart && currentTimeMillis <= mSessionEnd;
     }
 
     public boolean hasSessionStarted() {
-        long currentTimeMillis = UIUtils.getCurrentTime(mContext);
+        long currentTimeMillis = UIUtils.INSTANCE.getCurrentTime(mContext);
         return currentTimeMillis > mSessionStart;
     }
 
     public boolean hasSessionEnded() {
-        long currentTimeMillis = UIUtils.getCurrentTime(mContext);
+        long currentTimeMillis = UIUtils.INSTANCE.getCurrentTime(mContext);
         return currentTimeMillis > mSessionEnd;
     }
 
@@ -210,7 +210,7 @@ public class SessionDetailModel implements Model {
         if (!hasSessionStarted()) {
             return 0l;
         } else {
-            long currentTimeMillis = UIUtils.getCurrentTime(mContext);
+            long currentTimeMillis = UIUtils.INSTANCE.getCurrentTime(mContext);
             // Rounded down number of minutes.
             return (currentTimeMillis - mSessionStart) / 60000;
         }
@@ -223,14 +223,14 @@ public class SessionDetailModel implements Model {
         if (hasSessionStarted()) {
             return 0l;
         } else {
-            long currentTimeMillis = UIUtils.getCurrentTime(mContext);
+            long currentTimeMillis = UIUtils.INSTANCE.getCurrentTime(mContext);
             // Rounded up number of minutes.
             return (mSessionStart - currentTimeMillis) / 60000 + 1;
         }
     }
 
     public boolean isSessionReadyForFeedback() {
-        long currentTimeMillis = UIUtils.getCurrentTime(mContext);
+        long currentTimeMillis = UIUtils.INSTANCE.getCurrentTime(mContext);
         return currentTimeMillis
                 > mSessionEnd - SessionDetailConstants.FEEDBACK_MILLIS_BEFORE_SESSION_END_MS;
     }
@@ -349,7 +349,7 @@ public class SessionDetailModel implements Model {
         if (mSessionColor == 0) {
             mSessionColor = mContext.getResources().getColor(R.color.default_session_color);
         } else {
-            mSessionColor = UIUtils.setColorOpaque(mSessionColor);
+            mSessionColor = UIUtils.INSTANCE.setColorOpaque(mSessionColor);
         }
 
         mLiveStreamId = cursor
@@ -391,10 +391,10 @@ public class SessionDetailModel implements Model {
 
     @VisibleForTesting
     public void formatSubtitle() {
-        mSubtitle = UIUtils.formatSessionSubtitle(
+        mSubtitle = UIUtils.INSTANCE.formatSessionSubtitle(
                 mSessionStart, mSessionEnd, mRoomName, mBuffer, mContext);
         if (mHasLiveStream) {
-            mSubtitle += " " + UIUtils.getLiveBadgeText(mContext, mSessionStart, mSessionEnd);
+            mSubtitle += " " + UIUtils.INSTANCE.getLiveBadgeText(mContext, mSessionStart, mSessionEnd);
         }
     }
 
@@ -514,7 +514,7 @@ public class SessionDetailModel implements Model {
         } else if (loaderId == SessionDetailQueryEnum.MY_VIEWED_VIDEOS.getId()) {
             LOGD(TAG, "Starting My Viewed Videos query");
             Uri myPlayedVideoUri = ScheduleContract.MyViewedVideos.buildMyViewedVideosUri(
-                    AccountUtils.getActiveAccountName(mContext));
+                    AccountUtils.INSTANCE.getActiveAccountName(mContext));
             loader = getCursorLoaderInstance(mContext, myPlayedVideoUri,
                     SessionDetailQueryEnum.MY_VIEWED_VIDEOS.getProjection(), null, null, null);
         }
@@ -642,7 +642,7 @@ public class SessionDetailModel implements Model {
 
     @VisibleForTesting
     public void sendAnalyticsEvent(String category, String action, String label) {
-        AnalyticsHelper.sendEvent(category, action, label);
+        AnalyticsHelper.INSTANCE.sendEvent(category, action, label);
     }
 
     private void sendAnalyticsEventForStarUnstarSession(boolean starred) {

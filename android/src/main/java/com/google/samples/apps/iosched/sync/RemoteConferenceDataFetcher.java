@@ -100,7 +100,7 @@ public class RemoteConferenceDataFetcher {
         // refTimestamp is in a wrong format, we simply ignore it. But pay attention to this
         // warning in the log, because it might mean unnecessary data is being downloaded.
         if (!TextUtils.isEmpty(refTimestamp)) {
-            if (TimeUtils.isValidFormatForIfModifiedSinceHeader(refTimestamp)) {
+            if (TimeUtils.INSTANCE.isValidFormatForIfModifiedSinceHeader(refTimestamp)) {
                 httpClient.addHeader("If-Modified-Since", refTimestamp);
             } else {
                 LOGW(TAG, "Could not set If-Modified-Since HTTP header. Potentially downloading " +
@@ -155,7 +155,7 @@ public class RemoteConferenceDataFetcher {
         File urlOverrideFile = new File(mContext.getFilesDir(), URL_OVERRIDE_FILE_NAME);
         if (urlOverrideFile.exists()) {
             try {
-                String overrideUrl = IOUtils.readFileAsString(urlOverrideFile).trim();
+                String overrideUrl = IOUtils.INSTANCE.readFileAsString(urlOverrideFile).trim();
                 LOGW(TAG, "Debug URL override active: " + overrideUrl);
                 return overrideUrl;
             } catch (IOException ex) {
@@ -267,7 +267,7 @@ public class RemoteConferenceDataFetcher {
         File cacheFile = getCacheFile(url);
         if (cacheFile.exists()) {
             LOGD(TAG, "Cache hit " + cacheKey + " for " + sanitizeUrl(url));
-            return IOUtils.readFileAsString(cacheFile);
+            return IOUtils.INSTANCE.readFileAsString(cacheFile);
         } else {
             LOGD(TAG, "Cache miss " + cacheKey + " for " + sanitizeUrl(url));
             return null;
@@ -284,7 +284,7 @@ public class RemoteConferenceDataFetcher {
         String cacheKey = getCacheKey(url);
         File cacheFile = getCacheFile(url);
         createCacheDir();
-        IOUtils.writeToFile(body, cacheFile);
+        IOUtils.INSTANCE.writeToFile(body, cacheFile);
         LOGD(TAG, "Wrote to cache " + cacheKey + " --> " + sanitizeUrl(url));
     }
 
@@ -295,7 +295,7 @@ public class RemoteConferenceDataFetcher {
      * @return The cache key (guaranteed to be a valid filename)
      */
     private String getCacheKey(String url) {
-        return HashUtils.computeWeakHash(url.trim()) + String.format("%04x", url.length());
+        return HashUtils.INSTANCE.computeWeakHash(url.trim()) + String.format("%04x", url.length());
     }
 
     // Sanitize a URL for logging purposes (only the last component is left visible).

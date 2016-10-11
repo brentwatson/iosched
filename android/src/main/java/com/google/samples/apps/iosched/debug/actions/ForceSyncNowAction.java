@@ -39,12 +39,12 @@ public class ForceSyncNowAction implements DebugAction {
         new AsyncTask<Context, Void, Void>() {
             @Override
             protected Void doInBackground(Context... contexts) {
-                Account account = AccountUtils.getActiveAccount(context);
+                Account account = AccountUtils.INSTANCE.getActiveAccount(context);
                 if (account == null) {
                     callback.done(false, "Cannot sync if there is no active account.");
                 } else {
                     new SyncHelper(contexts[0]).performSync(new SyncResult(),
-                      AccountUtils.getActiveAccount(context), bundle);
+                      AccountUtils.INSTANCE.getActiveAccount(context), bundle);
                 }
               return null;
             }

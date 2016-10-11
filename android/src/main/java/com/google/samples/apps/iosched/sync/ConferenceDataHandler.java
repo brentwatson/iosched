@@ -245,20 +245,20 @@ public class ConferenceDataHandler {
 
             usedTiles.add(filename);
 
-            if (!MapUtils.hasTile(mContext, filename)) {
+            if (!MapUtils.INSTANCE.hasTile(mContext, filename)) {
                 shouldClearCache = true;
                 // copy or download the tile if it is not stored yet
-                if (MapUtils.hasTileAsset(mContext, filename)) {
+                if (MapUtils.INSTANCE.hasTileAsset(mContext, filename)) {
                     // file already exists as an asset, copy it
-                    MapUtils.copyTileAsset(mContext, filename);
+                    MapUtils.INSTANCE.copyTileAsset(mContext, filename);
                 } else if (downloadAllowed && !TextUtils.isEmpty(url)) {
                     try {
                         // download the file only if downloads are allowed and url is not empty
-                        File tileFile = MapUtils.getTileFile(mContext, filename);
+                        File tileFile = MapUtils.INSTANCE.getTileFile(mContext, filename);
                         BasicHttpClient httpClient = new BasicHttpClient();
                         httpClient.setRequestLogger(mQuietLogger);
                         HttpResponse httpResponse = httpClient.get(url, null);
-                        IOUtils.writeToFile(httpResponse.getBody(), tileFile);
+                        IOUtils.INSTANCE.writeToFile(httpResponse.getBody(), tileFile);
 
                         // ensure the file is valid SVG
                         InputStream is = new FileInputStream(tileFile);
@@ -279,10 +279,10 @@ public class ConferenceDataHandler {
         }
 
         if (shouldClearCache) {
-            MapUtils.clearDiskCache(mContext);
+            MapUtils.INSTANCE.clearDiskCache(mContext);
         }
 
-        MapUtils.removeUnusedTiles(mContext, usedTiles);
+        MapUtils.INSTANCE.removeUnusedTiles(mContext, usedTiles);
     }
 
     // Returns the timestamp of the data we have in the content provider.

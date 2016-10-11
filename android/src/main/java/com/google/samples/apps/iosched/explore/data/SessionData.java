@@ -60,7 +60,7 @@ public class SessionData {
             return false;
         }
         Calendar now = java.util.Calendar.getInstance();
-        now.setTimeInMillis(UIUtils.getCurrentTime(context));
+        now.setTimeInMillis(UIUtils.INSTANCE.getCurrentTime(context));
         if (mStartDate.before(now.getTime()) && mEndDate.after(now.getTime())) {
             return true;
         } else {

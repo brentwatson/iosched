@@ -159,7 +159,7 @@ public class LoginAndAuthHelper implements GoogleApiClient.ConnectionCallbacks, 
             sCanShowAuthUi = sCanShowSignInUi = true;
             SettingsUtils.markUserRefusedSignIn(mAppContext, false);
             mGoogleApiClient.connect();
-        } else if (!AccountUtils.hasToken(mAppContext, mAccountName)) {
+        } else if (!AccountUtils.INSTANCE.hasToken(mAppContext, mAccountName)) {
             sCanShowAuthUi = sCanShowSignInUi = true;
             SettingsUtils.markUserRefusedSignIn(mAppContext, false);
             mTokenTask = new GetTokenTask();
@@ -216,7 +216,7 @@ public class LoginAndAuthHelper implements GoogleApiClient.ConnectionCallbacks, 
         LOGD(TAG, "Helper connected, account " + mAccountName);
 
         // load user's Google+ profile, if we don't have it yet
-        if (!AccountUtils.hasPlusInfo(activity, mAccountName)) {
+        if (!AccountUtils.INSTANCE.hasPlusInfo(activity, mAccountName)) {
             LOGD(TAG, "We don't have Google+ info for " + mAccountName + " yet, so loading.");
             PendingResult<People.LoadPeopleResult> result = Plus.PeopleApi.load(mGoogleApiClient, "me");
             result.setResultCallback(this);
@@ -225,7 +225,7 @@ public class LoginAndAuthHelper implements GoogleApiClient.ConnectionCallbacks, 
         }
 
         // try to authenticate, if we don't have a token yet
-        if (!AccountUtils.hasToken(activity, mAccountName)) {
+        if (!AccountUtils.INSTANCE.hasToken(activity, mAccountName)) {
             LOGD(TAG, "We don't have auth token for " + mAccountName + " yet, so getting it.");
             mTokenTask = new GetTokenTask();
             mTokenTask.execute();
@@ -311,22 +311,22 @@ public class LoginAndAuthHelper implements GoogleApiClient.ConnectionCallbacks, 
 
                 // Record profile ID, image URL and name
                 LOGD(TAG, "Saving plus profile ID: " + currentUser.getId());
-                AccountUtils.setPlusProfileId(mAppContext, mAccountName, currentUser.getId());
+                AccountUtils.INSTANCE.setPlusProfileId(mAppContext, mAccountName, currentUser.getId());
                 String imageUrl = currentUser.getImage().getUrl();
                 if (imageUrl != null) {
                     imageUrl = Uri.parse(imageUrl)
                             .buildUpon().appendQueryParameter("sz", "256").build().toString();
                 }
                 LOGD(TAG, "Saving plus image URL: " + imageUrl);
-                AccountUtils.setPlusImageUrl(mAppContext, mAccountName, imageUrl);
+                AccountUtils.INSTANCE.setPlusImageUrl(mAppContext, mAccountName, imageUrl);
                 LOGD(TAG, "Saving plus display name: " + currentUser.getDisplayName());
-                AccountUtils.setPlusName(mAppContext, mAccountName, currentUser.getDisplayName());
+                AccountUtils.INSTANCE.setPlusName(mAppContext, mAccountName, currentUser.getDisplayName());
                 Person.Cover cover = currentUser.getCover();
                 if (cover != null) {
                     Person.Cover.CoverPhoto coverPhoto = cover.getCoverPhoto();
                     if (coverPhoto != null) {
                         LOGD(TAG, "Saving plus cover URL: " + coverPhoto.getUrl());
-                        AccountUtils.setPlusCoverUrl(mAppContext, mAccountName, coverPhoto.getUrl());
+                        AccountUtils.INSTANCE.setPlusCoverUrl(mAppContext, mAccountName, coverPhoto.getUrl());
                     }
                 } else {
                     LOGD(TAG, "Profile has no cover.");
@@ -448,7 +448,7 @@ public class LoginAndAuthHelper implements GoogleApiClient.ConnectionCallbacks, 
                 // Save auth token.
                 LOGD(TAG, "Saving token: " + (token == null ? "(null)" : "(length " +
                         token.length() + ")") + " for account "  + mAccountName);
-                AccountUtils.setAuthToken(mAppContext, mAccountName, token);
+                AccountUtils.INSTANCE.setAuthToken(mAppContext, mAccountName, token);
                 return token;
             } catch (GooglePlayServicesAvailabilityException e) {
                 postShowRecoveryDialog(e.getConnectionStatusCode());

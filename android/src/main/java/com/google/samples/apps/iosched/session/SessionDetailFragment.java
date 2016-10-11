@@ -171,7 +171,7 @@ public class SessionDetailFragment extends Fragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mLUtils = LUtils.getInstance((AppCompatActivity) getActivity());
+        mLUtils = LUtils.Companion.getInstance((AppCompatActivity) getActivity());
         mHandler = new Handler();
         initViews();
         initViewListeners();
@@ -394,7 +394,7 @@ public class SessionDetailFragment extends Fragment
 
         float gapFillProgress = 1;
         if (mPhotoHeightPixels != 0) {
-            gapFillProgress = Math.min(Math.max(UIUtils.getProgress(scrollY,
+            gapFillProgress = Math.min(Math.max(UIUtils.INSTANCE.getProgress(scrollY,
                     0,
                     mPhotoHeightPixels), 0), 1);
         }
@@ -414,7 +414,7 @@ public class SessionDetailFragment extends Fragment
         mSubtitle.setText(data.getSessionSubtitle());
 
         mPhotoViewContainer
-                .setBackgroundColor(UIUtils.scaleSessionColorToDefaultBG(data.getSessionColor()));
+                .setBackgroundColor(UIUtils.INSTANCE.scaleSessionColorToDefaultBG(data.getSessionColor()));
 
         if (data.hasPhotoUrl()) {
             mHasPhoto = true;
@@ -446,7 +446,7 @@ public class SessionDetailFragment extends Fragment
         // Handle Keynote as a special case, where the user cannot remove it
         // from the schedule (it is auto added to schedule on sync)
         mAddScheduleButton.setVisibility(
-                (AccountUtils.hasActiveAccount(getContext()) && !data.isKeynote())
+                (AccountUtils.INSTANCE.hasActiveAccount(getContext()) && !data.isKeynote())
                         ? View.VISIBLE : View.INVISIBLE);
 
         displayTags(data);
@@ -456,7 +456,7 @@ public class SessionDetailFragment extends Fragment
         }
 
         if (!TextUtils.isEmpty(data.getSessionAbstract())) {
-            UIUtils.setTextMaybeHtml(mAbstract, data.getSessionAbstract());
+            UIUtils.INSTANCE.setTextMaybeHtml(mAbstract, data.getSessionAbstract());
             mAbstract.setVisibility(View.VISIBLE);
         } else {
             mAbstract.setVisibility(View.GONE);
@@ -466,7 +466,7 @@ public class SessionDetailFragment extends Fragment
         final View requirementsBlock = getActivity().findViewById(R.id.session_requirements_block);
         final String sessionRequirements = data.getRequirements();
         if (!TextUtils.isEmpty(sessionRequirements)) {
-            UIUtils.setTextMaybeHtml(mRequirements, sessionRequirements);
+            UIUtils.INSTANCE.setTextMaybeHtml(mRequirements, sessionRequirements);
             requirementsBlock.setVisibility(View.VISIBLE);
         } else {
             requirementsBlock.setVisibility(View.GONE);
@@ -535,7 +535,7 @@ public class SessionDetailFragment extends Fragment
         if (!mAnalyticsScreenViewHasFired) {
             // ANALYTICS SCREEN: View the Session Details page for a specific session.
             // Contains: The session title.
-            AnalyticsHelper.sendScreenView("Session: " + sessionTitle);
+            AnalyticsHelper.INSTANCE.sendScreenView("Session: " + sessionTitle);
             mAnalyticsScreenViewHasFired = true;
         }
     }
@@ -587,10 +587,10 @@ public class SessionDetailFragment extends Fragment
                     R.id.twitter_icon_box);
 
             setUpSpeakerSocialIcon(speaker, twitterIcon, speaker.getTwitterUrl(),
-                    UIUtils.TWITTER_COMMON_NAME, UIUtils.TWITTER_PACKAGE_NAME);
+                    UIUtils.INSTANCE.getTWITTER_COMMON_NAME(), UIUtils.INSTANCE.getTWITTER_PACKAGE_NAME());
 
             setUpSpeakerSocialIcon(speaker, plusOneIcon, speaker.getPlusoneUrl(),
-                    UIUtils.GOOGLE_PLUS_COMMON_NAME, UIUtils.GOOGLE_PLUS_PACKAGE_NAME);
+                    UIUtils.INSTANCE.getGOOGLE_PLUS_COMMON_NAME(), UIUtils.INSTANCE.getGOOGLE_PLUS_PACKAGE_NAME());
 
             // A speaker may have both a Twitter and GPlus page, only a Twitter page or only a
             // GPlus page, or neither. By default, align the Twitter icon to the right and the GPlus
@@ -604,7 +604,7 @@ public class SessionDetailFragment extends Fragment
             speakerHeaderView.setText(speakerHeader);
             speakerImageView.setContentDescription(
                     getString(R.string.speaker_googleplus_profile, speakerHeader));
-            UIUtils.setTextMaybeHtml(speakerAbstractView, speaker.getAbstract());
+            UIUtils.INSTANCE.setTextMaybeHtml(speakerAbstractView, speaker.getAbstract());
 
             if (!TextUtils.isEmpty(speaker.getUrl())) {
                 speakerImageView.setEnabled(true);
@@ -614,9 +614,9 @@ public class SessionDetailFragment extends Fragment
                         Intent speakerProfileIntent = new Intent(Intent.ACTION_VIEW,
                                 Uri.parse(speaker.getUrl()));
                         speakerProfileIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
-                        UIUtils.preferPackageForIntent(getActivity(),
+                        UIUtils.INSTANCE.preferPackageForIntent(getActivity(),
                                 speakerProfileIntent,
-                                UIUtils.GOOGLE_PLUS_PACKAGE_NAME);
+                                UIUtils.INSTANCE.getGOOGLE_PLUS_PACKAGE_NAME());
                         startActivity(speakerProfileIntent);
                     }
                 });
@@ -652,7 +652,7 @@ public class SessionDetailFragment extends Fragment
             socialIcon.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    UIUtils.fireSocialIntent(
+                    UIUtils.INSTANCE.fireSocialIntent(
                             getActivity(),
                             Uri.parse(socialUrl),
                             packageName
@@ -724,7 +724,7 @@ public class SessionDetailFragment extends Fragment
 
         String timeHint = "";
 
-        if (TimeUtils.hasConferenceEnded(getContext())) {
+        if (TimeUtils.INSTANCE.hasConferenceEnded(getContext())) {
             // No time hint to display.
             timeHint = "";
         } else if (data.hasSessionEnded()) {
@@ -826,7 +826,7 @@ public class SessionDetailFragment extends Fragment
                 if ("GIVE_FEEDBACK".equals(tag)) {
                     // ANALYTICS EVENT: Click on the "send feedback" action in Session Details.
                     // Contains: The session title.
-                    AnalyticsHelper.sendEvent("Session", "Feedback", data.getSessionTitle());
+                    AnalyticsHelper.INSTANCE.sendEvent("Session", "Feedback", data.getSessionTitle());
                     Intent intent = data.getFeedbackIntent();
                     startActivity(intent);
                 } else {
@@ -864,6 +864,6 @@ public class SessionDetailFragment extends Fragment
     private void fireLinkEvent(int actionId, SessionDetailModel data) {
         // ANALYTICS EVENT:  Click on a link in the Session Details page.
         // Contains: The link's name and the session title.
-        AnalyticsHelper.sendEvent("Session", getString(actionId), data.getSessionTitle());
+        AnalyticsHelper.INSTANCE.sendEvent("Session", getString(actionId), data.getSessionTitle());
     }
 }

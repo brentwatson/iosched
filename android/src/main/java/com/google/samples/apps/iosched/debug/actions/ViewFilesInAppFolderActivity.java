@@ -70,7 +70,7 @@ public class ViewFilesInAppFolderActivity extends BaseActivity
                 .addScope(Drive.SCOPE_APPFOLDER)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
-                .setAccountName(AccountUtils.getActiveAccountName(this))
+                .setAccountName(AccountUtils.INSTANCE.getActiveAccountName(this))
                 .build();
     }
 

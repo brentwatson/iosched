@@ -95,10 +95,10 @@ public class GMSUserDataSyncHelper extends AbstractUserDataSyncHelper {
             UserDataHelper.UserData local = UserDataHelper.getUserData(actions);
 
             String remoteGcmKey = remote.getGcmKey();
-            String localGcmKey = AccountUtils.getGcmKey(mContext, mAccountName);
-            LOGD(TAG, "Local GCM key: " + AccountUtils.sanitizeGcmKey(localGcmKey));
+            String localGcmKey = AccountUtils.INSTANCE.getGcmKey(mContext, mAccountName);
+            LOGD(TAG, "Local GCM key: " + AccountUtils.INSTANCE.sanitizeGcmKey(localGcmKey));
             LOGD(TAG, "Remote GCM key: " + (remoteGcmKey == null ? "(null)"
-                    : AccountUtils.sanitizeGcmKey(remoteGcmKey)));
+                    : AccountUtils.INSTANCE.sanitizeGcmKey(remoteGcmKey)));
 
             // if the remote data came with a GCM key, it should override ours
             if (!TextUtils.isEmpty(remoteGcmKey)) {
@@ -107,7 +107,7 @@ public class GMSUserDataSyncHelper extends AbstractUserDataSyncHelper {
                 } else {
                     LOGD(TAG, "Remote GCM key is different from local. OVERRIDING local.");
                     localGcmKey = remoteGcmKey;
-                    AccountUtils.setGcmKey(mContext, mAccountName, localGcmKey);
+                    AccountUtils.INSTANCE.setGcmKey(mContext, mAccountName, localGcmKey);
                 }
             }
 
@@ -132,7 +132,7 @@ public class GMSUserDataSyncHelper extends AbstractUserDataSyncHelper {
                 merged.setGcmKey(localGcmKey);
                 // save to remote
                 LOGD(TAG, "Sending user data to Drive, gcm key "
-                        + AccountUtils.sanitizeGcmKey(localGcmKey));
+                        + AccountUtils.INSTANCE.sanitizeGcmKey(localGcmKey));
 
                 String content = UserDataHelper.toJsonString(merged);
                 helper.saveDriveFile(driveId, content);

@@ -35,7 +35,7 @@ public class SocialActivity extends BaseActivity {
          * LABEL:     'Social'
          * [/ANALYTICS]
          */
-        AnalyticsHelper.sendScreenView(SCREEN_LABEL);
+        AnalyticsHelper.INSTANCE.sendScreenView(SCREEN_LABEL);
 
         overridePendingTransition(0, 0);
     }

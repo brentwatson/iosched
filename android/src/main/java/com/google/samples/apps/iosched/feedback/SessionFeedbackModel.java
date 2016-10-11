@@ -133,7 +133,7 @@ public class SessionFeedbackModel implements Model {
 
     @VisibleForTesting
     public void sendAnalyticsEvent(String category, String action, String label) {
-        AnalyticsHelper.sendEvent(category, action, label);
+        AnalyticsHelper.INSTANCE.sendEvent(category, action, label);
     }
 
     public enum SessionFeedbackQueryEnum implements QueryEnum {

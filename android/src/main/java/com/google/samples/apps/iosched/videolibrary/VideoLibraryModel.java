@@ -355,7 +355,7 @@ public class VideoLibraryModel implements Model {
                 selectionArgs.add(mSelectedTopic);
             }
             String selection = selectionClauses.isEmpty() ? null :
-                    ParserUtils.joinStrings(" AND ", selectionClauses, null);
+                    ParserUtils.INSTANCE.joinStrings(" AND ", selectionClauses, null);
             String[] selectionArgsArray = selectionArgs.isEmpty() ? null : selectionArgs.toArray(
                     new String[selectionArgs.size()]);
 
@@ -396,7 +396,7 @@ public class VideoLibraryModel implements Model {
 
                 LOGD(TAG, "setVideoViewed id=" + playedVideoId);
                 Uri myPlayedVideoUri = ScheduleContract.MyViewedVideos.buildMyViewedVideosUri(
-                        AccountUtils.getActiveAccountName(mActivity));
+                        AccountUtils.INSTANCE.getActiveAccountName(mActivity));
 
                 AsyncQueryHandler handler =
                         new AsyncQueryHandler(mActivity.getContentResolver()) {};
@@ -410,7 +410,7 @@ public class VideoLibraryModel implements Model {
                         false));
 
                 // Request an immediate user data sync to reflect the viewed video in the cloud.
-                SyncHelper.requestManualSync(AccountUtils.getActiveAccount(mActivity), true);
+                SyncHelper.requestManualSync(AccountUtils.INSTANCE.getActiveAccount(mActivity), true);
             } else {
                 LOGE(TAG, "The VideoLibraryUserActionEnum.VIDEO_VIEWED action was called without a "
                         + "proper Bundle.");

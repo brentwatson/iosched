@@ -84,7 +84,7 @@ public class MapActivity extends BaseActivity
 
         // ANALYTICS SCREEN: View the Map screen on a phone
         // Contains: Nothing (Page name is a constant)
-        AnalyticsHelper.sendScreenView(SCREEN_LABEL);
+        AnalyticsHelper.INSTANCE.sendScreenView(SCREEN_LABEL);
 
         overridePendingTransition(0, 0);
     }
@@ -206,7 +206,7 @@ public class MapActivity extends BaseActivity
     public void onSessionClicked(String sessionId) {
         // ANALYTICS EVENT: Click on a session in the Maps screen.
         // Contains: The session ID.
-        AnalyticsHelper.sendEvent(SCREEN_LABEL, "selectsession", sessionId);
+        AnalyticsHelper.INSTANCE.sendEvent(SCREEN_LABEL, "selectsession", sessionId);
 
         getLUtils().startActivityWithTransition(
                 new Intent(Intent.ACTION_VIEW,

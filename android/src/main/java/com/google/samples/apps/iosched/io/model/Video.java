@@ -38,7 +38,7 @@ public class Video {
                 .append("topic").append(topic == null ? "" : topic)
                 .append("speakers").append(speakers == null ? "" : speakers)
                 .append("thumbnailUrl").append(thumbnailUrl == null ? "" : thumbnailUrl);
-        return HashUtils.computeWeakHash(sb.toString());
+        return HashUtils.INSTANCE.computeWeakHash(sb.toString());
     }
 }
 

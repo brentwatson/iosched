@@ -207,7 +207,7 @@ public class SessionAlarmService extends IntentService
         if (alarmOffset == UNDEFINED_ALARM_OFFSET) {
             alarmTime = sessionEnd - MILLI_FIVE_MINUTES;
         } else {
-            alarmTime = UIUtils.getCurrentTime(this) + alarmOffset;
+            alarmTime = UIUtils.INSTANCE.getCurrentTime(this) + alarmOffset;
         }
 
         LOGD(TAG, "Scheduling session feedback alarm for session '" + sessionTitle + "'");
@@ -231,7 +231,7 @@ public class SessionAlarmService extends IntentService
         NotificationManager nm =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nm.cancel(NOTIFICATION_ID);
-        final long currentTime = UIUtils.getCurrentTime(this);
+        final long currentTime = UIUtils.INSTANCE.getCurrentTime(this);
         // If the session is already started, do not schedule system notification.
         if (currentTime > sessionStart) {
             LOGD(TAG, "Not scheduling alarm because target time is in the past: " + sessionStart);
@@ -435,7 +435,7 @@ public class SessionAlarmService extends IntentService
 
     // Starred sessions are about to begin.  Constructs and triggers system notification.
     private void notifySession(final long sessionStart, final long alarmOffset) {
-        long currentTime = UIUtils.getCurrentTime(this);
+        long currentTime = UIUtils.INSTANCE.getCurrentTime(this);
         final long intervalEnd = sessionStart + MILLI_TEN_MINUTES;
         LOGD(TAG, "Considering notifying for time interval.");
         LOGD(TAG, "    Interval start: " + sessionStart + "=" + (new Date(sessionStart)).toString());
@@ -453,7 +453,7 @@ public class SessionAlarmService extends IntentService
         }
 
         // Avoid repeated notifications.
-        if (alarmOffset == UNDEFINED_ALARM_OFFSET && UIUtils.isNotificationFiredForBlock(
+        if (alarmOffset == UNDEFINED_ALARM_OFFSET && UIUtils.INSTANCE.isNotificationFiredForBlock(
                 this, ScheduleContract.Blocks.generateBlockId(sessionStart, intervalEnd))) {
             LOGD(TAG, "Skipping session notification (already notified)");
             return;

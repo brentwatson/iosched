@@ -90,7 +90,7 @@ public class ScheduleHelper {
 
         // Count number of start/end pairs for sessions that are between dayStart and dayEnd and
         // are not in my schedule:
-        String liveStreamedOnlySelection = UIUtils.shouldShowLiveSessionsOnly(mContext)
+        String liveStreamedOnlySelection = UIUtils.INSTANCE.shouldShowLiveSessionsOnly(mContext)
                 ? "AND IFNULL(" + ScheduleContract.Sessions.SESSION_LIVESTREAM_ID + ",'')!=''"
                 : "";
 
@@ -117,7 +117,7 @@ public class ScheduleHelper {
         cursor.close();
 
         // remove free blocks that have no available sessions or that are in the past
-        long now = UIUtils.getCurrentTime(mContext);
+        long now = UIUtils.INSTANCE.getCurrentTime(mContext);
         Iterator<ScheduleItem> it = items.iterator();
         while (it.hasNext()) {
             ScheduleItem i = it.next();
@@ -167,7 +167,7 @@ public class ScheduleHelper {
         try {
             cursor = mContext.getContentResolver().query(
                     ScheduleContractHelper.addOverrideAccountName(Sessions.CONTENT_MY_SCHEDULE_URI,
-                            AccountUtils.getActiveAccountName(mContext)),
+                            AccountUtils.INSTANCE.getActiveAccountName(mContext)),
                     SessionsQuery.PROJECTION,
                     // filter sessions to the specified day
                     Sessions.STARTING_AT_TIME_INTERVAL_SELECTION,
@@ -186,7 +186,7 @@ public class ScheduleHelper {
                     if (!TextUtils.isEmpty(cursor.getString(SessionsQuery.SESSION_LIVESTREAM_URL))) {
                         item.flags |= ScheduleItem.FLAG_HAS_LIVESTREAM;
                     }
-                    item.subtitle = UIUtils.formatSessionSubtitle(
+                    item.subtitle = UIUtils.INSTANCE.formatSessionSubtitle(
                             cursor.getString(SessionsQuery.ROOM_ROOM_NAME),
                             cursor.getString(SessionsQuery.SESSION_SPEAKER_NAMES), mContext);
                     item.room = cursor.getString(SessionsQuery.ROOM_ROOM_NAME);

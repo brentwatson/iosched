@@ -252,7 +252,7 @@ public class SearchActivity extends BaseActivity implements
     private void searchFor(String query) {
         // ANALYTICS EVENT: Start a search on the Search activity
         // Contains: Nothing (Event params are constant:  Search query not included)
-        AnalyticsHelper.sendEvent(SCREEN_LABEL, "Search", "");
+        AnalyticsHelper.INSTANCE.sendEvent(SCREEN_LABEL, "Search", "");
         Bundle args = new Bundle(1);
         if (query == null) {
             query = "";

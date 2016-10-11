@@ -55,7 +55,7 @@ public class MarkerLoadingTask extends AsyncTaskLoader<List<MarkerLoadingTask.Ma
         if (cursor != null) {
 
             list = new ArrayList<>(count);
-            final IconGenerator labelIconGenerator = MapUtils.getLabelIconGenerator(getContext());
+            final IconGenerator labelIconGenerator = MapUtils.INSTANCE.getLabelIconGenerator(getContext());
             cursor.moveToFirst();
 
             while (!cursor.isAfterLast()) {
@@ -65,17 +65,17 @@ public class MarkerLoadingTask extends AsyncTaskLoader<List<MarkerLoadingTask.Ma
                 final float lat = cursor.getFloat(MarkerQuery.MARKER_LATITUDE);
                 final float lon = cursor.getFloat(MarkerQuery.MARKER_LONGITUDE);
                 final int type =
-                        MapUtils.detectMarkerType(cursor.getString(MarkerQuery.MARKER_TYPE));
+                        MapUtils.INSTANCE.detectMarkerType(cursor.getString(MarkerQuery.MARKER_TYPE));
                 final String label = cursor.getString(MarkerQuery.MARKER_LABEL);
 
                 final LatLng position = new LatLng(lat, lon);
                 MarkerOptions marker = null;
                 if (type == MarkerModel.TYPE_LABEL) {
                     // Label markers contain the label as its icon
-                    marker = MapUtils.createLabelMarker(labelIconGenerator, id, position, label);
+                    marker = MapUtils.INSTANCE.createLabelMarker(labelIconGenerator, id, position, label);
                 } else if (type != MarkerModel.TYPE_INACTIVE) {
                     // All other markers (that are not inactive) contain a pin icon
-                    marker = MapUtils.createPinMarker(id, position);
+                    marker = MapUtils.INSTANCE.createPinMarker(id, position);
                 }
 
                 MarkerModel model = new MarkerModel(id, floor, type, label, null);

@@ -452,7 +452,7 @@ public class ScheduleDatabase extends SQLiteOpenHelper {
         LOGD(TAG, "onUpgrade() from " + oldVersion + " to " + newVersion);
 
         // Cancel any sync currently in progress
-        Account account = AccountUtils.getActiveAccount(mContext);
+        Account account = AccountUtils.INSTANCE.getActiveAccount(mContext);
         if (account != null) {
             LOGI(TAG, "Cancelling any pending syncs for account");
             ContentResolver.cancelSync(account, ScheduleContract.CONTENT_AUTHORITY);

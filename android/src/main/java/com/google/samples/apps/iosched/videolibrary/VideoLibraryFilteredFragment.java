@@ -260,7 +260,7 @@ public class VideoLibraryFilteredFragment extends Fragment implements UpdatableV
 
         // configure video fragment's top clearance to take our overlaid controls (Action Bar
         // and spinner box) into account.
-        int actionBarSize = UIUtils.calculateActionBarSize(getActivity());
+        int actionBarSize = UIUtils.INSTANCE.calculateActionBarSize(getActivity());
         DrawShadowFrameLayout drawShadowFrameLayout =
                 (DrawShadowFrameLayout) getActivity().findViewById(R.id.main_content);
         if (drawShadowFrameLayout != null) {
@@ -363,11 +363,11 @@ public class VideoLibraryFilteredFragment extends Fragment implements UpdatableV
 
                     // ANALYTICS EVENT: Click on a video on the Filtered Video Library screen
                     // Contains: video's YouTube URL, http://www.youtube.com/...
-                    AnalyticsHelper.sendEvent(FILTERED_VIDEO_LIBRARY_ANALYTICS_CATEGORY,
+                    AnalyticsHelper.INSTANCE.sendEvent(FILTERED_VIDEO_LIBRARY_ANALYTICS_CATEGORY,
                             "selectvideo", youtubeLink);
                     Intent i = new Intent(Intent.ACTION_VIEW, Uri.parse(youtubeLink));
-                    UIUtils.preferPackageForIntent(getActivity(), i,
-                            UIUtils.YOUTUBE_PACKAGE_NAME);
+                    UIUtils.INSTANCE.preferPackageForIntent(getActivity(), i,
+                            UIUtils.INSTANCE.getYOUTUBE_PACKAGE_NAME());
                     i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                     startActivity(i);
                     // Mark the video as played.

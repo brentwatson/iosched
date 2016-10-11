@@ -154,7 +154,7 @@ public class ExploreSessionsFragment extends Fragment implements
         getActivity().invalidateOptionsMenu();
         // configure session fragment's top clearance to take our overlaid controls (Action Bar
         // and spinner box) into account.
-        int actionBarSize = UIUtils.calculateActionBarSize(getActivity());
+        int actionBarSize = UIUtils.INSTANCE.calculateActionBarSize(getActivity());
         DrawShadowFrameLayout drawShadowFrameLayout =
                 (DrawShadowFrameLayout) getActivity().findViewById(R.id.main_content);
         if (drawShadowFrameLayout != null) {
@@ -304,7 +304,7 @@ public class ExploreSessionsFragment extends Fragment implements
             long startTime = cursor.getLong(ExploreSessionsQuery.SESSION_START);
             long endTime = cursor.getLong(ExploreSessionsQuery.SESSION_END);
 
-            int day = UIUtils.startTimeToDayIndex(startTime);
+            int day = UIUtils.INSTANCE.startTimeToDayIndex(startTime);
             if (day == 0) {
                 // We have a problem!
                 LOGE(TAG, "Invalid Day for Session: " +
@@ -321,10 +321,10 @@ public class ExploreSessionsFragment extends Fragment implements
             if (day != 0) {
                 final Date startDate = new Date(startTime);
                 infoText = getString(R.string.explore_sessions_show_day_hour_and_room,
-                        TimeUtils.formatShortDate(getActivity(), startDate),
+                        TimeUtils.INSTANCE.formatShortDate(getActivity(), startDate),
                         getString(R.string.explore_sessions_show_day_n, day),
-                        TimeUtils.formatShortTime(getActivity(), startDate),
-                        TimeUtils.formatShortTime(getActivity(), new Date(endTime)),
+                        TimeUtils.INSTANCE.formatShortTime(getActivity(), startDate),
+                        TimeUtils.INSTANCE.formatShortTime(getActivity(), new Date(endTime)),
                         room != null ? room : context.getString(R.string.unknown_room));
             }
             infoView.setText(infoText);

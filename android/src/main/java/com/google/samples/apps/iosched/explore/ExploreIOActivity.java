@@ -73,7 +73,7 @@ public class ExploreIOActivity extends BaseActivity implements Toolbar.OnMenuIte
 
         // ANALYTICS SCREEN: View the Explore I/O screen
         // Contains: Nothing (Page name is a constant)
-        AnalyticsHelper.sendScreenView(SCREEN_LABEL);
+        AnalyticsHelper.INSTANCE.sendScreenView(SCREEN_LABEL);
 
         registerHideableHeaderView(findViewById(R.id.headerbar));
     }
@@ -146,7 +146,7 @@ public class ExploreIOActivity extends BaseActivity implements Toolbar.OnMenuIte
         Object tag = moreButton != null ? moreButton.getTag() : null;
         Intent intent = new Intent(getApplicationContext(), ExploreSessionsActivity.class);
         if (tag instanceof LiveStreamData) {
-            intent.setData(ScheduleContract.Sessions.buildSessionsAfterUri(UIUtils.getCurrentTime(this)));
+            intent.setData(ScheduleContract.Sessions.buildSessionsAfterUri(UIUtils.INSTANCE.getCurrentTime(this)));
             intent.putExtra(ExploreSessionsActivity.EXTRA_SHOW_LIVE_STREAM_SESSIONS, true);
         } else if (tag instanceof ItemGroup) {
             intent.putExtra(ExploreSessionsActivity.EXTRA_FILTER_TAG, ((ItemGroup)tag).getId());

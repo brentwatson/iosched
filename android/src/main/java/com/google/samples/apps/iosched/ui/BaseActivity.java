@@ -275,7 +275,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        RecentTasksStyler.styleRecentTasksEntry(this);
+        RecentTasksStyler.INSTANCE.styleRecentTasksEntry(this);
 
         // Check if the EULA has been accepted; if not, show it.
         if (WelcomeActivity.Companion.shouldDisplay(this)) {
@@ -300,7 +300,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
             ab.setDisplayHomeAsUpEnabled(true);
         }
 
-        mLUtils = LUtils.getInstance(this);
+        mLUtils = LUtils.Companion.getInstance(this);
         mThemedStatusBarColor = getResources().getColor(R.color.theme_primary_dark);
         mNormalStatusBarColor = mThemedStatusBarColor;
     }
@@ -485,11 +485,11 @@ public abstract class BaseActivity extends AppCompatActivity implements
      */
     private void populateNavDrawer() {
         boolean attendeeAtVenue = SettingsUtils.isAttendeeAtVenue(this);
-        boolean conferenceInProgress = TimeUtils.isConferenceInProgress(this);
+        boolean conferenceInProgress = TimeUtils.INSTANCE.isConferenceInProgress(this);
         mNavDrawerItems.clear();
 
         // decide which items will appear in the nav drawer
-        if (AccountUtils.hasActiveAccount(this)) {
+        if (AccountUtils.INSTANCE.hasActiveAccount(this)) {
             // Only logged-in users can save sessions, so if there is no active account,
             // there is no My Schedule
             mNavDrawerItems.add(NAVDRAWER_ITEM_MY_SCHEDULE);
@@ -603,7 +603,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
         }
 
         final View chosenAccountView = findViewById(R.id.chosen_account_view);
-        Account chosenAccount = AccountUtils.getActiveAccount(this);
+        Account chosenAccount = AccountUtils.INSTANCE.getActiveAccount(this);
         if (chosenAccount == null) {
             // No account logged in; hide account box
             chosenAccountView.setVisibility(View.GONE);
@@ -626,7 +626,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
         TextView email = (TextView) chosenAccountView.findViewById(R.id.profile_email_text);
         mExpandAccountBoxIndicator = (ImageView) findViewById(R.id.expand_account_box_indicator);
 
-        String name = AccountUtils.getPlusName(this);
+        String name = AccountUtils.INSTANCE.getPlusName(this);
         if (name == null) {
             nameTextView.setVisibility(View.GONE);
         } else {
@@ -634,12 +634,12 @@ public abstract class BaseActivity extends AppCompatActivity implements
             nameTextView.setText(name);
         }
 
-        String imageUrl = AccountUtils.getPlusImageUrl(this);
+        String imageUrl = AccountUtils.INSTANCE.getPlusImageUrl(this);
         if (imageUrl != null) {
             mImageLoader.loadImage(imageUrl, profileImageView);
         }
 
-        String coverImageUrl = AccountUtils.getPlusCoverUrl(this);
+        String coverImageUrl = AccountUtils.INSTANCE.getPlusCoverUrl(this);
         if (coverImageUrl != null) {
             findViewById(R.id.profile_cover_image_placeholder).setVisibility(View.GONE);
             coverImageView.setVisibility(View.VISIBLE);
@@ -684,7 +684,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
             ((TextView) itemView.findViewById(R.id.profile_email_text))
                     .setText(account.name);
             final String accountName = account.name;
-            String imageUrl = AccountUtils.getPlusImageUrl(this, accountName);
+            String imageUrl = AccountUtils.INSTANCE.getPlusImageUrl(this, accountName);
             if (!TextUtils.isEmpty(imageUrl)) {
                 mImageLoader.loadImage(imageUrl,
                         (ImageView) itemView.findViewById(R.id.profile_image));
@@ -702,7 +702,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
                         mDrawerLayout.closeDrawer(GravityCompat.START);
                     } else {
                         LOGD(TAG, "User requested switch to account: " + accountName);
-                        AccountUtils.setActiveAccount(BaseActivity.this, accountName);
+                        AccountUtils.INSTANCE.setActiveAccount(BaseActivity.this, accountName);
                         onAccountChangeRequested();
                         startLoginProcess();
                         mAccountBoxExpanded = false;
@@ -796,7 +796,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
     }
 
     protected void requestDataRefresh() {
-        Account activeAccount = AccountUtils.getActiveAccount(this);
+        Account activeAccount = AccountUtils.INSTANCE.getActiveAccount(this);
         ContentResolver contentResolver = getContentResolver();
         if (contentResolver.isSyncActive(activeAccount, ScheduleContract.CONTENT_AUTHORITY)) {
             LOGD(TAG, "Ignoring manual sync request because a sync is already in progress.");
@@ -964,7 +964,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
         // Check to ensure a Google Account is active for the app. Placing the check here ensures
         // it is run again in the case where a Google Account wasn't present on the device and a
         // picker had to be started.
-        if (!AccountUtils.enforceActiveGoogleAccount(this, SELECT_GOOGLE_ACCOUNT_RESULT)) {
+        if (!AccountUtils.INSTANCE.enforceActiveGoogleAccount(this, SELECT_GOOGLE_ACCOUNT_RESULT)) {
             LOGD(TAG, "EnforceActiveGoogleAccount returned false");
             return;
         }
@@ -1058,27 +1058,27 @@ public abstract class BaseActivity extends AppCompatActivity implements
 
     private void startLoginProcess() {
         LOGD(TAG, "Starting login process.");
-        if (!AccountUtils.hasActiveAccount(this)) {
+        if (!AccountUtils.INSTANCE.hasActiveAccount(this)) {
             LOGD(TAG, "No active account, attempting to pick a default.");
-            String defaultAccount = AccountUtils.getActiveAccountName(this);
+            String defaultAccount = AccountUtils.INSTANCE.getActiveAccountName(this);
             if (defaultAccount == null) {
                 LOGE(TAG, "Failed to pick default account (no accounts). Failing.");
                 //complainMustHaveGoogleAccount();
                 return;
             }
             LOGD(TAG, "Default to: " + defaultAccount);
-            AccountUtils.setActiveAccount(this, defaultAccount);
+            AccountUtils.INSTANCE.setActiveAccount(this, defaultAccount);
         }
 
-        if (!AccountUtils.hasActiveAccount(this)) {
+        if (!AccountUtils.INSTANCE.hasActiveAccount(this)) {
             LOGD(TAG, "Can't proceed with login -- no account chosen.");
             return;
         } else {
-            LOGD(TAG, "Chosen account: " + AccountUtils.getActiveAccountName(this));
+            LOGD(TAG, "Chosen account: " + AccountUtils.INSTANCE.getActiveAccountName(this));
         }
 
-        String accountName = AccountUtils.getActiveAccountName(this);
-        LOGD(TAG, "Chosen account: " + AccountUtils.getActiveAccountName(this));
+        String accountName = AccountUtils.INSTANCE.getActiveAccountName(this);
+        LOGD(TAG, "Chosen account: " + AccountUtils.INSTANCE.getActiveAccountName(this));
 
         if (mLoginAndAuthHelper != null && mLoginAndAuthHelper.getAccountName()
                 .equals(accountName)) {
@@ -1111,7 +1111,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
             if (resultCode == RESULT_OK) {
                 // Set selected GoogleAccount as active.
                 String accountName = data.getStringExtra(AccountManager.KEY_ACCOUNT_NAME);
-                AccountUtils.setActiveAccount(this, accountName);
+                AccountUtils.INSTANCE.setActiveAccount(this, accountName);
                 onAuthSuccess(accountName, true);
             } else {
                 LOGW(TAG, "A Google Account is required to use this application.");
@@ -1296,7 +1296,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
         if (isSeparator(itemId)) {
             View separator =
                     getLayoutInflater().inflate(R.layout.navdrawer_separator, container, false);
-            UIUtils.setAccessibilityIgnore(separator);
+            UIUtils.INSTANCE.setAccessibilityIgnore(separator);
             return separator;
         }
 
@@ -1351,8 +1351,8 @@ public abstract class BaseActivity extends AppCompatActivity implements
         } else {
             // Get the correct GCM key for the user. GCM key is a somewhat non-standard
             // approach we use in this app. For more about this, check GCM.TXT.
-            final String gcmKey = AccountUtils.hasActiveAccount(this) ?
-                    AccountUtils.getGcmKey(this, AccountUtils.getActiveAccountName(this)) : null;
+            final String gcmKey = AccountUtils.INSTANCE.hasActiveAccount(this) ?
+                    AccountUtils.INSTANCE.getGcmKey(this, AccountUtils.INSTANCE.getActiveAccountName(this)) : null;
             // Device is already registered on GCM, needs to check if it is
             // registered on our server as well.
             if (ServerUtilities.isRegisteredOnServer(this, gcmKey)) {
@@ -1366,7 +1366,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
                     @Override
                     protected Void doInBackground(Void... params) {
                         LOGI(TAG, "Registering on the GCM server with GCM key: "
-                                + AccountUtils.sanitizeGcmKey(gcmKey));
+                                + AccountUtils.INSTANCE.sanitizeGcmKey(gcmKey));
                         boolean registered = ServerUtilities.register(BaseActivity.this,
                                 regId, gcmKey);
                         // At this point all attempts to register with the app
@@ -1419,7 +1419,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    String accountName = AccountUtils.getActiveAccountName(BaseActivity.this);
+                    String accountName = AccountUtils.INSTANCE.getActiveAccountName(BaseActivity.this);
                     if (TextUtils.isEmpty(accountName)) {
                         onRefreshingStateChanged(false);
                         mManualSyncRequest = false;

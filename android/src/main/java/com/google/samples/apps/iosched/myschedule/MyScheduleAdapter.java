@@ -100,7 +100,7 @@ public class MyScheduleAdapter implements ListAdapter, AbsListView.RecyclerListe
         TypedArray a = context.obtainStyledAttributes(new int[]{R.attr.selectableItemBackground});
         mSelectableItemBackground = a.getResourceId(0, 0);
         a.recycle();
-        mIsRtl = UIUtils.isRtl(context);
+        mIsRtl = UIUtils.INSTANCE.isRtl(context);
     }
 
     @Override
@@ -149,10 +149,10 @@ public class MyScheduleAdapter implements ListAdapter, AbsListView.RecyclerListe
 
     private String formatDescription(ScheduleItem item) {
         StringBuilder description = new StringBuilder();
-        description.append(TimeUtils.formatShortTime(mContext, new Date(item.startTime)));
+        description.append(TimeUtils.INSTANCE.formatShortTime(mContext, new Date(item.startTime)));
         if (!Config.Tags.SPECIAL_KEYNOTE.equals(item.mainTag)) {
             description.append(" - ");
-            description.append(TimeUtils.formatShortTime(mContext, new Date(item.endTime)));
+            description.append(TimeUtils.INSTANCE.formatShortTime(mContext, new Date(item.endTime)));
         }
         if (!TextUtils.isEmpty(item.room)) {
             description.append(" / ");
@@ -169,7 +169,7 @@ public class MyScheduleAdapter implements ListAdapter, AbsListView.RecyclerListe
                 Uri uri = (Uri) tag;
                 // ANALYTICS EVENT: Select a slot on My Agenda
                 // Contains: URI indicating session ID or time interval of slot
-                AnalyticsHelper.sendEvent("My Schedule", "selectslot", uri.toString());
+                AnalyticsHelper.INSTANCE.sendEvent("My Schedule", "selectslot", uri.toString());
                 mContext.startActivity(new Intent(Intent.ACTION_VIEW, uri));
             }
         }
@@ -248,7 +248,7 @@ public class MyScheduleAdapter implements ListAdapter, AbsListView.RecyclerListe
         final ScheduleItem item = mItems.get(position);
         ScheduleItem nextItem = position < mItems.size() - 1 ? mItems.get(position + 1) : null;
 
-        long now = UIUtils.getCurrentTime(view.getContext());
+        long now = UIUtils.INSTANCE.getCurrentTime(view.getContext());
         boolean isNowPlaying = item.startTime <= now && now <= item.endTime && item.type == ScheduleItem.SESSION;
         boolean isPastDuringConference = item.endTime <= now && now < Config.CONFERENCE_END_MILLIS;
 
@@ -266,7 +266,7 @@ public class MyScheduleAdapter implements ListAdapter, AbsListView.RecyclerListe
             holder.icon.setColorFilter(mIconColorDefault);
         }
 
-        holder.startTime.setText(TimeUtils.formatShortTime(mContext, new Date(item.startTime)));
+        holder.startTime.setText(TimeUtils.INSTANCE.formatShortTime(mContext, new Date(item.startTime)));
 
         // show or hide the "LIVE NOW" badge
         holder.live.setVisibility(0 != (item.flags & ScheduleItem.FLAG_HAS_LIVESTREAM)
@@ -287,7 +287,7 @@ public class MyScheduleAdapter implements ListAdapter, AbsListView.RecyclerListe
             holder.feedback.setVisibility(View.GONE);
             holder.title.setVisibility(View.VISIBLE);
             holder.title.setText(item.title);
-            holder.icon.setImageResource(UIUtils.getBreakIcon(item.title));
+            holder.icon.setImageResource(UIUtils.INSTANCE.getBreakIcon(item.title));
             holder.browse.setVisibility(View.GONE);
             holder.description.setText(formatDescription(item));
         } else if (item.type == ScheduleItem.SESSION) {
@@ -307,7 +307,7 @@ public class MyScheduleAdapter implements ListAdapter, AbsListView.RecyclerListe
                     public void onClick(View view) {
                         // ANALYTICS EVENT: Click on the "Send Feedback" action from Schedule page.
                         // Contains: The session title.
-                        AnalyticsHelper.sendEvent("My Schedule", "Feedback", item.title);
+                        AnalyticsHelper.INSTANCE.sendEvent("My Schedule", "Feedback", item.title);
                         Intent feedbackIntent = new Intent(Intent.ACTION_VIEW,
                                 ScheduleContract.Sessions.buildSessionUri(item.sessionId),
                                 mContext, SessionFeedbackActivity.class);
@@ -318,7 +318,7 @@ public class MyScheduleAdapter implements ListAdapter, AbsListView.RecyclerListe
             holder.title.setVisibility(View.VISIBLE);
             holder.title.setText(item.title);
             holder.browse.setVisibility(View.GONE);
-            holder.icon.setImageResource(UIUtils.getSessionIcon(item.sessionType));
+            holder.icon.setImageResource(UIUtils.INSTANCE.getSessionIcon(item.sessionType));
 
             Uri sessionUri = ScheduleContract.Sessions.buildSessionUri(item.sessionId);
             if (0 != (item.flags & ScheduleItem.FLAG_CONFLICTS_WITH_PREVIOUS)) {

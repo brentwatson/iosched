@@ -17,19 +17,19 @@
 package com.google.samples.apps.iosched.about;
 
 
-import com.google.samples.apps.iosched.BuildConfig;
-import com.google.samples.apps.iosched.R;
-import com.google.samples.apps.iosched.ui.BaseActivity;
-import com.google.samples.apps.iosched.ui.widget.DrawShadowFrameLayout;
-import com.google.samples.apps.iosched.util.AboutUtils;
-import com.google.samples.apps.iosched.util.UIUtils;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.TextView;
+
+import com.google.samples.apps.iosched.BuildConfig;
+import com.google.samples.apps.iosched.R;
+import com.google.samples.apps.iosched.ui.BaseActivity;
+import com.google.samples.apps.iosched.ui.widget.DrawShadowFrameLayout;
+import com.google.samples.apps.iosched.util.AboutUtils;
+import com.google.samples.apps.iosched.util.UIUtils;
 
 public class AboutActivity extends BaseActivity {
 
@@ -49,10 +49,10 @@ public class AboutActivity extends BaseActivity {
                     openUrl(URL_PRIVACY_POLICY);
                     break;
                 case R.id.about_licenses:
-                    AboutUtils.showOpenSourceLicenses(AboutActivity.this);
+                    AboutUtils.INSTANCE.showOpenSourceLicenses(AboutActivity.this);
                     break;
                 case R.id.about_eula:
-                    AboutUtils.showEula(AboutActivity.this);
+                    AboutUtils.INSTANCE.showEula(AboutActivity.this);
                     break;
             }
         }
@@ -90,7 +90,7 @@ public class AboutActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        int actionBarSize = UIUtils.calculateActionBarSize(this);
+        int actionBarSize = UIUtils.INSTANCE.calculateActionBarSize(this);
         DrawShadowFrameLayout drawShadowFrameLayout =
                 (DrawShadowFrameLayout) findViewById(R.id.main_content);
         if (drawShadowFrameLayout != null) {

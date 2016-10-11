@@ -71,7 +71,7 @@ public class TileLoadingTask extends AsyncTaskLoader<List<TileLoadingTask.TileEn
 
             // Initialise the tile cache that is reused for all TileProviders.
             // Note that the cache *MUST* be closed when the encapsulating Fragment is stopped.
-            DiskLruCache tileCache = MapUtils.openDiskCache(getContext());
+            DiskLruCache tileCache = MapUtils.INSTANCE.openDiskCache(getContext());
 
             list = new ArrayList<>(count);
             cursor.moveToFirst();
@@ -79,7 +79,7 @@ public class TileLoadingTask extends AsyncTaskLoader<List<TileLoadingTask.TileEn
                 final int floor = cursor.getInt(OverlayQuery.TILE_FLOOR);
                 final String file = cursor.getString(OverlayQuery.TILE_FILE);
 
-                File f = MapUtils.getTileFile(getContext().getApplicationContext(), file);
+                File f = MapUtils.INSTANCE.getTileFile(getContext().getApplicationContext(), file);
                 if (f == null || !f.exists()) {
                     // Skip the file if it is invalid or does not exist.
                     break;

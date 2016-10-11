@@ -296,7 +296,7 @@ class VideoLibraryFragment : Fragment(), UpdatableView<VideoLibraryModel>, Colle
         if (TextUtils.isEmpty(thumbUrl)) {
             viewHolder.thumbnailView!!.setImageResource(android.R.color.transparent)
         } else {
-            mImageLoader!!.loadImage(thumbUrl, viewHolder.thumbnailView)
+            mImageLoader!!.loadImage(thumbUrl, viewHolder.thumbnailView!!)
         }
 
         val videoId = video.id

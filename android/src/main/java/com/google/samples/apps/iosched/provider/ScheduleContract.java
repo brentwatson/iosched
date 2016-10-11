@@ -426,7 +426,7 @@ public final class ScheduleContract {
         public static String generateBlockId(long startTime, long endTime) {
             startTime /= DateUtils.SECOND_IN_MILLIS;
             endTime /= DateUtils.SECOND_IN_MILLIS;
-            return ParserUtils.sanitizeId(startTime + "-" + endTime);
+            return ParserUtils.INSTANCE.sanitizeId(startTime + "-" + endTime);
         }
     }
 

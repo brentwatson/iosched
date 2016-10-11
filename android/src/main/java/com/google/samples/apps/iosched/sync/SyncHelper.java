@@ -179,8 +179,8 @@ public class SyncHelper {
                 syncResult.stats.numAuthExceptions++;
 
                 // If we have a token, try to refresh it.
-                if (AccountUtils.hasToken(mContext, account.name)) {
-                    AccountUtils.refreshAuthToken(mContext);
+                if (AccountUtils.INSTANCE.hasToken(mContext, account.name)) {
+                    AccountUtils.INSTANCE.refreshAuthToken(mContext);
                 } else {
                     LOGW(TAG, "No auth token yet for this account. Skipping remote sync.");
                 }
@@ -336,7 +336,7 @@ public class SyncHelper {
     }
 
    private static long calculateRecommendedSyncInterval(final Context context) {
-        long now = UIUtils.getCurrentTime(context);
+        long now = UIUtils.INSTANCE.getCurrentTime(context);
         long aroundConferenceStart = Config.CONFERENCE_START_MILLIS
                 - Config.AUTO_SYNC_AROUND_CONFERENCE_THRESH;
         if (now < aroundConferenceStart) {

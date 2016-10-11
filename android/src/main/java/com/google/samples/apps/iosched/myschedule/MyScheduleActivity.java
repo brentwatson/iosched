@@ -170,7 +170,7 @@ public class MyScheduleActivity extends BaseActivity implements MyScheduleFragme
 
         // ANALYTICS SCREEN: View the My Schedule screen
         // Contains: Nothing (Page name is a constant)
-        AnalyticsHelper.sendScreenView(SCREEN_LABEL);
+        AnalyticsHelper.INSTANCE.sendScreenView(SCREEN_LABEL);
 
         mViewPager = (ViewPager) findViewById(R.id.view_pager);
         mScrollViewWide = (ScrollView) findViewById(R.id.main_content_wide);
@@ -272,7 +272,7 @@ public class MyScheduleActivity extends BaseActivity implements MyScheduleFragme
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         if (mViewPager != null) {
-            long now = UIUtils.getCurrentTime(this);
+            long now = UIUtils.INSTANCE.getCurrentTime(this);
             selectDay(0);
             for (int i = 0; i < Config.CONFERENCE_DAYS.length; i++) {
                 if (now >= Config.CONFERENCE_DAYS[i][0] && now <= Config.CONFERENCE_DAYS[i][1]) {
@@ -305,7 +305,7 @@ public class MyScheduleActivity extends BaseActivity implements MyScheduleFragme
     private String getDayName(int position) {
         long day1Start = Config.CONFERENCE_DAYS[0][0];
         long day = 1000 * 60 * 60 * 24;
-        return TimeUtils.formatShortDate(this, new Date(day1Start + day * position));
+        return TimeUtils.INSTANCE.formatShortDate(this, new Date(day1Start + day * position));
     }
 
     private void setTabLayoutContentDescriptions() {
@@ -340,7 +340,7 @@ public class MyScheduleActivity extends BaseActivity implements MyScheduleFragme
     @Override
     public void onAuthFailure(String accountName) {
         super.onAuthFailure(accountName);
-        UIUtils.setUpButterBar(mButterBar, getString(R.string.login_failed_text),
+        UIUtils.INSTANCE.setUpButterBar(mButterBar, getString(R.string.login_failed_text),
                 getString(R.string.login_failed_text_retry), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -592,7 +592,7 @@ public class MyScheduleActivity extends BaseActivity implements MyScheduleFragme
                 return;
             }
             LOGD(TAG, "Running MySchedule UI updater (now=" +
-                    new Date(UIUtils.getCurrentTime(activity)) + ")");
+                    new Date(UIUtils.INSTANCE.getCurrentTime(activity)) + ")");
             if (activity.mScheduleAdapters != null
                     && activity.mScheduleAdapters.length > today
                     && activity.mScheduleAdapters[today] != null) {

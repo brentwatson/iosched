@@ -151,7 +151,7 @@ public class SessionCalendarService extends IntentService {
         if (intent != null && intent.hasExtra(EXTRA_ACCOUNT_NAME)) {
             accountName = intent.getStringExtra(EXTRA_ACCOUNT_NAME);
         } else {
-            accountName = AccountUtils.getActiveAccountName(this);
+            accountName = AccountUtils.INSTANCE.getActiveAccountName(this);
         }
 
         if (TextUtils.isEmpty(accountName)) {

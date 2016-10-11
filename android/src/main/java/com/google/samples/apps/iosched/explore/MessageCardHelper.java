@@ -79,7 +79,7 @@ public class MessageCardHelper {
             @Override
             public void onClick(View view) {
                 LOGD(TAG, "Installing conference wifi.");
-                WiFiUtils.installConferenceWiFi(view.getContext());
+                WiFiUtils.INSTANCE.installConferenceWiFi(view.getContext());
 
                 // Switching like this ensure the value change listener is fired.
                 SettingsUtils.markDeclinedWifiSetup(view.getContext(), true);

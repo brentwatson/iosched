@@ -37,11 +37,11 @@ public class TriggerSyncReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        String accountName = AccountUtils.getActiveAccountName(context);
+        String accountName = AccountUtils.INSTANCE.getActiveAccountName(context);
         if (TextUtils.isEmpty(accountName)) {
             return;
         }
-        Account account = AccountUtils.getActiveAccount(context);
+        Account account = AccountUtils.INSTANCE.getActiveAccount(context);
         if (account != null) {
             if (intent.getBooleanExtra(EXTRA_USER_DATA_SYNC_ONLY, false) ) {
                 // this is a request to sync user data only, so do a manual sync right now

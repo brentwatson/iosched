@@ -14,42 +14,37 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.util;
+package com.google.samples.apps.iosched.util
 
-import android.annotation.TargetApi;
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.Build;
-
-import com.google.samples.apps.iosched.R;
+import android.annotation.TargetApi
+import android.app.Activity
+import android.app.ActivityManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.os.Build
+import com.google.samples.apps.iosched.R
 
 /**
  * Helper class that applies the proper icon, title and background color to recent tasks list.
  */
-public class RecentTasksStyler {
-    private static Bitmap sIcon = null;
-
-    private RecentTasksStyler() {
-    }
+object RecentTasksStyler {
+    private var sIcon: Bitmap? = null
 
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
-    public static void styleRecentTasksEntry(Activity activity) {
+    fun styleRecentTasksEntry(activity: Activity) {
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            return;
+            return
         }
 
-        Resources resources = activity.getResources();
-        String label = resources.getString(activity.getApplicationInfo().labelRes);
-        int colorPrimary = resources.getColor(R.color.theme_primary);
+        val resources = activity.resources
+        val label = resources.getString(activity.applicationInfo.labelRes)
+        val colorPrimary = resources.getColor(R.color.theme_primary)
 
         if (sIcon == null) {
             // Cache to avoid decoding the same bitmap on every Activity change
-            sIcon = BitmapFactory.decodeResource(resources, R.drawable.ic_stat_notification);
+            sIcon = BitmapFactory.decodeResource(resources, R.drawable.ic_stat_notification)
         }
 
-        activity.setTaskDescription(new ActivityManager.TaskDescription(label, sIcon, colorPrimary));
+        activity.setTaskDescription(ActivityManager.TaskDescription(label, sIcon, colorPrimary))
     }
 }

@@ -377,7 +377,7 @@ public class SettingsUtils {
      */
     public static void markSyncAttemptedNow(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putLong(PREF_LAST_SYNC_ATTEMPTED, UIUtils.getCurrentTime(context)).apply();
+        sp.edit().putLong(PREF_LAST_SYNC_ATTEMPTED, UIUtils.INSTANCE.getCurrentTime(context)).apply();
     }
 
     /**
@@ -397,7 +397,7 @@ public class SettingsUtils {
      */
     public static void markSyncSucceededNow(final Context context) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
-        sp.edit().putLong(PREF_LAST_SYNC_SUCCEEDED, UIUtils.getCurrentTime(context)).apply();
+        sp.edit().putLong(PREF_LAST_SYNC_SUCCEEDED, UIUtils.INSTANCE.getCurrentTime(context)).apply();
     }
 
     /**

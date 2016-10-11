@@ -179,7 +179,7 @@ public class ExploreIOFragment extends Fragment implements UpdatableView<Explore
 
         // configure fragment's top clearance to take our overlaid controls (Action Bar
         // and spinner box) into account.
-        int actionBarSize = UIUtils.calculateActionBarSize(getActivity());
+        int actionBarSize = UIUtils.INSTANCE.calculateActionBarSize(getActivity());
         DrawShadowFrameLayout drawShadowFrameLayout =
                 (DrawShadowFrameLayout) getActivity().findViewById(R.id.main_content);
         if (drawShadowFrameLayout != null) {
@@ -279,8 +279,8 @@ public class ExploreIOFragment extends Fragment implements UpdatableView<Explore
                     inventoryGroup.setDisplayCols(1);
                     inventory.addGroup(inventoryGroup);
                 } else if (shouldShowCard(ConfMessageCardUtils.ConfMessageCard.WIFI_FEEDBACK)) {
-                    if (WiFiUtils.isWiFiEnabled(getContext()) &&
-                            WiFiUtils.isWiFiApConfigured(getContext())) {
+                    if (WiFiUtils.INSTANCE.isWiFiEnabled(getContext()) &&
+                            WiFiUtils.INSTANCE.isWiFiApConfigured(getContext())) {
                         inventoryGroup = new CollectionView.InventoryGroup(GROUP_ID_MESSAGE_CARDS);
                         MessageData conferenceMessageOptIn = MessageCardHelper
                                 .getWifiFeedbackMessageData(getContext());
@@ -291,7 +291,7 @@ public class ExploreIOFragment extends Fragment implements UpdatableView<Explore
                 }
             }
             // Check whether a wifi setup card should be offered.
-            if (WiFiUtils.shouldOfferToSetupWifi(getContext(), true)) {
+            if (WiFiUtils.INSTANCE.shouldOfferToSetupWifi(getContext(), true)) {
                 // Build card asking users whether they want to enable wifi.
                 inventoryGroup = new CollectionView.InventoryGroup(GROUP_ID_MESSAGE_CARDS);
                 MessageData conferenceMessageOptIn = MessageCardHelper
@@ -423,7 +423,7 @@ public class ExploreIOFragment extends Fragment implements UpdatableView<Explore
         ViewGroup containerView = (ViewGroup)inflater.inflate(containerLayoutId, parent, false);
         // Explicitly tell Accessibility to ignore the entire containerView since we add specific
         // individual content descriptions on child Views.
-        UIUtils.setAccessibilityIgnore(containerView);
+        UIUtils.INSTANCE.setAccessibilityIgnore(containerView);
 
         ViewGroup containerContents = (ViewGroup)containerView.findViewById(
                 R.id.explore_io_card_container_contents);

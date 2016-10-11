@@ -86,7 +86,7 @@ public final class ServerUtilities {
 
         LOGI(TAG, "registering device (gcm_id = " + gcmId + ")");
         String serverUrl = BuildConfig.GCM_SERVER_URL + "/register";
-        LOGI(TAG, "registering on GCM with GCM key: " + AccountUtils.sanitizeGcmKey(gcmKey));
+        LOGI(TAG, "registering on GCM with GCM key: " + AccountUtils.INSTANCE.sanitizeGcmKey(gcmKey));
 
         Map<String, String> params = new HashMap<String, String>();
         params.put("gcm_id", gcmId);
@@ -169,7 +169,7 @@ public final class ServerUtilities {
         LOGI(TAG, "Notifying GCM that user data changed");
         String serverUrl = BuildConfig.GCM_SERVER_URL + "/send/self/sync_user";
         try {
-            String gcmKey = AccountUtils.getGcmKey(context, AccountUtils.getActiveAccountName(context));
+            String gcmKey = AccountUtils.INSTANCE.getGcmKey(context, AccountUtils.INSTANCE.getActiveAccountName(context));
             if (gcmKey != null) {
                 post(serverUrl, new HashMap<String, String>(), gcmKey);
             }
@@ -189,7 +189,7 @@ public final class ServerUtilities {
         final SharedPreferences prefs = context.getSharedPreferences(
                 PREFERENCES, Context.MODE_PRIVATE);
         LOGD(TAG, "Setting registered on server status as: " + flag + ", gcmKey="
-                + AccountUtils.sanitizeGcmKey(gcmKey));
+                + AccountUtils.INSTANCE.sanitizeGcmKey(gcmKey));
         Editor editor = prefs.edit();
         if (flag) {
             editor.putLong(PROPERTY_REGISTERED_TS, new Date().getTime());
@@ -224,12 +224,12 @@ public final class ServerUtilities {
             final String registeredGcmKey = prefs.getString(PROPERTY_GCM_KEY, "");
             if (registeredGcmKey.equals(gcmKey)) {
                 LOGD(TAG, "GCM registration is valid and for the correct gcm key: "
-                        + AccountUtils.sanitizeGcmKey(registeredGcmKey));
+                        + AccountUtils.INSTANCE.sanitizeGcmKey(registeredGcmKey));
                 return true;
             }
             LOGD(TAG, "GCM registration is for DIFFERENT gcm key "
-                    + AccountUtils.sanitizeGcmKey(registeredGcmKey) + ". We were expecting "
-                    + AccountUtils.sanitizeGcmKey(gcmKey));
+                    + AccountUtils.INSTANCE.sanitizeGcmKey(registeredGcmKey) + ". We were expecting "
+                    + AccountUtils.INSTANCE.sanitizeGcmKey(gcmKey));
             return false;
         } else {
             LOGV(TAG, "GCM registration expired. regTS=" + regTS + " yesterdayTS=" + yesterdayTS);

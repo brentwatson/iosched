@@ -83,7 +83,7 @@ public class ScheduleWidgetRemoteViewsService extends RemoteViewsService {
         }
 
         public int getCount() {
-            if (mScheduleItems == null || !AccountUtils.hasActiveAccount(mContext)) {
+            if (mScheduleItems == null || !AccountUtils.INSTANCE.hasActiveAccount(mContext)) {
                 return 0;
             }
             if (mScheduleItems.size() < 10) {
@@ -98,7 +98,7 @@ public class ScheduleWidgetRemoteViewsService extends RemoteViewsService {
                 return VIEW_TYPE_NORMAL;
             }
             ScheduleItem item = mScheduleItems.get(position);
-            long now = UIUtils.getCurrentTime(mContext);
+            long now = UIUtils.INSTANCE.getCurrentTime(mContext);
             if (item.startTime <= now && now <= item.endTime && item.type == ScheduleItem.SESSION) {
                 return VIEW_TYPE_NOW;
             } else {
@@ -150,7 +150,7 @@ public class ScheduleWidgetRemoteViewsService extends RemoteViewsService {
                     return rv;
                 }
 
-                long now = UIUtils.getCurrentTime(mContext);
+                long now = UIUtils.INSTANCE.getCurrentTime(mContext);
                 rv.setTextViewText(R.id.start_end_time, formatTime(now, item));
 
                 rv.setViewVisibility(R.id.live_now_badge, View.GONE);
@@ -177,7 +177,7 @@ public class ScheduleWidgetRemoteViewsService extends RemoteViewsService {
                     rv.setOnClickFillInIntent(R.id.box, fillIntent);
 
                 } else if (item.type == ScheduleItem.BREAK) {
-                    rv.setImageViewResource(R.id.icon, UIUtils.getBreakIcon(item.title));
+                    rv.setImageViewResource(R.id.icon, UIUtils.INSTANCE.getBreakIcon(item.title));
 
                     rv.setTextViewText(R.id.slot_title, item.title);
                     rv.setTextColor(R.id.slot_title, mContext.getResources().getColor(R.color.body_text_1));
@@ -186,7 +186,7 @@ public class ScheduleWidgetRemoteViewsService extends RemoteViewsService {
                     rv.setTextColor(R.id.slot_room, mContext.getResources().getColor(R.color.body_text_2));
 
                 } else if (item.type == ScheduleItem.SESSION) {
-                    rv.setImageViewResource(R.id.icon, UIUtils.getSessionIcon(item.sessionType));
+                    rv.setImageViewResource(R.id.icon, UIUtils.INSTANCE.getSessionIcon(item.sessionType));
 
                     rv.setTextViewText(R.id.slot_title, item.title);
                     rv.setTextColor(R.id.slot_title, mContext.getResources().getColor(R.color.body_text_1));
@@ -264,12 +264,12 @@ public class ScheduleWidgetRemoteViewsService extends RemoteViewsService {
             int position = 0;
             mScheduleItems = new ArrayList<ScheduleItem>();
             for (ScheduleItem item : allScheduleItems) {
-                if (item.endTime <= UIUtils.getCurrentTime(mContext)) {
+                if (item.endTime <= UIUtils.INSTANCE.getCurrentTime(mContext)) {
                     continue;
                 }
                 mScheduleItems.add(item);
                 time = item.startTime;
-                if (!UIUtils.isSameDayDisplay(previousTime, time, mContext)) {
+                if (!UIUtils.INSTANCE.isSameDayDisplay(previousTime, time, mContext)) {
                     mBuffer.setLength(0);
                     mSections.add(new SimpleSectionedListAdapter.Section(position,
                             DateUtils.formatDateRange(
@@ -304,10 +304,10 @@ public class ScheduleWidgetRemoteViewsService extends RemoteViewsService {
                 }
             } else {
                 // session in the future
-                time.append(TimeUtils.formatShortTime(mContext, new Date(item.startTime)));
+                time.append(TimeUtils.INSTANCE.formatShortTime(mContext, new Date(item.startTime)));
             }
             time.append(" - ");
-            time.append(TimeUtils.formatShortTime(mContext, new Date(item.endTime)));
+            time.append(TimeUtils.INSTANCE.formatShortTime(mContext, new Date(item.endTime)));
             return time.toString();
         }
     }

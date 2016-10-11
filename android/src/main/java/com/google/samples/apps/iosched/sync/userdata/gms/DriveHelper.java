@@ -112,7 +112,7 @@ public class DriveHelper {
                 theFile.open(mGoogleApiClient, DriveFile.MODE_WRITE_ONLY, null).await();
 
         try {
-            IOUtils.writeToStream(content, result.getDriveContents().getOutputStream());
+            IOUtils.INSTANCE.writeToStream(content, result.getDriveContents().getOutputStream());
             // Update the last viewed.
             MetadataChangeSet changeSet = new MetadataChangeSet.Builder()
                     .setLastViewedByMeDate(new Date())
@@ -132,7 +132,7 @@ public class DriveHelper {
         DriveContents driveContents = result.getDriveContents();
         try {
             if (driveContents != null) {
-                return IOUtils.readAsString(driveContents.getInputStream());
+                return IOUtils.INSTANCE.readAsString(driveContents.getInputStream());
             }
         } finally {
             if (driveContents != null) {

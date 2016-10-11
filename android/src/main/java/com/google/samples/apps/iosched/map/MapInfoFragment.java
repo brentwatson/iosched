@@ -131,7 +131,7 @@ public abstract class MapInfoFragment extends Fragment
             return null;
         }
 
-        final long time = UIUtils.getCurrentTime(getActivity());
+        final long time = UIUtils.INSTANCE.getCurrentTime(getActivity());
         final String roomId = args.getString(QUERY_ARG_ROOMID);
         final String roomTitle = args.getString(QUERY_ARG_ROOMTITLE);
         final int roomType = args.getInt(QUERY_ARG_ROOMTYPE);
@@ -171,7 +171,7 @@ public abstract class MapInfoFragment extends Fragment
      * @see com.google.samples.apps.iosched.util.UIUtils#isTablet(android.content.Context)
      */
     public static MapInfoFragment newInstace(Context c) {
-        if (UIUtils.isTablet(c)) {
+        if (UIUtils.INSTANCE.isTablet(c)) {
             return InlineInfoFragment.newInstance();
         } else {
             return SlideableInfoFragment.newInstance();
@@ -186,7 +186,7 @@ public abstract class MapInfoFragment extends Fragment
 
         onSessionsLoaded(roomTitle, roomType, sessions);
         mList.setAdapter(new SessionAdapter(getActivity(), sessions, 0,
-                MapUtils.hasInfoSessionListIcons(roomType)));
+                MapUtils.INSTANCE.hasInfoSessionListIcons(roomType)));
     }
 
     private void showSessionSubtitle(String roomTitle, int roomType, Cursor sessions) {
@@ -199,7 +199,7 @@ public abstract class MapInfoFragment extends Fragment
         final String title = roomTitle;
         final String subtitle = sessions.getString(SingleSessionLoader.Query.SESSION_ABSTRACT);
 
-        setHeader(MapUtils.getRoomIcon(roomType), title, subtitle);
+        setHeader(MapUtils.INSTANCE.getRoomIcon(roomType), title, subtitle);
         mList.setVisibility(View.GONE);
 
         onRoomSubtitleLoaded(title, roomType, subtitle);
@@ -222,7 +222,7 @@ public abstract class MapInfoFragment extends Fragment
      * Prepares and starts a SessionLoader for the specified query token.
      */
     private void loadSessions(String roomId, String roomTitle, int roomType, int queryToken){
-        setHeader(MapUtils.getRoomIcon(roomType), roomTitle, null);
+        setHeader(MapUtils.INSTANCE.getRoomIcon(roomType), roomTitle, null);
         onSessionListLoading(roomId, roomTitle);
 
         // Load the following sessions for this room
@@ -249,17 +249,17 @@ public abstract class MapInfoFragment extends Fragment
     }
 
     protected void onSessionsLoaded(String roomTitle, int roomType, Cursor cursor) {
-        setHeader(MapUtils.getRoomIcon(roomType), roomTitle, null);
+        setHeader(MapUtils.INSTANCE.getRoomIcon(roomType), roomTitle, null);
         mList.setVisibility(View.VISIBLE);
     }
 
     protected void onSessionLoadingFailed(String roomTitle, int roomType) {
-        setHeader(MapUtils.getRoomIcon(roomType), roomTitle, null);
+        setHeader(MapUtils.INSTANCE.getRoomIcon(roomType), roomTitle, null);
         mList.setVisibility(View.GONE);
     }
 
     public void showMoscone() {
-        setHeader(MapUtils.getRoomIcon(MarkerModel.TYPE_MOSCONE), R.string.map_moscone,
+        setHeader(MapUtils.INSTANCE.getRoomIcon(MarkerModel.TYPE_MOSCONE), R.string.map_moscone,
                 R.string.map_moscone_address);
         mList.setVisibility(View.GONE);
     }
@@ -302,7 +302,7 @@ public abstract class MapInfoFragment extends Fragment
     }
 
     public void showTitleOnly(int roomType, String title) {
-        setHeader(MapUtils.getRoomIcon(roomType), title, null);
+        setHeader(MapUtils.INSTANCE.getRoomIcon(roomType), title, null);
         mList.setVisibility(View.GONE);
     }
 
@@ -384,14 +384,14 @@ public abstract class MapInfoFragment extends Fragment
                     .getString(OverviewSessionLoader.Query.SESSION_TAGS);
 
             final int sessionType = ScheduleHelper.detectSessionType(sessionTag);
-            final String text = UIUtils.formatIntervalTimeString(blockStart, blockEnd,
+            final String text = UIUtils.INSTANCE.formatIntervalTimeString(blockStart, blockEnd,
                     mStringBuilder, context);
 
             holder.title.setText(title);
             holder.title.setTag(sessionId);
             holder.text.setText(text);
             if (mDisplayIcons) {
-                holder.image.setImageResource(UIUtils.getSessionIcon(sessionType));
+                holder.image.setImageResource(UIUtils.INSTANCE.getSessionIcon(sessionType));
             }
         }
 

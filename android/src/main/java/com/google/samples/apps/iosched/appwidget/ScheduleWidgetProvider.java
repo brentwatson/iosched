@@ -61,7 +61,7 @@ public class ScheduleWidgetProvider extends AppWidgetProvider {
             final boolean shouldSync = widgetIntent.getBooleanExtra(EXTRA_PERFORM_SYNC, false);
 
             // Trigger sync
-            Account chosenAccount = AccountUtils.getActiveAccount(context);
+            Account chosenAccount = AccountUtils.INSTANCE.getActiveAccount(context);
             if (shouldSync && chosenAccount != null) {
                 SyncHelper.requestManualSync(chosenAccount);
             }
@@ -79,7 +79,7 @@ public class ScheduleWidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         LOGD(TAG, "updating app widget");
-        final boolean isAuthenticated = AccountUtils.hasActiveAccount(context);
+        final boolean isAuthenticated = AccountUtils.INSTANCE.hasActiveAccount(context);
         for (int appWidgetId : appWidgetIds) {
             // Specify the service to provide data for the collection widget.  Note that we need to
             // embed the appWidgetId via the data otherwise it will be ignored.

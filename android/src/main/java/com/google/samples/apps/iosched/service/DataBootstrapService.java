@@ -106,7 +106,7 @@ public class DataBootstrapService extends IntentService {
         } finally {
             // Request a manual sync immediately after the bootstrapping process, in case we
             // have an active connection. Otherwise, the scheduled sync could take a while.
-            SyncHelper.requestManualSync(AccountUtils.getActiveAccount(appContext));
+            SyncHelper.requestManualSync(AccountUtils.INSTANCE.getActiveAccount(appContext));
         }
     }
 }

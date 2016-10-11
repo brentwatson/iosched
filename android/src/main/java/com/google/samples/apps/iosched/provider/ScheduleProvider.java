@@ -106,8 +106,8 @@ public class ScheduleProvider extends ContentProvider {
             writer.print("Current sync interval: ");
             writer.println(SettingsUtils.getCurSyncInterval(context));
             writer.print("Is an account active: ");
-            writer.println(AccountUtils.hasActiveAccount(context));
-            boolean canGetAuthToken = !TextUtils.isEmpty(AccountUtils.getAuthToken(context));
+            writer.println(AccountUtils.INSTANCE.hasActiveAccount(context));
+            boolean canGetAuthToken = !TextUtils.isEmpty(AccountUtils.INSTANCE.getAuthToken(context));
             writer.print("Can an auth token be retrieved: ");
             writer.println(canGetAuthToken);
 
@@ -639,7 +639,7 @@ public class ScheduleProvider extends ContentProvider {
     private String getCurrentAccountName(Uri uri, boolean sanitize) {
         String accountName = ScheduleContractHelper.getOverrideAccountName(uri);
         if (accountName == null) {
-            accountName = AccountUtils.getActiveAccountName(getContext());
+            accountName = AccountUtils.INSTANCE.getActiveAccountName(getContext());
         }
         if (sanitize) {
             // sanitize accountName when concatenating (http://xkcd.com/327/)

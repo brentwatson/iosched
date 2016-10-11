@@ -64,10 +64,10 @@ public class SocialFragment extends Fragment {
         socialGplusDevs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtils.fireSocialIntent(
+                UIUtils.INSTANCE.fireSocialIntent(
                         getActivity(),
                         SocialLinksEnum.GPLUS_DEVS.getUri(),
-                        UIUtils.GOOGLE_PLUS_PACKAGE_NAME);
+                        UIUtils.INSTANCE.getGOOGLE_PLUS_PACKAGE_NAME());
             }
         });
 
@@ -76,10 +76,10 @@ public class SocialFragment extends Fragment {
         socialTwitterDevs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtils.fireSocialIntent(
+                UIUtils.INSTANCE.fireSocialIntent(
                         getActivity(),
                         SocialLinksEnum.TWITTER_DEVS.getUri(),
-                        UIUtils.TWITTER_PACKAGE_NAME
+                        UIUtils.INSTANCE.getTWITTER_PACKAGE_NAME()
                 );
             }
         });
@@ -90,7 +90,7 @@ public class SocialFragment extends Fragment {
 
         ViewGroup requestPanel = (ViewGroup) getActivity().findViewById(R.id.request_panel);
         // Make the "Request" panel visible only a few days before I/O.
-        if (UIUtils.getCurrentTime(getActivity()) < Config.SHOW_IO15_REQUEST_SOCIAL_PANEL_TIME) {
+        if (UIUtils.INSTANCE.getCurrentTime(getActivity()) < Config.SHOW_IO15_REQUEST_SOCIAL_PANEL_TIME) {
             requestPanel.setVisibility(View.GONE);
         } else {
             setUpSocialIcons(requestPanel, SocialLinksEnum.GPLUS_REQUEST,
@@ -112,10 +112,10 @@ public class SocialFragment extends Fragment {
         twitterIconBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtils.fireSocialIntent(
+                UIUtils.INSTANCE.fireSocialIntent(
                         getActivity(),
                         twitterValue.getUri(),
-                        UIUtils.TWITTER_PACKAGE_NAME
+                        UIUtils.INSTANCE.getTWITTER_PACKAGE_NAME()
                 );
             }
         });
@@ -126,10 +126,10 @@ public class SocialFragment extends Fragment {
         gPlusIconBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIUtils.fireSocialIntent(
+                UIUtils.INSTANCE.fireSocialIntent(
                         getActivity(),
                         gPlusValue.getUri(),
-                        UIUtils.GOOGLE_PLUS_PACKAGE_NAME
+                        UIUtils.INSTANCE.getGOOGLE_PLUS_PACKAGE_NAME()
                 );
             }
         });
@@ -150,7 +150,7 @@ public class SocialFragment extends Fragment {
 
         // Configure the fragment's top clearance to take our overlaid controls (Action Bar
         // and spinner box) into account.
-        int actionBarSize = UIUtils.calculateActionBarSize(getActivity());
+        int actionBarSize = UIUtils.INSTANCE.calculateActionBarSize(getActivity());
         DrawShadowFrameLayout drawShadowFrameLayout =
                 (DrawShadowFrameLayout) getActivity().findViewById(R.id.main_content);
         if (drawShadowFrameLayout != null) {

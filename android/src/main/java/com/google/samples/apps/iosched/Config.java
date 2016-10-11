@@ -34,11 +34,11 @@ public class Config {
     // Turn the hard-coded conference dates in gradle.properties into workable objects.
     public static final long[][] CONFERENCE_DAYS = new long[][]{
             // start and end of day 1
-            {ParserUtils.parseTime(BuildConfig.CONFERENCE_DAY1_START),
-                    ParserUtils.parseTime(BuildConfig.CONFERENCE_DAY1_END)},
+            {ParserUtils.INSTANCE.parseTime(BuildConfig.CONFERENCE_DAY1_START),
+                    ParserUtils.INSTANCE.parseTime(BuildConfig.CONFERENCE_DAY1_END)},
             // start and end of day 2
-            {ParserUtils.parseTime(BuildConfig.CONFERENCE_DAY2_START),
-                    ParserUtils.parseTime(BuildConfig.CONFERENCE_DAY2_END)},
+            {ParserUtils.INSTANCE.parseTime(BuildConfig.CONFERENCE_DAY2_START),
+                    ParserUtils.INSTANCE.parseTime(BuildConfig.CONFERENCE_DAY2_END)},
     };
 
     public static final TimeZone CONFERENCE_TIMEZONE =
@@ -48,7 +48,7 @@ public class Config {
 
     public static final long CONFERENCE_END_MILLIS = CONFERENCE_DAYS[CONFERENCE_DAYS.length - 1][1];
 
-    public static final long SHOW_IO15_REQUEST_SOCIAL_PANEL_TIME = ParserUtils.parseTime(
+    public static final long SHOW_IO15_REQUEST_SOCIAL_PANEL_TIME = ParserUtils.INSTANCE.parseTime(
             BuildConfig.SHOW_IO15_REQUEST_SOCIAL_PANEL_TIME);
 
     // YouTube share URL

@@ -153,8 +153,8 @@ public class ExploreSessionsActivity extends BaseActivity
 
             String title = getString(R.string.explore_sessions_time_slot_title,
                     getString(R.string.explore_sessions_show_day_n,
-                            UIUtils.startTimeToDayIndex(interval[0])),
-                    UIUtils.formatTime(interval[0], this));
+                            UIUtils.INSTANCE.startTimeToDayIndex(interval[0])),
+                    UIUtils.INSTANCE.formatTime(interval[0], this));
             setTitle(title);
 
             mTimeSlotLayout.setVisibility(View.VISIBLE);
@@ -191,7 +191,7 @@ public class ExploreSessionsActivity extends BaseActivity
 
         // ANALYTICS SCREEN: View the Explore Sessions screen
         // Contains: Nothing (Page name is a constant)
-        AnalyticsHelper.sendScreenView(SCREEN_LABEL);
+        AnalyticsHelper.INSTANCE.sendScreenView(SCREEN_LABEL);
     }
 
     @Override
@@ -221,7 +221,7 @@ public class ExploreSessionsActivity extends BaseActivity
             case R.id.menu_search:
                 // ANALYTICS EVENT: Click the search button on the ExploreSessions screen
                 // Contains: No data (Just that a search occurred, no search term)
-                AnalyticsHelper.sendEvent(SCREEN_LABEL, "launchsearch", "");
+                AnalyticsHelper.INSTANCE.sendEvent(SCREEN_LABEL, "launchsearch", "");
                 startActivity(new Intent(this, SearchActivity.class));
                 return true;
         }
@@ -443,7 +443,7 @@ public class ExploreSessionsActivity extends BaseActivity
                     .inflate(R.layout.explore_sessions_list_item_alt_header, parent, false);
             // We do not want the divider/header to be read out by TalkBack, so
             // inform the view that this is not important for accessibility.
-            UIUtils.setAccessibilityIgnore(view);
+            UIUtils.INSTANCE.setAccessibilityIgnore(view);
             return view;
         }
 
