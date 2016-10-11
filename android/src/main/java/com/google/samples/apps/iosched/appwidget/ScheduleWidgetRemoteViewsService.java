@@ -169,7 +169,7 @@ public class ScheduleWidgetRemoteViewsService extends RemoteViewsService {
                     rv.setTextViewText(R.id.slot_room, item.subtitle);
                     rv.setTextColor(R.id.slot_room, mContext.getResources().getColor(R.color.body_text_2));
 
-                    Intent fillIntent = TaskStackBuilderProxyActivity.getFillIntent(
+                    Intent fillIntent = TaskStackBuilderProxyActivity.Companion.getFillIntent(
                             homeIntent,
                             new Intent(Intent.ACTION_VIEW, ScheduleContract.Sessions.buildUnscheduledSessionsInInterval(
                                     item.startTime, item.endTime))
@@ -208,7 +208,7 @@ public class ScheduleWidgetRemoteViewsService extends RemoteViewsService {
                         }
                     }
 
-                    Intent fillIntent = TaskStackBuilderProxyActivity.getFillIntent(
+                    Intent fillIntent = TaskStackBuilderProxyActivity.Companion.getFillIntent(
                             homeIntent,
                             new Intent(Intent.ACTION_VIEW, ScheduleContract.Sessions.buildSessionUri(item.sessionId)));
                     rv.setOnClickFillInIntent(R.id.box, fillIntent);

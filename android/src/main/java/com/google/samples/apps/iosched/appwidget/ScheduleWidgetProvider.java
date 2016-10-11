@@ -101,7 +101,7 @@ public class ScheduleWidgetProvider extends AppWidgetProvider {
                     getRefreshBroadcastIntent(context, true), PendingIntent.FLAG_UPDATE_CURRENT);
             rv.setOnClickPendingIntent(R.id.widget_refresh_button, refreshPendingIntent);
 
-            final Intent onClickIntent = TaskStackBuilderProxyActivity.getTemplate(context);
+            final Intent onClickIntent = TaskStackBuilderProxyActivity.Companion.getTemplate(context);
             final PendingIntent onClickPendingIntent = PendingIntent.getActivity(context, 0,
                     onClickIntent, PendingIntent.FLAG_UPDATE_CURRENT);
             rv.setPendingIntentTemplate(R.id.widget_schedule_list, onClickPendingIntent);
