@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.debug;
+package com.google.samples.apps.iosched.debug
 
-import android.content.Context;
+import android.content.Context
 
 /**
  * Simple generic interface around debug actions.
@@ -24,11 +24,11 @@ import android.content.Context;
  * DebugActionRunnerFragment and have their output status, timing and message
  * logged into the log area.
  */
-public interface DebugAction {
-    void run(Context context, Callback callback);
-    String getLabel();
+interface DebugAction {
+    fun run(context: Context, callback: Callback)
+    val label: String
 
-    public interface Callback {
-        void done(boolean success, String message);
+    interface Callback {
+        fun done(success: Boolean, message: String)
     }
 }

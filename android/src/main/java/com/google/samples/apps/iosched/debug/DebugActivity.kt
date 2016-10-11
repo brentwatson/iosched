@@ -14,31 +14,28 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.debug;
+package com.google.samples.apps.iosched.debug
 
-import com.google.samples.apps.iosched.R;
-import com.google.samples.apps.iosched.ui.BaseActivity;
-
-import android.os.Bundle;
+import android.os.Bundle
+import com.google.samples.apps.iosched.R
+import com.google.samples.apps.iosched.ui.BaseActivity
 
 /**
  * Activity that implements the debug UI. This UI has buttons and other widgets
  * that allows the user to invoke tests and tweak other debug settings.
- *
+
  * This screen is only accessible if the app is built with the debug
  * configuration.
  */
-public class DebugActivity extends BaseActivity {
+class DebugActivity : BaseActivity() {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.debug_act);
-        overridePendingTransition(0, 0);
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setContentView(R.layout.debug_act)
+        overridePendingTransition(0, 0)
     }
 
-    @Override
-    protected int getSelfNavDrawerItem() {
-        return NAVDRAWER_ITEM_DEBUG;
+    override fun getSelfNavDrawerItem(): Int {
+        return BaseActivity.NAVDRAWER_ITEM_DEBUG
     }
 }

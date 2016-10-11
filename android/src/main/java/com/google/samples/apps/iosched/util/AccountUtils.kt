@@ -102,7 +102,7 @@ object AccountUtils {
         }
     }
 
-    fun setActiveAccount(context: Context, accountName: String): Boolean {
+    fun setActiveAccount(context: Context, accountName: String?): Boolean {
         LOGD(TAG, "Set active account to: " + accountName)
         val sp = getSharedPreferences(context)
         sp.edit().putString(PREF_ACTIVE_ACCOUNT, accountName).apply()

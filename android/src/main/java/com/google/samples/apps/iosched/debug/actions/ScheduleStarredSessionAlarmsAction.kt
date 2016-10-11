@@ -14,29 +14,25 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.debug.actions;
+package com.google.samples.apps.iosched.debug.actions
 
-import android.content.Context;
-import android.content.Intent;
-
-import com.google.samples.apps.iosched.service.SessionAlarmService;
-import com.google.samples.apps.iosched.debug.DebugAction;
+import android.content.Context
+import android.content.Intent
+import com.google.samples.apps.iosched.debug.DebugAction
+import com.google.samples.apps.iosched.service.SessionAlarmService
 
 /**
  * Schedules a feedback notification for 1 minute in the future.
  */
-public class ScheduleStarredSessionAlarmsAction implements DebugAction {
+class ScheduleStarredSessionAlarmsAction : DebugAction {
 
-    @Override
-    public void run(Context context, Callback callback) {
-        Intent intent = new Intent(
+    override fun run(context: Context, callback: DebugAction.Callback) {
+        val intent = Intent(
                 SessionAlarmService.ACTION_SCHEDULE_ALL_STARRED_BLOCKS,
-                null, context, SessionAlarmService.class);
-        context.startService(intent);
+                null, context, SessionAlarmService::class.java)
+        context.startService(intent)
     }
 
-    @Override
-    public String getLabel() {
-        return "Schedule session notifications";
-    }
+    override val label: String
+        get() = "Schedule session notifications"
 }

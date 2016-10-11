@@ -13,22 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.google.samples.apps.iosched.debug.actions;
+package com.google.samples.apps.iosched.debug.actions
 
-import android.content.Context;
-import android.content.Intent;
+import android.content.Context
+import android.content.Intent
 
-import com.google.samples.apps.iosched.debug.DebugAction;
+import com.google.samples.apps.iosched.debug.DebugAction
 
-public class ShowAllDriveFilesDebugAction implements DebugAction {
+class ShowAllDriveFilesDebugAction : DebugAction {
 
-    @Override
-    public void run(Context context, final Callback callback) {
-        context.startActivity(new Intent(context, ViewFilesInAppFolderActivity.class));
+    override fun run(context: Context, callback: DebugAction.Callback) {
+        context.startActivity(Intent(context, ViewFilesInAppFolderActivity::class.java))
     }
 
-    @Override
-    public String getLabel() {
-        return "List all files in AppData folder";
-    }
+    override val label: String
+        get() = "List all files in AppData folder"
 }
