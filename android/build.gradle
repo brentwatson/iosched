@@ -15,6 +15,7 @@
  */
 
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'jacoco'
 
 repositories {
@@ -123,6 +124,9 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+    }
 }
 
 dependencies {
@@ -183,4 +187,5 @@ dependencies {
     compile 'com.android.support.test.espresso:espresso-idling-resource:2.0'
 
     compile 'com.google.guava:guava:18.0'
+    compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 }
