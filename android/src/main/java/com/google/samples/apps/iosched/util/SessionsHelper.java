@@ -49,8 +49,8 @@ public class SessionsHelper {
 
     public void startMapActivity(String roomId) {
         Intent intent = new Intent(mActivity.getApplicationContext(), MapActivity.class);
-        intent.putExtra(MapActivity.EXTRA_ROOM, roomId);
-        intent.putExtra(MapActivity.EXTRA_DETACHED_MODE, true);
+        intent.putExtra(MapActivity.Companion.getEXTRA_ROOM(), roomId);
+        intent.putExtra(MapActivity.Companion.getEXTRA_DETACHED_MODE(), true);
         mActivity.startActivity(intent);
     }
 

@@ -14,24 +14,17 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.map.util;
+package com.google.samples.apps.iosched.map.util
 
-import com.google.samples.apps.iosched.provider.ScheduleContract;
-
-import android.content.Context;
+import android.content.Context
+import com.google.samples.apps.iosched.provider.ScheduleContract
 
 /**
  * Loads the title and abstract for the very first session scheduled in a room.
  */
-public class SingleSessionLoader extends SessionLoader {
-
-
-    public SingleSessionLoader(Context context, String roomId, String roomTitle, int roomType) {
-        super(context, roomId, roomTitle, roomType,
-                ScheduleContract.Rooms.buildSessionsDirUri(roomId),
-                Query.PROJECTION, null, null, Query.ORDER_LIMIT);
-
-    }
+class SingleSessionLoader(context: Context, roomId: String, roomTitle: String, roomType: Int) :
+        SessionLoader(context, roomId, roomTitle, roomType, ScheduleContract.Rooms.buildSessionsDirUri(roomId),
+                SingleSessionLoader.Query.PROJECTION, null, null, SingleSessionLoader.Query.ORDER_LIMIT) {
 
 
     /**
@@ -39,18 +32,16 @@ public class SingleSessionLoader extends SessionLoader {
      * that are following a given time in a particular room. Results are limited to the first
      * session only.
      */
-    public static interface Query {
+    interface Query {
+        companion object {
 
-        final String ORDER_LIMIT = ScheduleContract.Sessions.SESSION_START + " ASC LIMIT 1";
+            val ORDER_LIMIT = ScheduleContract.Sessions.SESSION_START + " ASC LIMIT 1"
 
 
-        final String[] PROJECTION = {
-                ScheduleContract.Sessions._ID,
-                ScheduleContract.Sessions.SESSION_TITLE,
-                ScheduleContract.Sessions.SESSION_ABSTRACT
-        };
+            val PROJECTION = arrayOf(ScheduleContract.Sessions._ID, ScheduleContract.Sessions.SESSION_TITLE, ScheduleContract.Sessions.SESSION_ABSTRACT)
 
-        int SESSION_TITLE = 1;
-        int SESSION_ABSTRACT = 2;
+            val SESSION_TITLE = 1
+            val SESSION_ABSTRACT = 2
+        }
     }
 }

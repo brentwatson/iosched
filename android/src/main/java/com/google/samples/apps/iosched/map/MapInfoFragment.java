@@ -16,16 +16,6 @@
 
 package com.google.samples.apps.iosched.map;
 
-import com.google.samples.apps.iosched.R;
-import com.google.samples.apps.iosched.map.util.SingleSessionLoader;
-import com.google.samples.apps.iosched.map.util.OverviewSessionLoader;
-import com.google.samples.apps.iosched.map.util.MarkerModel;
-import com.google.samples.apps.iosched.map.util.SessionLoader;
-import com.google.samples.apps.iosched.model.ScheduleHelper;
-import com.google.samples.apps.iosched.provider.ScheduleContract;
-import com.google.samples.apps.iosched.util.MapUtils;
-import com.google.samples.apps.iosched.util.UIUtils;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.LoaderManager;
@@ -42,6 +32,16 @@ import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.google.samples.apps.iosched.R;
+import com.google.samples.apps.iosched.map.util.MarkerModel;
+import com.google.samples.apps.iosched.map.util.OverviewSessionLoader;
+import com.google.samples.apps.iosched.map.util.SessionLoader;
+import com.google.samples.apps.iosched.map.util.SingleSessionLoader;
+import com.google.samples.apps.iosched.model.ScheduleHelper;
+import com.google.samples.apps.iosched.provider.ScheduleContract;
+import com.google.samples.apps.iosched.util.MapUtils;
+import com.google.samples.apps.iosched.util.UIUtils;
 
 /**
  * Displays information about the map.
@@ -172,9 +172,9 @@ public abstract class MapInfoFragment extends Fragment
      */
     public static MapInfoFragment newInstace(Context c) {
         if (UIUtils.INSTANCE.isTablet(c)) {
-            return InlineInfoFragment.newInstance();
+            return InlineInfoFragment.Companion.newInstance();
         } else {
-            return SlideableInfoFragment.newInstance();
+            return SlideableInfoFragment.Companion.newInstance();
         }
     }
 
@@ -197,7 +197,7 @@ public abstract class MapInfoFragment extends Fragment
         sessions.moveToFirst();
 
         final String title = roomTitle;
-        final String subtitle = sessions.getString(SingleSessionLoader.Query.SESSION_ABSTRACT);
+        final String subtitle = sessions.getString(SingleSessionLoader.Query.Companion.getSESSION_ABSTRACT());
 
         setHeader(MapUtils.INSTANCE.getRoomIcon(roomType), title, subtitle);
         mList.setVisibility(View.GONE);
@@ -259,7 +259,7 @@ public abstract class MapInfoFragment extends Fragment
     }
 
     public void showMoscone() {
-        setHeader(MapUtils.INSTANCE.getRoomIcon(MarkerModel.TYPE_MOSCONE), R.string.map_moscone,
+        setHeader(MapUtils.INSTANCE.getRoomIcon(MarkerModel.Companion.getTYPE_MOSCONE()), R.string.map_moscone,
                 R.string.map_moscone_address);
         mList.setVisibility(View.GONE);
     }
@@ -317,7 +317,7 @@ public abstract class MapInfoFragment extends Fragment
 
     }
 
-    interface Callback {
+    public interface Callback {
 
         public void onInfoSizeChanged(int left, int top, int right, int bottom);
 
@@ -373,15 +373,15 @@ public abstract class MapInfoFragment extends Fragment
                 view.setTag(holder);
             }
             final String title = cursor
-                    .getString(OverviewSessionLoader.Query.SESSION_TITLE);
+                    .getString(OverviewSessionLoader.Query.Companion.getSESSION_TITLE());
             final String sessionId = cursor
-                    .getString(OverviewSessionLoader.Query.SESSION_ID);
+                    .getString(OverviewSessionLoader.Query.Companion.getSESSION_ID());
             final long blockStart = cursor
-                    .getLong(OverviewSessionLoader.Query.SESSION_START);
+                    .getLong(OverviewSessionLoader.Query.Companion.getSESSION_START());
             final long blockEnd = cursor
-                    .getLong(OverviewSessionLoader.Query.SESSION_END);
+                    .getLong(OverviewSessionLoader.Query.Companion.getSESSION_END());
             final String sessionTag = cursor
-                    .getString(OverviewSessionLoader.Query.SESSION_TAGS);
+                    .getString(OverviewSessionLoader.Query.Companion.getSESSION_TAGS());
 
             final int sessionType = ScheduleHelper.Companion.detectSessionType(sessionTag);
             final String text = UIUtils.INSTANCE.formatIntervalTimeString(blockStart, blockEnd,
