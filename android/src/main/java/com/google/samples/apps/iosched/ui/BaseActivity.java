@@ -959,7 +959,7 @@ public abstract class BaseActivity extends AppCompatActivity implements
         super.onResume();
 
         // Perform one-time bootstrap setup, if needed
-        DataBootstrapService.startDataBootstrapIfNecessary(this);
+        DataBootstrapService.Companion.startDataBootstrapIfNecessary(this);
 
         // Check to ensure a Google Account is active for the app. Placing the check here ensures
         // it is run again in the case where a Google Account wasn't present on the device and a
