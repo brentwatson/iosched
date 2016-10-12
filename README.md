@@ -1,3 +1,107 @@
+This conversion to [Kotlin](https://kotlinlang.org/) was done as an expermiment to compare Java and
+Kotlin compile times, code size, and various other metrics.  Details below.
+
+## Setup
+
+|                | Version      |
+|----------------|--------------|
+| Android Studio | 2.2.1        |
+| Gradle         | 2.2.1        |
+| Kotlin         | 1.0.4        |
+| OS             | Ubuntu 16.04 |
+
+
+## Notes
+
+**Please Note**: The code was not throughtly modified to use kotlin paradigms. 
+More work could be put in to do better null checking (`!!` instances) and
+make better use of the stdlib especially related to collections and iteration.
+
+Only the code under the `android` directory was converted.  Code under `third_party` was not converted.
+
+
+## Build Times
+
+|                      | clean build       | incremental build |
+|----------------------|-------------------|-------------------|
+| Java Version         | 42.731 secs       | 6.049 secs        |
+| Kotlin gradle config | 47.403 secs       | 5.921 secs        |
+| 50% Kotlin Version   | 53.671 secs       | 5.609 secs        |
+| Full Kotlin Version  | 1 mins 7.088 secs | 4.965 secs        |
+
+_*Interesting that incremental builds got faster.  This was not expected._
+
+Clean build command: `./gradlew clean android:assembleDebug`  
+Incremental build command: `./gradlew android:assembleDebug`
+
+
+## Code Size
+
+Stats calculated using [cloc](https://github.com/AlDanial/cloc) version 1.70
+
+```bash
+> cd ./iosched/android/src/main/java/com/google/samples/apps
+> cloc-1.70.pl .
+```
+
+
+### Java Version
+
+```
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Java                           192           4934           7254          23241
+-------------------------------------------------------------------------------
+SUM:                           192           4934           7254          23241
+-------------------------------------------------------------------------------
+```
+
+### 50% Kotlin Version
+
+```
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Kotlin                         120           2753           4329          12036
+Java                            72           2086           2899           9521
+-------------------------------------------------------------------------------
+SUM:                           192           4839           7228          21557
+-------------------------------------------------------------------------------
+```
+
+### Full Kotlin Version
+
+```
+-------------------------------------------------------------------------------
+Language                     files          blank        comment           code
+-------------------------------------------------------------------------------
+Kotlin                         172           3665           5722          16169
+Java                            20           1066           1464           4609
+-------------------------------------------------------------------------------
+SUM:                           192           4731           7186          20778
+-------------------------------------------------------------------------------
+```
+_* making better use of the stdlib would greatly reduce the final line count._
+
+
+## Future TODOs
+
+- Convert `for` loops to use stdlib
+- Make use of `listOf`, `mapOf`, etc
+- Use `with`/`apply` where appropriate
+- Find and fix `!!` occurences
+
+## Issues Most Encountered with Java->Kotlin Converter
+- Nullable objects treated as non-null and vise-versa
+- Complex generic types
+- Multi-line string concat (`+` being added on next line)
+- Assignments are not expressions (eg `while((x = read()) != -1)`)
+- Overzealous companion object creation.
+
+
+---
+
 Google I/O Android App
 ======================
 
