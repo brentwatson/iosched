@@ -14,11 +14,10 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.io.model;
+package com.google.samples.apps.iosched.io.model
 
-public class DataManifest {
-    public String format;
-    public String[] data_files;
-}
-
-
+data class Room (
+    var id: String,
+    var name: String,
+    var floor: String
+)

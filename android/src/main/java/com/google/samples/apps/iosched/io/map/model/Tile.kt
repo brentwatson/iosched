@@ -14,14 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.io.model;
+package com.google.samples.apps.iosched.io.map.model
 
-public class Block {
-    public String title;
-    public String subtitle;
-    public String start;
-    public String end;
-    public String type;
-}
-
-
+data class Tile (
+    var filename: String,
+    var url: String
+)

@@ -33,7 +33,7 @@ class SpeakersHandler(context: Context) : JSONHandler(context) {
 
     override fun process(element: JsonElement) {
         for (speaker in Gson().fromJson(element, Array<Speaker>::class.java)) {
-            speakerMap.put(speaker.id, speaker)
+            speakerMap.put(speaker.id!!, speaker)
         }
     }
 
@@ -54,13 +54,13 @@ class SpeakersHandler(context: Context) : JSONHandler(context) {
         var updatedSpeakers = 0
         for (speaker in speakerMap.values) {
             val hashCode = speaker.importHashcode
-            speakersToKeep.add(speaker.id)
+            speakersToKeep.add(speaker.id!!)
 
             // add speaker, if necessary
-            if (!isIncrementalUpdate || !speakerHashcodes!!.containsKey(speaker.id) ||
-                    speakerHashcodes[speaker.id] != hashCode) {
+            if (!isIncrementalUpdate || !speakerHashcodes!!.containsKey(speaker.id!!) ||
+                    speakerHashcodes[speaker.id!!] != hashCode) {
                 ++updatedSpeakers
-                val isNew = !isIncrementalUpdate || !speakerHashcodes!!.containsKey(speaker.id)
+                val isNew = !isIncrementalUpdate || !speakerHashcodes!!.containsKey(speaker.id!!)
                 buildSpeaker(isNew, speaker, list)
             }
         }

@@ -33,7 +33,7 @@ class TagsHandler(context: Context) : JSONHandler(context) {
 
     override fun process(element: JsonElement) {
         for (tag in Gson().fromJson(element, Array<Tag>::class.java)) {
-            tagMap.put(tag.tag, tag)
+            tagMap.put(tag.tag!!, tag)
         }
     }
 

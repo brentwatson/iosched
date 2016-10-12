@@ -14,16 +14,13 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.io.model;
+package com.google.samples.apps.iosched.io.model
 
-import com.google.gson.annotations.SerializedName;
+data class Block (
+    var title: String,
+    var subtitle: String,
+    var start: String,
+    var end: String,
+    var type: String
+)
 
-public class Tag {
-    public String tag;
-    public String name;
-    public String category;
-    public String color;
-    @SerializedName("abstract")
-    public String _abstract;
-    public int order_in_category;
-}

@@ -14,10 +14,11 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.io.model;
+package com.google.samples.apps.iosched.io.model
 
-public class Room {
-    public String id;
-    public String name;
-    public String floor;
-}
+data class Hashtag (
+    var name: String,
+    var description: String,
+    var color: String,
+    var order: Int = 0
+)

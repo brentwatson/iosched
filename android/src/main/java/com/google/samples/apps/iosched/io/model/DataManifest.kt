@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2014 Google Inc. All rights reserved.
  *
@@ -15,12 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.io.map.model;
+package com.google.samples.apps.iosched.io.model
 
-public class Marker {
-    public String id;
-    public String type;
-    public float lat;
-    public float lng;
-    public String title;
-}
+data class DataManifest (
+    var format: String,
+    var data_files: Array<String>
+)

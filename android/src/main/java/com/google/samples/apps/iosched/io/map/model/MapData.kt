@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.io.model;
+package com.google.samples.apps.iosched.io.map.model
 
-public class Hashtag {
-    public String name;
-    public String description;
-    public String color;
-    public int order;
+class MapData {
+    var markers: Map<String, Array<Marker>>? = null
+    var tiles: Map<String, Tile>? = null
 }

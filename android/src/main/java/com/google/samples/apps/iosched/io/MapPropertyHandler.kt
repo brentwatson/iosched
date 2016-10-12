@@ -39,10 +39,10 @@ class MapPropertyHandler(context: Context) : JSONHandler(context) {
     override fun process(element: JsonElement) {
         for (mapData in Gson().fromJson(element, Array<MapData>::class.java)) {
             if (mapData.tiles != null) {
-                processTileOverlays(mapData.tiles)
+                processTileOverlays(mapData.tiles!!)
             }
             if (mapData.markers != null) {
-                processMarkers(mapData.markers)
+                processMarkers(mapData.markers!!)
             }
         }
     }

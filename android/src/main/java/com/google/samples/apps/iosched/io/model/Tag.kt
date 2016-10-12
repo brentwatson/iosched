@@ -14,11 +14,16 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.io.map.model;
+package com.google.samples.apps.iosched.io.model
 
-import java.util.Map;
+import com.google.gson.annotations.SerializedName
 
-public class MapData {
-    public Map<String, Marker[]> markers;
-    public Map<String, Tile> tiles;
-}
+data class Tag (
+    var tag: String?,
+    var name: String?,
+    var category: String?,
+    var color: String?,
+    @SerializedName("abstract")
+    var _abstract: String?,
+    var order_in_category: Int = 0
+)

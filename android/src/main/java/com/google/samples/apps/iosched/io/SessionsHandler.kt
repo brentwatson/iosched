@@ -165,7 +165,7 @@ class SessionsHandler(context: Context) : JSONHandler(context) {
             mStringBuilder.setLength(0)
             for (i in session.speakers.indices) {
                 if (mSpeakerMap!!.containsKey(session.speakers[i])) {
-                    mStringBuilder.append(if (i == 0) "" else if (i == session.speakers.size - 1) " and " else ", ").append(mSpeakerMap!![session.speakers[i]]!!.name.trim { it <= ' ' })
+                    mStringBuilder.append(if (i == 0) "" else if (i == session.speakers.size - 1) " and " else ", ").append(mSpeakerMap!![session.speakers[i]]!!.name!!.trim { it <= ' ' })
                 } else {
                     LOGW(TAG, "Unknown speaker ID " + session.speakers[i] + " in session " + session.id)
                 }
@@ -217,7 +217,7 @@ class SessionsHandler(context: Context) : JSONHandler(context) {
         if (mTagMap == null) {
             throw IllegalStateException("Attempt to compute type order without tag map.")
         }
-        for (tagId in session.tags) {
+        for (tagId in session.tags!!) {
             if (Config.Tags.SPECIAL_KEYNOTE == tagId) {
                 return keynoteOrder
             }
@@ -255,7 +255,7 @@ class SessionsHandler(context: Context) : JSONHandler(context) {
         list.add(ContentProviderOperation.newDelete(uri).build())
 
         // add a mapping (a session+tag tuple) for each tag in the session
-        for (tag in session.tags) {
+        for (tag in session.tags!!) {
             list.add(ContentProviderOperation.newInsert(uri).withValue(ScheduleDatabase.SessionsTags.SESSION_ID, session.id).withValue(ScheduleDatabase.SessionsTags.TAG_ID, tag).build())
         }
     }

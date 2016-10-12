@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2014 Google Inc. All rights reserved.
  *
@@ -15,9 +14,12 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.io.map.model;
+package com.google.samples.apps.iosched.io.map.model
 
-public class Tile {
-    public String filename;
-    public String url;
-}
+data class Marker (
+    var id: String,
+    var type: String,
+    var lat: Float = 0.toFloat(),
+    var lng: Float = 0.toFloat(),
+    var title: String
+)

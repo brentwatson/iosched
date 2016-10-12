@@ -39,7 +39,7 @@ class VideosHandler(context: Context) : JSONHandler(context) {
                 LOGW(TAG, "Video without valid ID. Using VID instead: " + video.vid)
                 video.id = video.vid
             }
-            mVideos.put(video.id, video)
+            mVideos.put(video.id!!, video)
         }
     }
 
@@ -60,13 +60,13 @@ class VideosHandler(context: Context) : JSONHandler(context) {
         var updatedVideos = 0
         for (video in mVideos.values) {
             val hashCode = video.importHashcode
-            videosToKeep.add(video.id)
+            videosToKeep.add(video.id!!)
 
             // add video, if necessary
-            if (!isIncrementalUpdate || !videoHashcodes!!.containsKey(video.id) ||
-                    videoHashcodes[video.id] != hashCode) {
+            if (!isIncrementalUpdate || !videoHashcodes!!.containsKey(video.id!!) ||
+                    videoHashcodes[video.id!!] != hashCode) {
                 ++updatedVideos
-                val isNew = !isIncrementalUpdate || !videoHashcodes!!.containsKey(video.id)
+                val isNew = !isIncrementalUpdate || !videoHashcodes!!.containsKey(video.id!!)
                 buildVideo(isNew, video, list)
             }
         }
@@ -116,7 +116,7 @@ class VideosHandler(context: Context) : JSONHandler(context) {
                     + ". Using fallback: " + thumbUrl)
         }
 
-        list.add(builder.withValue(ScheduleContract.Videos.VIDEO_ID, video.id).withValue(ScheduleContract.Videos.VIDEO_YEAR, video.year).withValue(ScheduleContract.Videos.VIDEO_TITLE, video.title.trim { it <= ' ' }).withValue(ScheduleContract.Videos.VIDEO_DESC, video.desc).withValue(ScheduleContract.Videos.VIDEO_VID, video.vid).withValue(ScheduleContract.Videos.VIDEO_TOPIC, video.topic).withValue(ScheduleContract.Videos.VIDEO_SPEAKERS, video.speakers).withValue(ScheduleContract.Videos.VIDEO_THUMBNAIL_URL, thumbUrl).withValue(ScheduleContract.Videos.VIDEO_IMPORT_HASHCODE,
+        list.add(builder.withValue(ScheduleContract.Videos.VIDEO_ID, video.id).withValue(ScheduleContract.Videos.VIDEO_YEAR, video.year).withValue(ScheduleContract.Videos.VIDEO_TITLE, video.title!!.trim { it <= ' ' }).withValue(ScheduleContract.Videos.VIDEO_DESC, video.desc).withValue(ScheduleContract.Videos.VIDEO_VID, video.vid).withValue(ScheduleContract.Videos.VIDEO_TOPIC, video.topic).withValue(ScheduleContract.Videos.VIDEO_SPEAKERS, video.speakers).withValue(ScheduleContract.Videos.VIDEO_THUMBNAIL_URL, thumbUrl).withValue(ScheduleContract.Videos.VIDEO_IMPORT_HASHCODE,
                 video.importHashcode).build())
     }
 
