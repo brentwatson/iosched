@@ -151,7 +151,7 @@ class ScheduleHelper(private val mContext: Context) {
         try {
             cursor = mContext.contentResolver.query(
                     ScheduleContractHelper.addOverrideAccountName(Sessions.CONTENT_MY_SCHEDULE_URI,
-                            AccountUtils.getActiveAccountName(mContext)),
+                            AccountUtils.getActiveAccountName(mContext)!!),
                     SessionsQuery.PROJECTION,
                     // filter sessions to the specified day
                     Sessions.STARTING_AT_TIME_INTERVAL_SELECTION,

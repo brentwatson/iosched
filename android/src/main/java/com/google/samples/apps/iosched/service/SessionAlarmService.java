@@ -599,7 +599,7 @@ public class SessionAlarmService extends IntentService
         try {
             c = cr.query(ScheduleContract.Sessions.CONTENT_MY_SCHEDULE_URI,
                     new String[]{
-                            ScheduleContractHelper.formatQueryDistinctParameter(
+                            ScheduleContractHelper.INSTANCE.formatQueryDistinctParameter(
                                     ScheduleContract.Sessions.SESSION_START),
                             ScheduleContract.Sessions.SESSION_END,
                             ScheduleContract.Sessions.SESSION_IN_MY_SCHEDULE},

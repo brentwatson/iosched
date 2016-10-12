@@ -476,7 +476,7 @@ public final class ScheduleContract {
         public static final String CONTENT_TYPE_ID = "myschedule";
 
         public static Uri buildMyScheduleUri(String accountName) {
-            return ScheduleContractHelper.addOverrideAccountName(CONTENT_URI, accountName);
+            return ScheduleContractHelper.INSTANCE.addOverrideAccountName(CONTENT_URI, accountName);
         }
 
     }
@@ -494,7 +494,7 @@ public final class ScheduleContract {
         public static final String CONTENT_TYPE_ID = "myfeedbacksubmitted";
 
         public static Uri buildMyFeedbackSubmittedUri(String accountName) {
-            return ScheduleContractHelper.addOverrideAccountName(CONTENT_URI, accountName);
+            return ScheduleContractHelper.INSTANCE.addOverrideAccountName(CONTENT_URI, accountName);
         }
 
     }
@@ -511,7 +511,7 @@ public final class ScheduleContract {
         public static final String CONTENT_TYPE_ID = "myviewedvideos";
 
         public static Uri buildMyViewedVideosUri(String accountName) {
-            return ScheduleContractHelper.addOverrideAccountName(CONTENT_URI, accountName);
+            return ScheduleContractHelper.INSTANCE.addOverrideAccountName(CONTENT_URI, accountName);
         }
 
     }
