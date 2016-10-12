@@ -383,7 +383,7 @@ public abstract class MapInfoFragment extends Fragment
             final String sessionTag = cursor
                     .getString(OverviewSessionLoader.Query.SESSION_TAGS);
 
-            final int sessionType = ScheduleHelper.detectSessionType(sessionTag);
+            final int sessionType = ScheduleHelper.Companion.detectSessionType(sessionTag);
             final String text = UIUtils.INSTANCE.formatIntervalTimeString(blockStart, blockEnd,
                     mStringBuilder, context);
 

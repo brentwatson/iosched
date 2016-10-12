@@ -16,27 +16,12 @@
 
 package com.google.samples.apps.iosched.myschedule
 
-import com.google.samples.apps.iosched.Config
-import com.google.samples.apps.iosched.R
-import com.google.samples.apps.iosched.model.ScheduleHelper
-import com.google.samples.apps.iosched.model.ScheduleItem
-import com.google.samples.apps.iosched.provider.ScheduleContract
-import com.google.samples.apps.iosched.session.SessionDetailActivity
-import com.google.samples.apps.iosched.settings.SettingsUtils
-import com.google.samples.apps.iosched.ui.BaseActivity
-import com.google.samples.apps.iosched.util.AnalyticsHelper
-import com.google.samples.apps.iosched.util.ThrottledContentObserver
-import com.google.samples.apps.iosched.util.TimeUtils
-import com.google.samples.apps.iosched.util.UIUtils
-
 import android.app.AlertDialog
 import android.app.Fragment
 import android.app.FragmentManager
 import android.app.ListFragment
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
-import android.database.ContentObserver
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -51,20 +36,25 @@ import android.text.TextUtils
 import android.text.method.LinkMovementMethod
 import android.text.util.Linkify
 import android.util.TypedValue
-import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.widget.ScrollView
 import android.widget.TextView
-
+import com.google.samples.apps.iosched.Config
+import com.google.samples.apps.iosched.R
+import com.google.samples.apps.iosched.model.ScheduleHelper
+import com.google.samples.apps.iosched.model.ScheduleItem
+import com.google.samples.apps.iosched.provider.ScheduleContract
+import com.google.samples.apps.iosched.session.SessionDetailActivity
+import com.google.samples.apps.iosched.settings.SettingsUtils
+import com.google.samples.apps.iosched.ui.BaseActivity
+import com.google.samples.apps.iosched.util.AnalyticsHelper
+import com.google.samples.apps.iosched.util.LogUtils.*
+import com.google.samples.apps.iosched.util.ThrottledContentObserver
+import com.google.samples.apps.iosched.util.TimeUtils
+import com.google.samples.apps.iosched.util.UIUtils
 import java.lang.ref.WeakReference
-import java.util.Arrays
-import java.util.Date
-import java.util.HashSet
-
-import com.google.samples.apps.iosched.util.LogUtils.LOGD
-import com.google.samples.apps.iosched.util.LogUtils.LOGE
-import com.google.samples.apps.iosched.util.LogUtils.makeLogTag
+import java.util.*
 
 class MyScheduleActivity : BaseActivity(), MyScheduleFragment.Listener {
 
@@ -399,7 +389,7 @@ class MyScheduleActivity : BaseActivity(), MyScheduleFragment.Listener {
 
     protected fun updateData() {
         for (i in Config.CONFERENCE_DAYS.indices) {
-            mDataHelper.getScheduleDataAsync(mScheduleAdapters[i],
+            mDataHelper.getScheduleDataAsync(mScheduleAdapters[i]!!,
                     Config.CONFERENCE_DAYS[i][0], Config.CONFERENCE_DAYS[i][1])
         }
     }

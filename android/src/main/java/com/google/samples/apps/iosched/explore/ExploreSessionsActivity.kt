@@ -247,7 +247,7 @@ class ExploreSessionsActivity : BaseActivity(), Toolbar.OnMenuItemClickListener,
             } else {
                 // b) For remote users, default to only showing Sessions that are Live streamed.
                 val theTag = mTagMetadata!!.getTag(Config.Tags.SESSIONS)
-                if (!TextUtils.equals(theTag.category, userTagCategory)) {
+                if (!TextUtils.equals(theTag!!.category, userTagCategory)) {
                     mTagFilterHolder!!.add(theTag.id, theTag.category)
                 }
                 mTagFilterHolder!!.isShowLiveStreamedSessions = true
@@ -273,7 +273,7 @@ class ExploreSessionsActivity : BaseActivity(), Toolbar.OnMenuItemClickListener,
             if (titleTag != null && mTagFilterHolder!!.getCountByCategory(titleTag.category) == 1) {
                 for (tagId in mTagFilterHolder!!.selectedFilters) {
                     val theTag = mTagMetadata!!.getTag(tagId)
-                    if (TextUtils.equals(titleTag.category, theTag.category)) {
+                    if (TextUtils.equals(titleTag.category, theTag!!.category)) {
                         title = theTag.name
                     }
                 }
