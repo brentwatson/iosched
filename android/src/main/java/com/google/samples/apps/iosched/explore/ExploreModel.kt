@@ -201,13 +201,13 @@ class ExploreModel(private val mContext: Context) : Model {
         val currentTime: Long
         currentTime = UIUtils.getCurrentTime(mContext)
         if (keynoteData.startDate != null) {
-            startTime = keynoteData.startDate.time
+            startTime = keynoteData.startDate!!.time
         } else {
             LOGD(TAG, "Keynote start time wasn't set")
             startTime = 0
         }
         if (keynoteData.endDate != null) {
-            endTime = keynoteData.endDate.time
+            endTime = keynoteData.endDate!!.time
         } else {
             LOGD(TAG, "Keynote end time wasn't set")
             endTime = java.lang.Long.MAX_VALUE
@@ -217,7 +217,7 @@ class ExploreModel(private val mContext: Context) : Model {
         if (currentTime >= startTime && currentTime < endTime) {
             stringBuilder.append(mContext.getString(R.string.live_now))
         } else {
-            val shortDate = TimeUtils.formatShortDate(mContext, keynoteData.startDate)
+            val shortDate = TimeUtils.formatShortDate(mContext, keynoteData.startDate!!)
             stringBuilder.append(shortDate)
 
             if (startTime > 0) {

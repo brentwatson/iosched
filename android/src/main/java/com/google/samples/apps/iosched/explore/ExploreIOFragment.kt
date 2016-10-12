@@ -286,7 +286,7 @@ class ExploreIOFragment : Fragment(), UpdatableView<ExploreModel>, CollectionVie
             if (topic.sessions.size > 0) {
                 inventoryGroup = CollectionView.InventoryGroup(GROUP_ID_TOPIC_CARDS)
                 inventoryGroup.addItemWithTag(topic)
-                topic.title = getTranslatedTitle(topic.title, model)
+                topic.title = getTranslatedTitle(topic.title!!, model)
                 topicGroups.add(inventoryGroup)
             }
         }
@@ -296,7 +296,7 @@ class ExploreIOFragment : Fragment(), UpdatableView<ExploreModel>, CollectionVie
             if (theme.sessions.size > 0) {
                 inventoryGroup = CollectionView.InventoryGroup(GROUP_ID_THEME_CARDS)
                 inventoryGroup.addItemWithTag(theme)
-                theme.title = getTranslatedTitle(theme.title, model)
+                theme.title = getTranslatedTitle(theme.title!!, model)
                 themeGroups.add(inventoryGroup)
             }
         }
@@ -480,7 +480,7 @@ class ExploreIOFragment : Fragment(), UpdatableView<ExploreModel>, CollectionVie
             titleView.text = tag.sessionName
             if (!TextUtils.isEmpty(tag.imageUrl)) {
                 val imageView = view.findViewById(R.id.thumbnail) as ImageView
-                mImageLoader!!.loadImage(tag.imageUrl, imageView)
+                mImageLoader!!.loadImage(tag.imageUrl!!, imageView)
             }
             val inScheduleIndicator = view.findViewById(R.id.indicator_in_schedule) as ImageView
             if (inScheduleIndicator != null) {  // check not keynote
