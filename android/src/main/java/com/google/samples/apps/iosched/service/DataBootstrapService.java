@@ -77,7 +77,7 @@ public class DataBootstrapService extends IntentService {
         try {
             LOGD(TAG, "Starting data bootstrap process.");
             // Load data from bootstrap raw resource.
-            String bootstrapJson = JSONHandler
+            String bootstrapJson = JSONHandler.Companion
                     .parseResource(appContext, R.raw.bootstrap_data);
 
             // Apply the data we read to the database with the help of the ConferenceDataHandler.

@@ -14,35 +14,30 @@
  * limitations under the License.
  */
 
-package com.google.samples.apps.iosched.io;
+package com.google.samples.apps.iosched.io
 
-import java.io.IOException;
+import java.io.IOException
 
 /**
- * General {@link IOException} that indicates a problem occurred while parsing or applying a {@link
- * JSONHandler}.
+ * General [IOException] that indicates a problem occurred while parsing or applying a [ ].
  */
-public class HandlerException extends IOException {
+class HandlerException : IOException {
 
-    public HandlerException() {
-        super();
+    constructor() : super() {
     }
 
-    public HandlerException(String message) {
-        super(message);
+    constructor(message: String) : super(message) {
     }
 
-    public HandlerException(String message, Throwable cause) {
-        super(message);
-        initCause(cause);
+    constructor(message: String, cause: Throwable) : super(message) {
+        (this as java.lang.Throwable).initCause(cause)
     }
 
-    @Override
-    public String toString() {
-        if (getCause() != null) {
-            return getLocalizedMessage() + ": " + getCause();
+    override fun toString(): String {
+        if (cause != null) {
+            return (this as java.lang.Throwable).localizedMessage + ": " + cause
         } else {
-            return getLocalizedMessage();
+            return (this as java.lang.Throwable).localizedMessage
         }
     }
 }
